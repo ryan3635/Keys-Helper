@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#31647E"
+    tools:context=".MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/keys"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="160dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <ImageButton
+            android:id="@+id/c1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:onClick="playNote"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/d1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/whitekey" />
+
+        <ImageButton
+            android:id="@+id/d1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:background="#00000000"
+            android:onClick="playNote"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/e1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/whitekey" />
+
+        <ImageButton
+            android:id="@+id/e1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="96dp"
+            android:background="#00000000"
+            android:onClick="playNote"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/f1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/whitekey" />
+
+        <ImageButton
+            android:id="@+id/f1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="144dp"
+            android:background="#00000000"
+            android:onClick="playNote"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/g1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/whitekey" />
+
+        <ImageButton
+            android:id="@+id/g1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="192dp"
+            android:background="#00000000"
+            android:onClick="playNote"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/a1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/whitekey" />
+
+        <ImageButton
+            android:id="@+id/a1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="240dp"
+            android:background="#00000000"
+            android:onClick="playNote"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/b1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0"
+            app:srcCompat="@drawable/whitekey" />
+
+        <ImageButton
+            android:id="@+id/b1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="288dp"
+            android:background="#00000000"
+            android:onClick="playNote"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/c2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/whitekey" />
+
+        <ImageButton
+            android:id="@+id/c2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="336dp"
+            android:background="#00000000"
+            android:onClick="playNote"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/d2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/whitekey" />
+
+        <ImageButton
+            android:id="@+id/d2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="384dp"
+            android:background="#00000000"
+            android:onClick="playNote"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/e2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/whitekey" />
+
+        <ImageButton
+            android:id="@+id/e2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="432dp"
+            android:background="#00000000"
+            android:onClick="playNote"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/f2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/whitekey" />
+
+        <ImageButton
+            android:id="@+id/f2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="480dp"
+            android:background="#00000000"
+            android:onClick="playNote"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/g2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/whitekey" />
+
+        <ImageButton
+            android:id="@+id/g2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="528dp"
+            android:background="#00000000"
+            android:onClick="playNote"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/a2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/whitekey" />
+
+        <ImageButton
+            android:id="@+id/a2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="576dp"
+            android:background="#00000000"
+            android:onClick="playNote"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/b2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/whitekey" />
+
+        <ImageButton
+            android:id="@+id/b2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="624dp"
+            android:background="#00000000"
+            android:onClick="playNote"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/whitekey" />
+
+        <ImageButton
+            android:id="@+id/cs1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:onClick="playNote"
+            app:layout_constraintEnd_toStartOf="@+id/d1"
+            app:layout_constraintStart_toEndOf="@+id/c1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/blackkey" />
+
+        <ImageButton
+            android:id="@+id/ds1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:onClick="playNote"
+            app:layout_constraintEnd_toStartOf="@+id/e1"
+            app:layout_constraintStart_toEndOf="@+id/d1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/blackkey" />
+
+        <ImageButton
+            android:id="@+id/fs1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:onClick="playNote"
+            app:layout_constraintEnd_toStartOf="@+id/g1"
+            app:layout_constraintStart_toEndOf="@+id/f1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/blackkey" />
+
+        <ImageButton
+            android:id="@+id/gs1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:onClick="playNote"
+            app:layout_constraintEnd_toStartOf="@+id/a1"
+            app:layout_constraintStart_toEndOf="@+id/g1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/blackkey" />
+
+        <ImageButton
+            android:id="@+id/as1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:onClick="playNote"
+            app:layout_constraintEnd_toStartOf="@+id/b1"
+            app:layout_constraintStart_toEndOf="@+id/a1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/blackkey" />
+
+        <ImageButton
+            android:id="@+id/cs2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:onClick="playNote"
+            app:layout_constraintEnd_toStartOf="@+id/d2"
+            app:layout_constraintStart_toEndOf="@+id/c2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/blackkey" />
+
+        <ImageButton
+            android:id="@+id/ds2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:onClick="playNote"
+            app:layout_constraintEnd_toStartOf="@+id/e2"
+            app:layout_constraintStart_toEndOf="@+id/d2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/blackkey" />
+
+        <ImageButton
+            android:id="@+id/fs2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:onClick="playNote"
+            app:layout_constraintEnd_toStartOf="@+id/g2"
+            app:layout_constraintStart_toEndOf="@+id/f2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/blackkey" />
+
+        <ImageButton
+            android:id="@+id/gs2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:onClick="playNote"
+            app:layout_constraintEnd_toStartOf="@+id/a2"
+            app:layout_constraintStart_toEndOf="@+id/g2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/blackkey" />
+
+        <ImageButton
+            android:id="@+id/as2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:onClick="playNote"
+            app:layout_constraintEnd_toStartOf="@+id/b2"
+            app:layout_constraintStart_toEndOf="@+id/a2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/blackkey" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

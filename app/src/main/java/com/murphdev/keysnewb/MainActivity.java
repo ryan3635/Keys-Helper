@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
 
+    //Function that is called when a key is clicked - plays the sound of the corresponding note
     public void playNote(View v) {
         Resources res = context.getResources();
         int test = v.getId();

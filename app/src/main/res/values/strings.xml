@@ -1,3 +1,88 @@
 <resources>
     <string name="app_name">KeysNewb</string>
+
+    <!-- Selection areas -->
+    <string name="scale">Scale Type</string>
+    <string name="root">Root Note</string>
+    <string name="chord">Chords</string>
+    <string name="noChord">(select)</string>
+    <string name="hideSelection">Hide Selection</string>
+    <string name="hideNotes">Hide Notes</string>
+    <string name="horizontalBorder">Horizontal border for root notes</string>
+    <string name="verticalBorder">Vertical border for root notes</string>
+
+    <!-- Information area -->
+    <string name="selectedScale">Scale:</string>
+    <string name="initialScale">C Major</string>
+    <string name="initialNotesInScale">C, D, E, F, G, A, B</string>
+    <string name="selectedChord">Chord:</string>
+    <string name="noSelection">(none)</string>
+
+    <!-- Notes for each individual key -->
+    <string name="cNote">C</string>
+    <string name="dNote">D</string>
+    <string name="eNote">E</string>
+    <string name="fNote">F</string>
+    <string name="gNote">G</string>
+    <string name="aNote">A</string>
+    <string name="bNote">B</string>
+    <string name="csNote">C#</string>
+    <string name="dsNote">D#</string>
+    <string name="fsNote">F#</string>
+    <string name="gsNote">G#</string>
+    <string name="asNote">A#</string>
+
+    <!-- Scale Types -->
+    <string-array name="scaleTypes">
+        <item>Major</item>
+        <item>Minor</item>
+        <item>Blues</item>
+        <item>Major Pentonic</item>
+        <item>Minor Pentonic</item>
+        <item>Augmented</item>
+        <item>Diminished</item>
+        <item>Dorian</item>
+        <item>Locrian</item>
+        <item>Lydian</item>
+        <item>Mixolydian</item>
+        <item>Phrygian</item>
+    </string-array>
+
+    <!-- Initial Chords -->
+    <string-array name="initialChords">
+        <item>(select)</item>
+        <item>Cmaj</item>
+        <item>Fmaj</item>
+        <item>Gmaj</item>
+        <item>Dm</item>
+        <item>Em</item>
+        <item>Am</item>
+        <item>G7</item>
+        <item>Dmin7</item>
+        <item>Emin7</item>
+        <item>Amin7</item>
+        <item>Cmaj7</item>
+        <item>Fmaj7</item>
+        <item>C6</item>
+        <item>F6</item>
+        <item>G6</item>
+        <item>Dmin6</item>
+        <item>G9</item>
+        <item>Csus4</item>
+        <item>Dsus4</item>
+        <item>Esus4</item>
+        <item>Gsus4</item>
+        <item>Asus4</item>
+        <item>D7sus4</item>
+        <item>E7sus4</item>
+        <item>G7sus4</item>
+        <item>A7sus4</item>
+        <item>Csus2</item>
+        <item>Dsus2</item>
+        <item>Fsus2</item>
+        <item>Gsus2</item>
+        <item>Asus2</item>
+        <item>Bdim</item>
+    </string-array>
+
 </resources>

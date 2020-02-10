@@ -2,34 +2,32 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#31647E"
+    android:background="#FC6F6F6F"
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/keys"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="160dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="674dp"
+        android:layout_height="192dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
             android:id="@+id/c1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#00000000"
+            android:contentDescription="@string/cNote"
             android:onClick="playNote"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/d1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/whitekey" />
+            app:srcCompat="@drawable/c1" />
 
         <ImageButton
             android:id="@+id/d1"
@@ -37,13 +35,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="48dp"
             android:background="#00000000"
+            android:contentDescription="@string/dNote"
             android:onClick="playNote"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/e1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/whitekey" />
+            app:srcCompat="@drawable/d1" />
 
         <ImageButton
             android:id="@+id/e1"
@@ -51,13 +50,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="96dp"
             android:background="#00000000"
+            android:contentDescription="@string/eNote"
             android:onClick="playNote"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/f1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/whitekey" />
+            app:srcCompat="@drawable/e1" />
 
         <ImageButton
             android:id="@+id/f1"
@@ -65,13 +65,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="144dp"
             android:background="#00000000"
+            android:contentDescription="@string/fNote"
             android:onClick="playNote"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/g1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/whitekey" />
+            app:srcCompat="@drawable/f1" />
 
         <ImageButton
             android:id="@+id/g1"
@@ -79,13 +80,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="192dp"
             android:background="#00000000"
+            android:contentDescription="@string/gNote"
             android:onClick="playNote"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/a1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/whitekey" />
+            app:srcCompat="@drawable/g1" />
 
         <ImageButton
             android:id="@+id/a1"
@@ -93,13 +95,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="240dp"
             android:background="#00000000"
+            android:contentDescription="@string/aNote"
             android:onClick="playNote"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/b1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0"
-            app:srcCompat="@drawable/whitekey" />
+            app:srcCompat="@drawable/a1" />
 
         <ImageButton
             android:id="@+id/b1"
@@ -107,13 +110,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="288dp"
             android:background="#00000000"
+            android:contentDescription="@string/bNote"
             android:onClick="playNote"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/c2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/whitekey" />
+            app:srcCompat="@drawable/b1" />
 
         <ImageButton
             android:id="@+id/c2"
@@ -121,13 +125,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="336dp"
             android:background="#00000000"
+            android:contentDescription="@string/cNote"
             android:onClick="playNote"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/d2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/whitekey" />
+            app:srcCompat="@drawable/c2" />
 
         <ImageButton
             android:id="@+id/d2"
@@ -135,13 +140,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="384dp"
             android:background="#00000000"
+            android:contentDescription="@string/dNote"
             android:onClick="playNote"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/e2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/whitekey" />
+            app:srcCompat="@drawable/d2" />
 
         <ImageButton
             android:id="@+id/e2"
@@ -149,13 +155,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="432dp"
             android:background="#00000000"
+            android:contentDescription="@string/eNote"
             android:onClick="playNote"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/f2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/whitekey" />
+            app:srcCompat="@drawable/e2" />
 
         <ImageButton
             android:id="@+id/f2"
@@ -163,13 +170,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="480dp"
             android:background="#00000000"
+            android:contentDescription="@string/fNote"
             android:onClick="playNote"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/g2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/whitekey" />
+            app:srcCompat="@drawable/f2" />
 
         <ImageButton
             android:id="@+id/g2"
@@ -177,13 +185,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="528dp"
             android:background="#00000000"
+            android:contentDescription="@string/gNote"
             android:onClick="playNote"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/a2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/whitekey" />
+            app:srcCompat="@drawable/g2" />
 
         <ImageButton
             android:id="@+id/a2"
@@ -191,13 +200,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="576dp"
             android:background="#00000000"
+            android:contentDescription="@string/aNote"
             android:onClick="playNote"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/b2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/whitekey" />
+            app:srcCompat="@drawable/a2" />
 
         <ImageButton
             android:id="@+id/b2"
@@ -205,123 +215,806 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="624dp"
             android:background="#00000000"
+            android:contentDescription="@string/bNote"
             android:onClick="playNote"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/whitekey" />
+            app:srcCompat="@drawable/b2" />
 
         <ImageButton
             android:id="@+id/cs1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#00FFFFFF"
+            android:contentDescription="@string/csNote"
             android:onClick="playNote"
+            android:scaleX="1.2"
             app:layout_constraintEnd_toStartOf="@+id/d1"
             app:layout_constraintStart_toEndOf="@+id/c1"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/blackkey" />
+            app:srcCompat="@drawable/cs1" />
 
         <ImageButton
             android:id="@+id/ds1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#00FFFFFF"
+            android:contentDescription="@string/dsNote"
             android:onClick="playNote"
+            android:scaleX="1.2"
             app:layout_constraintEnd_toStartOf="@+id/e1"
             app:layout_constraintStart_toEndOf="@+id/d1"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/blackkey" />
+            app:srcCompat="@drawable/ds1" />
 
         <ImageButton
             android:id="@+id/fs1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#00FFFFFF"
+            android:contentDescription="@string/fsNote"
             android:onClick="playNote"
+            android:scaleX="1.2"
             app:layout_constraintEnd_toStartOf="@+id/g1"
             app:layout_constraintStart_toEndOf="@+id/f1"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/blackkey" />
+            app:srcCompat="@drawable/fs1" />
 
         <ImageButton
             android:id="@+id/gs1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#00FFFFFF"
+            android:contentDescription="@string/gsNote"
             android:onClick="playNote"
+            android:scaleX="1.2"
             app:layout_constraintEnd_toStartOf="@+id/a1"
             app:layout_constraintStart_toEndOf="@+id/g1"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/blackkey" />
+            app:srcCompat="@drawable/gs1" />
 
         <ImageButton
             android:id="@+id/as1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#00FFFFFF"
+            android:contentDescription="@string/asNote"
             android:onClick="playNote"
+            android:scaleX="1.2"
             app:layout_constraintEnd_toStartOf="@+id/b1"
             app:layout_constraintStart_toEndOf="@+id/a1"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/blackkey" />
+            app:srcCompat="@drawable/as1" />
 
         <ImageButton
             android:id="@+id/cs2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#00FFFFFF"
+            android:contentDescription="@string/csNote"
             android:onClick="playNote"
+            android:scaleX="1.2"
             app:layout_constraintEnd_toStartOf="@+id/d2"
             app:layout_constraintStart_toEndOf="@+id/c2"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/blackkey" />
+            app:srcCompat="@drawable/cs2" />
 
         <ImageButton
             android:id="@+id/ds2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#00FFFFFF"
+            android:contentDescription="@string/dsNote"
             android:onClick="playNote"
+            android:scaleX="1.2"
             app:layout_constraintEnd_toStartOf="@+id/e2"
             app:layout_constraintStart_toEndOf="@+id/d2"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/blackkey" />
+            app:srcCompat="@drawable/ds2" />
 
         <ImageButton
             android:id="@+id/fs2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#00FFFFFF"
+            android:contentDescription="@string/fsNote"
             android:onClick="playNote"
+            android:scaleX="1.2"
             app:layout_constraintEnd_toStartOf="@+id/g2"
             app:layout_constraintStart_toEndOf="@+id/f2"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/blackkey" />
+            app:srcCompat="@drawable/fs2" />
 
         <ImageButton
             android:id="@+id/gs2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#00FFFFFF"
+            android:contentDescription="@string/gsNote"
             android:onClick="playNote"
+            android:scaleX="1.2"
             app:layout_constraintEnd_toStartOf="@+id/a2"
             app:layout_constraintStart_toEndOf="@+id/g2"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/blackkey" />
+            app:srcCompat="@drawable/gs2" />
 
         <ImageButton
             android:id="@+id/as2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#00FFFFFF"
+            android:contentDescription="@string/asNote"
             android:onClick="playNote"
+            android:scaleX="1.2"
             app:layout_constraintEnd_toStartOf="@+id/b2"
             app:layout_constraintStart_toEndOf="@+id/a2"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/blackkey" />
+            app:srcCompat="@drawable/as2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Spinner
+        android:id="@+id/scaleType"
+        android:layout_width="165dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <Spinner
+        android:id="@+id/chord"
+        android:layout_width="145dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="233dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <CheckBox
+        android:id="@+id/hideSelection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="403dp"
+        android:layout_marginTop="145dp"
+        android:text="@string/hideSelection"
+        android:textColor="#DBE160"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <CheckBox
+        android:id="@+id/hideNotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="565dp"
+        android:layout_marginTop="145dp"
+        android:text="@string/hideNotes"
+        android:textColor="#C100C6AD"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <ImageView
+        android:id="@+id/horizontalBorder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:contentDescription="@string/horizontalBorder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys"
+        app:srcCompat="@drawable/horizontalline" />
+
+    <ImageView
+        android:id="@+id/verticalBorder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="118dp"
+        android:contentDescription="@string/verticalBorder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/horizontalBorder"
+        app:layout_constraintTop_toBottomOf="@+id/keys"
+        app:srcCompat="@drawable/verticalline" />
+
+    <RadioGroup
+        android:id="@+id/rootNotes"
+        android:layout_width="600dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="136dp"
+        android:layout_marginBottom="30dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys">
+
+        <RadioButton
+            android:id="@+id/rootE"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:onClick="rootUpdate"
+            android:scaleX="0.75"
+            android:scaleY="0.75"
+            android:text="@string/eNote"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:translationY="23dp" />
+
+        <RadioButton
+            android:id="@+id/rootC"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:checked="true"
+            android:onClick="rootUpdate"
+            android:scaleX="0.75"
+            android:scaleY="0.75"
+            android:text="@string/cNote"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/rootCs"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:onClick="rootUpdate"
+            android:scaleX="0.75"
+            android:scaleY="0.75"
+            android:text="@string/csNote"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:translationX="-47dp"
+            android:translationY="45dp" />
+
+        <RadioButton
+            android:id="@+id/rootD"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:onClick="rootUpdate"
+            android:scaleX="0.75"
+            android:scaleY="0.75"
+            android:text="@string/dNote"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:translationX="-50dp" />
+
+        <RadioButton
+            android:id="@+id/rootDs"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:onClick="rootUpdate"
+            android:scaleX="0.75"
+            android:scaleY="0.75"
+            android:text="@string/dsNote"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:translationX="-97dp"
+            android:translationY="45dp" />
+
+        <RadioButton
+            android:id="@+id/rootF"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:onClick="rootUpdate"
+            android:scaleX="0.75"
+            android:scaleY="0.75"
+            android:text="@string/fNote"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:translationX="-100dp" />
+
+        <RadioButton
+            android:id="@+id/rootFs"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:onClick="rootUpdate"
+            android:scaleX="0.75"
+            android:scaleY="0.75"
+            android:text="@string/fsNote"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:translationX="-145dp"
+            android:translationY="45dp" />
+
+        <RadioButton
+            android:id="@+id/rootG"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:onClick="rootUpdate"
+            android:scaleX="0.75"
+            android:scaleY="0.75"
+            android:text="@string/gNote"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:translationX="-148dp" />
+
+        <RadioButton
+            android:id="@+id/rootGs"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:onClick="rootUpdate"
+            android:scaleX="0.75"
+            android:scaleY="0.75"
+            android:text="@string/gsNote"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:translationX="-195dp"
+            android:translationY="45dp" />
+
+        <RadioButton
+            android:id="@+id/rootA"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:onClick="rootUpdate"
+            android:scaleX="0.75"
+            android:scaleY="0.75"
+            android:text="@string/aNote"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:translationX="-197dp" />
+
+        <RadioButton
+            android:id="@+id/rootAs"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:onClick="rootUpdate"
+            android:scaleX="0.75"
+            android:scaleY="0.75"
+            android:text="@string/asNote"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:translationX="-244dp"
+            android:translationY="45dp" />
+
+        <RadioButton
+            android:id="@+id/rootB"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:onClick="rootUpdate"
+            android:scaleX="0.75"
+            android:scaleY="0.75"
+            android:text="@string/bNote"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:translationX="-250dp"
+            android:translationY="23dp" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/fixedScaleType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="13dp"
+        android:text="@string/scale"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/fixedRootNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="165dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginBottom="65dp"
+        android:text="@string/root"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/fixedChordType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="233dp"
+        android:layout_marginTop="13dp"
+        android:text="@string/chord"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/fixedScaleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="410dp"
+        android:layout_marginTop="155dp"
+        android:layout_marginBottom="100dp"
+        android:text="@string/selectedScale"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/fixedChordText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="580dp"
+        android:layout_marginTop="155dp"
+        android:layout_marginBottom="100dp"
+        android:text="@string/selectedChord"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/infoSelectedScale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="155dp"
+        android:layout_marginBottom="100dp"
+        android:text="@string/initialScale"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fixedScaleText"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/infoScaleNotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="420dp"
+        android:layout_marginTop="175dp"
+        android:layout_marginBottom="81dp"
+        android:text="@string/initialNotesInScale"
+        android:textColor="#DBE160"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/infoSelectedChord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="155dp"
+        android:layout_marginBottom="100dp"
+        android:text="@string/noSelection"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fixedChordText"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/infoChordNotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="590dp"
+        android:layout_marginTop="175dp"
+        android:layout_marginBottom="81dp"
+        android:text="@string/noSelection"
+        android:textColor="#5EC449"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/C1note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/cNote"
+        android:textColor="#0112BB"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/Cs1note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/csNote"
+        android:textColor="#470000"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/D1note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="67dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/dNote"
+        android:textColor="#0112BB"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/Ds1note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="87dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/dsNote"
+        android:textColor="#470000"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/E1note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/eNote"
+        android:textColor="#0112BB"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/F1note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/fNote"
+        android:textColor="#0112BB"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/Fs1note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="185dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/fsNote"
+        android:textColor="#470000"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/G1note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="211dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/gNote"
+        android:textColor="#0112BB"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/Gs1note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="231dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/gsNote"
+        android:textColor="#470000"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/A1note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="259dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/aNote"
+        android:textColor="#0112BB"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/As1note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="280dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/asNote"
+        android:textColor="#470000"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/B1note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="308dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/bNote"
+        android:textColor="#0112BB"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/C2note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="354dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/cNote"
+        android:textColor="#0112BB"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/Cs2note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="376dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/csNote"
+        android:textColor="#470000"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/D2note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="403dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/dNote"
+        android:textColor="#0112BB"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/Ds2note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="423dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/dsNote"
+        android:textColor="#470000"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/E2note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="452dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/eNote"
+        android:textColor="#0112BB"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/F2note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="498dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/fNote"
+        android:textColor="#0112BB"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/Fs2note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="521dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/fsNote"
+        android:textColor="#470000"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/G2note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="548dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/gNote"
+        android:textColor="#0112BB"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/Gs2note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="569dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/gsNote"
+        android:textColor="#470000"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/A2note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="596dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/aNote"
+        android:textColor="#0112BB"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/As2note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="618dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/asNote"
+        android:textColor="#470000"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/B2note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="646dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/bNote"
+        android:textColor="#0112BB"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

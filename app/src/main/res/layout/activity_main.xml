@@ -27,7 +27,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/c1" />
+            app:srcCompat="@drawable/cchord" />
 
         <ImageButton
             android:id="@+id/d1"
@@ -42,7 +42,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/d1" />
+            app:srcCompat="@drawable/dselected" />
 
         <ImageButton
             android:id="@+id/e1"
@@ -57,7 +57,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/e1" />
+            app:srcCompat="@drawable/echord" />
 
         <ImageButton
             android:id="@+id/f1"
@@ -72,7 +72,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/f1" />
+            app:srcCompat="@drawable/fselected" />
 
         <ImageButton
             android:id="@+id/g1"
@@ -87,7 +87,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/g1" />
+            app:srcCompat="@drawable/gchord" />
 
         <ImageButton
             android:id="@+id/a1"
@@ -102,7 +102,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0"
-            app:srcCompat="@drawable/a1" />
+            app:srcCompat="@drawable/aselected" />
 
         <ImageButton
             android:id="@+id/b1"
@@ -117,7 +117,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/b1" />
+            app:srcCompat="@drawable/bselected" />
 
         <ImageButton
             android:id="@+id/c2"
@@ -132,7 +132,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/c2" />
+            app:srcCompat="@drawable/cselected" />
 
         <ImageButton
             android:id="@+id/d2"
@@ -147,7 +147,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/d2" />
+            app:srcCompat="@drawable/dselected" />
 
         <ImageButton
             android:id="@+id/e2"
@@ -162,7 +162,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/e2" />
+            app:srcCompat="@drawable/eselected" />
 
         <ImageButton
             android:id="@+id/f2"
@@ -177,7 +177,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/f2" />
+            app:srcCompat="@drawable/fselected" />
 
         <ImageButton
             android:id="@+id/g2"
@@ -192,7 +192,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/g2" />
+            app:srcCompat="@drawable/gselected" />
 
         <ImageButton
             android:id="@+id/a2"
@@ -207,7 +207,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/a2" />
+            app:srcCompat="@drawable/aselected" />
 
         <ImageButton
             android:id="@+id/b2"
@@ -221,7 +221,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/b2" />
+            app:srcCompat="@drawable/bselected" />
 
         <ImageButton
             android:id="@+id/cs1"
@@ -382,6 +382,7 @@
         android:text="@string/hideSelection"
         android:textColor="#DBE160"
         android:textStyle="bold"
+        android:onClick="checkBoxes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/keys"
         app:layout_constraintTop_toBottomOf="@+id/keys" />
@@ -395,6 +396,7 @@
         android:text="@string/hideNotes"
         android:textColor="#C100C6AD"
         android:textStyle="bold"
+        android:onClick="checkBoxes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/keys"
         app:layout_constraintTop_toBottomOf="@+id/keys" />
@@ -403,7 +405,7 @@
         android:id="@+id/horizontalBorder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:contentDescription="@string/horizontalBorder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/keys"
@@ -414,10 +416,11 @@
         android:id="@+id/verticalBorder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="118dp"
+        android:layout_marginStart="362dp"
+        android:layout_marginTop="117dp"
         android:contentDescription="@string/verticalBorder"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/horizontalBorder"
+        app:layout_constraintStart_toStartOf="@+id/rootNotes"
         app:layout_constraintTop_toBottomOf="@+id/keys"
         app:srcCompat="@drawable/verticalline" />
 
@@ -435,7 +438,7 @@
         app:layout_constraintTop_toBottomOf="@+id/keys">
 
         <RadioButton
-            android:id="@+id/rootE"
+            android:id="@+id/e"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:onClick="rootUpdate"
@@ -447,7 +450,7 @@
             android:translationY="23dp" />
 
         <RadioButton
-            android:id="@+id/rootC"
+            android:id="@+id/c"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:checked="true"
@@ -459,7 +462,7 @@
             android:textStyle="bold" />
 
         <RadioButton
-            android:id="@+id/rootCs"
+            android:id="@+id/cs"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:onClick="rootUpdate"
@@ -699,7 +702,7 @@
         android:layout_marginTop="175dp"
         android:layout_marginBottom="81dp"
         android:text="@string/noSelection"
-        android:textColor="#5EC449"
+        android:textColor="#C100C6AD"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/keys"

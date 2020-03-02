@@ -27,7 +27,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/cchord" />
+            app:srcCompat="@drawable/ckey" />
 
         <ImageButton
             android:id="@+id/d1"
@@ -42,7 +42,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/dselected" />
+            app:srcCompat="@drawable/dkey" />
 
         <ImageButton
             android:id="@+id/e1"
@@ -57,7 +57,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/echord" />
+            app:srcCompat="@drawable/ekey" />
 
         <ImageButton
             android:id="@+id/f1"
@@ -72,7 +72,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/fselected" />
+            app:srcCompat="@drawable/fkey" />
 
         <ImageButton
             android:id="@+id/g1"
@@ -87,7 +87,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/gchord" />
+            app:srcCompat="@drawable/gkey" />
 
         <ImageButton
             android:id="@+id/a1"
@@ -102,7 +102,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0"
-            app:srcCompat="@drawable/aselected" />
+            app:srcCompat="@drawable/akey" />
 
         <ImageButton
             android:id="@+id/b1"
@@ -117,7 +117,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/bselected" />
+            app:srcCompat="@drawable/bkey" />
 
         <ImageButton
             android:id="@+id/c2"
@@ -132,7 +132,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/cselected" />
+            app:srcCompat="@drawable/ckey" />
 
         <ImageButton
             android:id="@+id/d2"
@@ -147,7 +147,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/dselected" />
+            app:srcCompat="@drawable/dkey" />
 
         <ImageButton
             android:id="@+id/e2"
@@ -162,7 +162,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/eselected" />
+            app:srcCompat="@drawable/ekey" />
 
         <ImageButton
             android:id="@+id/f2"
@@ -177,7 +177,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/fselected" />
+            app:srcCompat="@drawable/fkey" />
 
         <ImageButton
             android:id="@+id/g2"
@@ -192,7 +192,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/gselected" />
+            app:srcCompat="@drawable/gkey" />
 
         <ImageButton
             android:id="@+id/a2"
@@ -207,7 +207,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/aselected" />
+            app:srcCompat="@drawable/akey" />
 
         <ImageButton
             android:id="@+id/b2"
@@ -221,7 +221,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/bselected" />
+            app:srcCompat="@drawable/bkey" />
 
         <ImageButton
             android:id="@+id/cs1"
@@ -475,7 +475,7 @@
             android:translationY="45dp" />
 
         <RadioButton
-            android:id="@+id/rootD"
+            android:id="@+id/d"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:onClick="rootUpdate"
@@ -487,7 +487,7 @@
             android:translationX="-50dp" />
 
         <RadioButton
-            android:id="@+id/rootDs"
+            android:id="@+id/ds"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:onClick="rootUpdate"
@@ -500,7 +500,7 @@
             android:translationY="45dp" />
 
         <RadioButton
-            android:id="@+id/rootF"
+            android:id="@+id/f"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:onClick="rootUpdate"
@@ -512,7 +512,7 @@
             android:translationX="-100dp" />
 
         <RadioButton
-            android:id="@+id/rootFs"
+            android:id="@+id/fs"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:onClick="rootUpdate"
@@ -525,7 +525,7 @@
             android:translationY="45dp" />
 
         <RadioButton
-            android:id="@+id/rootG"
+            android:id="@+id/g"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:onClick="rootUpdate"
@@ -537,7 +537,7 @@
             android:translationX="-148dp" />
 
         <RadioButton
-            android:id="@+id/rootGs"
+            android:id="@+id/gs"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:onClick="rootUpdate"
@@ -550,7 +550,7 @@
             android:translationY="45dp" />
 
         <RadioButton
-            android:id="@+id/rootA"
+            android:id="@+id/a"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:onClick="rootUpdate"
@@ -562,7 +562,7 @@
             android:translationX="-197dp" />
 
         <RadioButton
-            android:id="@+id/rootAs"
+            android:id="@+id/as"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:onClick="rootUpdate"
@@ -575,7 +575,7 @@
             android:translationY="45dp" />
 
         <RadioButton
-            android:id="@+id/rootB"
+            android:id="@+id/b"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:onClick="rootUpdate"
@@ -659,7 +659,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="155dp"
         android:layout_marginBottom="100dp"
-        android:text="@string/initialScale"
+        android:text="@string/noSelection"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -673,7 +673,7 @@
         android:layout_marginStart="420dp"
         android:layout_marginTop="175dp"
         android:layout_marginBottom="81dp"
-        android:text="@string/initialNotesInScale"
+        android:text="@string/noSelection"
         android:textColor="#DBE160"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -705,318 +705,6 @@
         android:textColor="#C100C6AD"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/C1note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/cNote"
-        android:textColor="#0112BB"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/Cs1note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/csNote"
-        android:textColor="#470000"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/D1note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="67dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/dNote"
-        android:textColor="#0112BB"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/Ds1note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="87dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/dsNote"
-        android:textColor="#470000"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/E1note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="116dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/eNote"
-        android:textColor="#0112BB"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/F1note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/fNote"
-        android:textColor="#0112BB"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/Fs1note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="185dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/fsNote"
-        android:textColor="#470000"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/G1note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="211dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/gNote"
-        android:textColor="#0112BB"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/Gs1note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="231dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/gsNote"
-        android:textColor="#470000"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/A1note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="259dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/aNote"
-        android:textColor="#0112BB"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/As1note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="280dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/asNote"
-        android:textColor="#470000"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/B1note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="308dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/bNote"
-        android:textColor="#0112BB"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/C2note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="354dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/cNote"
-        android:textColor="#0112BB"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/Cs2note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="376dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/csNote"
-        android:textColor="#470000"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/D2note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="403dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/dNote"
-        android:textColor="#0112BB"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/Ds2note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="423dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/dsNote"
-        android:textColor="#470000"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/E2note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="452dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/eNote"
-        android:textColor="#0112BB"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/F2note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="498dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/fNote"
-        android:textColor="#0112BB"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/Fs2note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="521dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/fsNote"
-        android:textColor="#470000"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/G2note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="548dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/gNote"
-        android:textColor="#0112BB"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/Gs2note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="569dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/gsNote"
-        android:textColor="#470000"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/A2note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="596dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/aNote"
-        android:textColor="#0112BB"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/As2note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="618dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/asNote"
-        android:textColor="#470000"
-        android:textSize="12sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/B2note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="646dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/bNote"
-        android:textColor="#0112BB"
-        android:textSize="12sp"
-        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/keys"
         app:layout_constraintTop_toBottomOf="@+id/keys" />
 

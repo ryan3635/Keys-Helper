@@ -13,10 +13,8 @@
 
     <!-- Information area -->
     <string name="selectedScale">Scale:</string>
-    <string name="initialScale">C Major</string>
-    <string name="initialNotesInScale">C, D, E, F, G, A, B</string>
     <string name="selectedChord">Chord:</string>
-    <string name="noSelection">(none)</string>
+    <string name="noSelection"></string>
 
     <!-- Notes for each individual key -->
     <string name="cNote">C</string>
@@ -34,6 +32,7 @@
 
     <!-- Scale Types -->
     <string-array name="scaleTypes">
+        <item>(select)</item>
         <item>Major</item>
         <item>Minor</item>
         <item>Blues</item>
@@ -48,9 +47,13 @@
         <item>Phrygian</item>
     </string-array>
 
-    <!-- Initial Chords -->
+    <!-- Initial Chord -->
     <string-array name="initialChords">
         <item>(select)</item>
+    </string-array>
+
+    <!-- C Chords
+    <string-array name="cmajChords">
         <item>Cmaj</item>
         <item>Fmaj</item>
         <item>Gmaj</item>
@@ -83,6 +86,6 @@
         <item>Gsus2</item>
         <item>Asus2</item>
         <item>Bdim</item>
-    </string-array>
+    </string-array> -->
 
 </resources>

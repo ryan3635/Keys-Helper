@@ -1,11 +1,7 @@
 package com.murphdev.keysnewb;
-
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -20,9 +16,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -36,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     RadioButton root;
     TextView infoScale, infoChord, infoScaleDisplay, infoChordDisplay;
     ImageButton keyButton;
-    String scale;
+    String scale, chord;
     boolean hideSel, hideNote;
     Key[] keys = new Key[24];
     Key key;
@@ -56,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         infoChordDisplay = findViewById(R.id.infoChordNotes);
         hideSel = false;
         hideNote = false;
+        chord = "(select)";
 
         //Scale type and chord selection spinners initialization
         scaleSpinner = findViewById(R.id.scaleType);
@@ -69,21 +65,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         chordSpinner.setOnItemSelectedListener(this);
         scaleSpinner.setOnItemSelectedListener(this);
-
-        /*
-        AlertDialog.Builder alert = new AlertDialog.Builder(context);
-        alert.setTitle("Test");
-        alert.setCancelable(false);
-        alert.setMessage("ID: " + realId + " root: " + testRoot + " scale: " + testScale + " chord: " + testChord);
-        alert.setPositiveButton("Close", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();}
-        });
-        alert.show();
-
-         */
-        //Toast.makeText(this, test, Toast.LENGTH_SHORT).show();
     }
 
     //playNote: Called when a key is clicked -> Plays sound and shows feedback on click
@@ -105,9 +86,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         //Displays feedback on key click
         keyButton = findViewById(id);
-        if (noteId.equals("cs1") || noteId.equals("ds1") || noteId.equals("fs1") || noteId.equals("gs1") || noteId.equals("as1") ||
-                noteId.equals("cs2") || noteId.equals("ds2") || noteId.equals("fs2") || noteId.equals("gs2") || noteId.equals("as2"))
-            keyButton.setImageResource(R.drawable.blackkeyfeedback);
+        if ((noteId.charAt(1)) == 's') keyButton.setImageResource(R.drawable.blackkeyfeedback);
         else keyButton.setImageResource(R.drawable.whitekeyfeedback);
 
         Timer t = new Timer();
@@ -120,38 +99,42 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
-    //rootUpdate: Called when the root note is changed -> highlights keys and updates chord selection
+    //rootUpdate: Called when the root note is changed -> Highlights keys and updates chord selection
     public void rootUpdate(View v) {
         keysInitialization();
         setScale();
+        updateChords();
+        setChord();
         paintKey(hideSel, hideNote);
-        //Updating chord selection options (call separate function -> updateChords)
     }
 
 
-    //onItemSelected: Called when either a scale type or chord is selected
+    //onItemSelected: Called when either a scale type or chord is selected -> Handles spinners functionality
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         keysInitialization();
         switch (parent.getId()) {
             case R.id.scaleType:
                 scale = parent.getItemAtPosition(position).toString();
+                if (scale.equals("(select)")) {
+                    String [] defaultChord = {"(select)"};
+                    ArrayAdapter<String> chordAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, defaultChord);
+                    chordAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    chordSpinner.setAdapter(chordAdapter);
+                }
                 setScale();
+                updateChords();
+                setChord();
                 paintKey(hideSel, hideNote);
-                //Updating chord selection options (call separate function -> updateChords)
                 break;
 
             case R.id.chord:
-                //Updating chord for information section (bottom right)
-                String chord = parent.getItemAtPosition(position).toString();
+                //Updating chord for info section (bottom right)
+                chord = parent.getItemAtPosition(position).toString();
                 infoChord.setText(chord);
-
-                //Highlighting keys for selected chord
-                int selectedRoot2 = rootNotes.getCheckedRadioButtonId();
-                root = findViewById(selectedRoot2);
-                String rootNote2 = (String) root.getText();
-                //...call a function that goes through each chord to find step formula of selected chord (matches string)
-                //..use step formula along with rootNote2 to build array and then highlight keys corresponding to that array
+                setScale();
+                setChord();
+                paintKey(hideSel, hideNote);
                 break;
         }
     }
@@ -178,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
-    //setKeys: Called when root note or scale spinner is updated -> handles which keys will be selected for the corresponding scale
+    //setScale: Called when root note or scale spinner is updated -> handles which keys will be selected for the corresponding scale
     public void setScale() {
         //Updating scale name for information section (bottom right)
         int selectedRoot = rootNotes.getCheckedRadioButtonId();
@@ -194,12 +177,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         rootNote = rootNote + "1"; //to match resource id of a key
         int[] steps = scaleSteps(scale);
         int step;
-        int i = 0;
-        int j = 0;
+        int i = 0, j = 0;
         while (!((keys[i].keyId).equals(rootNote))) i++;
         int rootPos = i; //saving root position
-        String infoScaleNote = "";
-        ArrayList<String> scaleNotes = new ArrayList<String>();
+        String infoScaleNote;
+        ArrayList<String> scaleNotes = new ArrayList<>();
 
         while (i < keys.length) {
             //for default (select) case
@@ -266,6 +248,96 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
+
+    //setChord: Called when a chord is selected from chord spinner -> handles which keys will be selected for the corresponding chord
+    public void setChord() {
+        String chordStart, chordType;
+        int i = 0;
+        int [] steps;
+        ArrayList<String> chordNotes = new ArrayList<>();
+        if (chord.equals("(select)")) {
+            while (i < keys.length) {
+                keys[i].clearChord();
+              i++;
+            }
+            infoChordDisplay.setText("(none)");
+        }
+        //selection
+        else {
+            chordStart = chord.substring(0, 1);
+            if ((chord.charAt(1)) == '#') {
+                chordStart = chordStart + "s";
+                chordType = chord.substring(2);
+            }
+            else chordType = chord.substring(1);
+            steps = chordSteps(chordType);
+            chordStart = chordStart.toLowerCase();
+            chordStart = chordStart + "1"; //to match resource id of key
+            i = 0;
+            while (!((keys[i].keyId).equals(chordStart))) i++;
+            for (int step : steps) {
+                keys[i].setChord();
+                chordNotes.add(keys[i].keyId);
+                i = i + step;
+            }
+            keys[i].setChord();
+            chordNotes.add(keys[i].keyId);
+
+            //updating chord notes for info section
+            String note;
+            String chordNotesFinal = "";
+            for (int j = 0; j < chordNotes.size(); j++) {
+                note = chordNotes.get(j);
+                if (note.charAt(1) == 's') note = note.substring(0, 1) + "#";
+                else note = note.substring(0, 1);
+                note = note.toUpperCase();
+                if (j == 0) chordNotesFinal = note;
+                else chordNotesFinal = chordNotesFinal + ", " + note;
+            }
+            infoChordDisplay.setText(chordNotesFinal);
+        }
+    }
+
+
+    //updateChords: Called when scale spinner or root note is updated -> determines what chords are loaded into chord spinner
+    public void updateChords() {
+        ArrayList<String> chords = new ArrayList<>();
+        String chordStart;
+        String [] chordTypes = {"maj", "m", "7", "min7", "maj7", "6", "min6", "sus4", "7sus4", "sus2", "dim", "aug"};
+        int [] chordSteps;
+        chords.add("(select)");
+        //Checking all chord types for each of the 12 notes, starting from C and ending on B
+        for (int i = 0; i < 12; i++) {
+            chordStart = keys[i].keyId;
+            if ((chordStart.charAt(1)) == 's') {
+                chordStart = chordStart.substring(0, 1);
+                chordStart = chordStart + "#";
+            }
+            else chordStart = chordStart.substring(0, 1);
+            chordStart = chordStart.toUpperCase();
+            int j = 0;
+            while (j < chordTypes.length) {
+                chordSteps = chordSteps(chordTypes[j]);
+                boolean isChord = true;
+                int step = i;
+                //If all notes within chord are in scale, the chord is added to chord spinner
+                for (int k = 0; k < chordSteps.length; k++) {
+                    if (!keys[step].scaleCheck()) {
+                        isChord = false;
+                        break;
+                    }
+                    step = step + chordSteps[k];
+                    }
+                    if (!keys[step].scaleCheck()) isChord = false;
+                if (isChord) chords.add(chordStart + chordTypes[j]);
+                j++;
+            }
+        }
+        Collections.sort(chords);
+        ArrayAdapter<String> chordAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, chords);
+        chordAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        chordSpinner.setAdapter(chordAdapter);
+    }
 
     //paintKey: Called when either spinner or checkbox is updated -> updates key image accordingly for each key
     public void paintKey(boolean hideSel, boolean hideNote) {
@@ -473,9 +545,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 keyID = i.idCheck();
                 int key = getResources().getIdentifier(keyID, "id", context.getPackageName());
                 keyButton = findViewById(key);
-                if (keyID.equals("cs1") || keyID.equals("ds1") || keyID.equals("fs1") || keyID.equals("gs1") || keyID.equals("as1") ||
-                        keyID.equals("cs2") || keyID.equals("ds2") || keyID.equals("fs2") || keyID.equals("gs2") || keyID.equals("as2"))
-                    keyButton.setImageResource(R.drawable.blackkey);
+                if ((keyID.charAt(1)) == 's') keyButton.setImageResource(R.drawable.blackkey);
                 else keyButton.setImageResource(R.drawable.whitekey);
             }
         }
@@ -495,14 +565,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             case "Minor":
                 steps = new int[] {2, 1, 2, 2, 1, 2, 2};
                 break;
-            case "Blues":
-                steps = new int[] {3, 2, 1, 1, 3, 2};
-                break;
             case "Major Pentonic":
                 steps = new int[] {2, 2, 3, 2, 3};
                 break;
             case "Minor Pentonic":
                 steps = new int[] {3, 2, 2, 3, 2};
+                break;
+            case "Blues":
+                steps = new int[] {3, 2, 1, 1, 3, 2};
                 break;
             case "Augmented":
                 steps = new int[] {3, 1, 3, 1, 3, 1};
@@ -534,6 +604,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public int[] chordSteps(String chordType) {
         int[] steps = {};
         switch (chordType) {
+            case "(select)":
+                steps = new int[] {};
+                break;
             case "maj":
                 steps = new int[] {4, 3};
                 break;
@@ -554,9 +627,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 break;
             case "min6":
                 steps = new int[] {3, 4, 2};
-                break;
-            case "9":
-                steps = new int[] {4, 3, 3, 4};
                 break;
             case "sus4":
                 steps = new int[] {5, 2};
@@ -580,129 +650,128 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     //keysInitialization: Called when app is first launched to set initial key properties
     public void keysInitialization() {
-        boolean isRoot = false;
         boolean isScale = false;
         boolean isChord = false;
         String keyID;
         for (int i = 0; i < keys.length; i++) {
                 if (i == 0) {
                     keyID = "c1";
-                    key = new Key(keyID, isRoot, isScale, isChord);
+                    key = new Key(keyID, isScale, isChord);
                     keys[i] = key;
                 }
                 else if (i == 1) {
                     keyID = "cs1";
-                    key = new Key(keyID, isRoot, isScale, isChord);
+                    key = new Key(keyID, isScale, isChord);
                     keys[i] = key;
                 }
                 else if (i == 2) {
                     keyID = "d1";
-                    key = new Key(keyID, isRoot, isScale, isChord);
+                    key = new Key(keyID, isScale, isChord);
                     keys[i] = key;
                 }
                 else if (i == 3) {
                     keyID = "ds1";
-                    key = new Key(keyID, isRoot, isScale, isChord);
+                    key = new Key(keyID, isScale, isChord);
                     keys[i] = key;
                 }
                 else if (i == 4) {
                     keyID = "e1";
-                    key = new Key(keyID, isRoot, isScale, isChord);
+                    key = new Key(keyID, isScale, isChord);
                     keys[i] = key;
                 }
                 else if (i == 5) {
                     keyID = "f1";
-                    key = new Key(keyID, isRoot, isScale, isChord);
+                    key = new Key(keyID, isScale, isChord);
                     keys[i] = key;
                 }
                 else if (i == 6) {
                     keyID = "fs1";
-                    key = new Key(keyID, isRoot, isScale, isChord);
+                    key = new Key(keyID, isScale, isChord);
                     keys[i] = key;
                 }
                 else if (i == 7) {
                     keyID = "g1";
-                    key = new Key(keyID, isRoot, isScale, isChord);
+                    key = new Key(keyID, isScale, isChord);
                     keys[i] = key;
                 }
                 else if (i == 8) {
                     keyID = "gs1";
-                    key = new Key(keyID, isRoot, isScale, isChord);
+                    key = new Key(keyID, isScale, isChord);
                     keys[i] = key;
                 }
                 else if (i == 9) {
                     keyID = "a1";
-                    key = new Key(keyID, isRoot, isScale, isChord);
+                    key = new Key(keyID, isScale, isChord);
                     keys[i] = key;
                 }
                 else if (i == 10) {
                     keyID = "as1";
-                    key = new Key(keyID, isRoot, isScale, isChord);
+                    key = new Key(keyID, isScale, isChord);
                     keys[i] = key;
                 }
                 else if (i == 11) {
                     keyID = "b1";
-                    key = new Key(keyID, isRoot, isScale, isChord);
+                    key = new Key(keyID, isScale, isChord);
                     keys[i] = key;
                 }
                 else if (i == 12) {
                     keyID = "c2";
-                    key = new Key(keyID, isRoot, isScale, isChord);
+                    key = new Key(keyID, isScale, isChord);
                     keys[i] = key;
                 }
                 else if (i == 13) {
                     keyID = "cs2";
-                    key = new Key(keyID, isRoot, isScale, isChord);
+                    key = new Key(keyID, isScale, isChord);
                     keys[i] = key;
                 }
                 else if (i == 14) {
                     keyID = "d2";
-                    key = new Key(keyID, isRoot, isScale, isChord);
+                    key = new Key(keyID, isScale, isChord);
                     keys[i] = key;
                 }
                 else if (i == 15) {
                     keyID = "ds2";
-                    key = new Key(keyID, isRoot, isScale, isChord);
+                    key = new Key(keyID, isScale, isChord);
                     keys[i] = key;
                 }
                 else if (i == 16) {
                     keyID = "e2";
-                    key = new Key(keyID, isRoot, isScale, isChord);
+                    key = new Key(keyID, isScale, isChord);
                     keys[i] = key;
                 }
                 else if (i == 17) {
                     keyID = "f2";
-                    key = new Key(keyID, isRoot, isScale, isChord);
+                    key = new Key(keyID, isScale, isChord);
                     keys[i] = key;
                 }
                 else if (i == 18) {
                     keyID = "fs2";
-                    key = new Key(keyID, isRoot, isScale, isChord);
+                    key = new Key(keyID, isScale, isChord);
                     keys[i] = key;
                 }
                 else if (i == 19) {
                     keyID = "g2";
-                    key = new Key(keyID, isRoot, isScale, isChord);
+                    key = new Key(keyID, isScale, isChord);
                     keys[i] = key;
                 }
                 else if (i == 20) {
                     keyID = "gs2";
-                    key = new Key(keyID, isRoot, isScale, isChord);
+                    key = new Key(keyID, isScale, isChord);
                     keys[i] = key;
                 }
                 else if (i == 21) {
                     keyID = "a2";
-                    key = new Key(keyID, isRoot, isScale, isChord);
+                    key = new Key(keyID, isScale, isChord);
                     keys[i] = key;
                 }
                 else if (i == 22) {
                     keyID = "as2";
-                    key = new Key(keyID, isRoot, isScale, isChord);
+                    key = new Key(keyID, isScale, isChord);
                     keys[i] = key;
                 }
                 else if (i == 23) {
                     keyID = "b2";
-                    key = new Key(keyID, isRoot, isScale, isChord);
+                    key = new Key(keyID, isScale, isChord);
                     keys[i] = key;
                 }
         }

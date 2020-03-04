@@ -35,9 +35,9 @@
         <item>(select)</item>
         <item>Major</item>
         <item>Minor</item>
-        <item>Blues</item>
         <item>Major Pentonic</item>
         <item>Minor Pentonic</item>
+        <item>Blues</item>
         <item>Augmented</item>
         <item>Diminished</item>
         <item>Dorian</item>
@@ -52,14 +52,16 @@
         <item>(select)</item>
     </string-array>
 
-    <!-- C Chords
+
     <string-array name="cmajChords">
+        <item>(select)</item>
         <item>Cmaj</item>
         <item>Fmaj</item>
         <item>Gmaj</item>
         <item>Dm</item>
         <item>Em</item>
         <item>Am</item>
+        <item>F#m</item>
         <item>G7</item>
         <item>Dmin7</item>
         <item>Emin7</item>
@@ -86,6 +88,8 @@
         <item>Gsus2</item>
         <item>Asus2</item>
         <item>Bdim</item>
-    </string-array> -->
+        <item>Cdim</item>
+        <item>Caug</item>
+    </string-array>
 
 </resources>

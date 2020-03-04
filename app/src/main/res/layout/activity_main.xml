@@ -234,7 +234,7 @@
             app:layout_constraintEnd_toStartOf="@+id/d1"
             app:layout_constraintStart_toEndOf="@+id/c1"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/cs1" />
+            app:srcCompat="@drawable/cskey" />
 
         <ImageButton
             android:id="@+id/ds1"
@@ -247,7 +247,7 @@
             app:layout_constraintEnd_toStartOf="@+id/e1"
             app:layout_constraintStart_toEndOf="@+id/d1"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ds1" />
+            app:srcCompat="@drawable/dskey" />
 
         <ImageButton
             android:id="@+id/fs1"
@@ -260,7 +260,7 @@
             app:layout_constraintEnd_toStartOf="@+id/g1"
             app:layout_constraintStart_toEndOf="@+id/f1"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/fs1" />
+            app:srcCompat="@drawable/fskey" />
 
         <ImageButton
             android:id="@+id/gs1"
@@ -273,7 +273,7 @@
             app:layout_constraintEnd_toStartOf="@+id/a1"
             app:layout_constraintStart_toEndOf="@+id/g1"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/gs1" />
+            app:srcCompat="@drawable/gskey" />
 
         <ImageButton
             android:id="@+id/as1"
@@ -286,7 +286,7 @@
             app:layout_constraintEnd_toStartOf="@+id/b1"
             app:layout_constraintStart_toEndOf="@+id/a1"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/as1" />
+            app:srcCompat="@drawable/askey" />
 
         <ImageButton
             android:id="@+id/cs2"
@@ -299,7 +299,7 @@
             app:layout_constraintEnd_toStartOf="@+id/d2"
             app:layout_constraintStart_toEndOf="@+id/c2"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/cs2" />
+            app:srcCompat="@drawable/cskey" />
 
         <ImageButton
             android:id="@+id/ds2"
@@ -312,7 +312,7 @@
             app:layout_constraintEnd_toStartOf="@+id/e2"
             app:layout_constraintStart_toEndOf="@+id/d2"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ds2" />
+            app:srcCompat="@drawable/dskey" />
 
         <ImageButton
             android:id="@+id/fs2"
@@ -325,7 +325,7 @@
             app:layout_constraintEnd_toStartOf="@+id/g2"
             app:layout_constraintStart_toEndOf="@+id/f2"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/fs2" />
+            app:srcCompat="@drawable/fskey" />
 
         <ImageButton
             android:id="@+id/gs2"
@@ -338,7 +338,7 @@
             app:layout_constraintEnd_toStartOf="@+id/a2"
             app:layout_constraintStart_toEndOf="@+id/g2"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/gs2" />
+            app:srcCompat="@drawable/gskey" />
 
         <ImageButton
             android:id="@+id/as2"
@@ -351,7 +351,7 @@
             app:layout_constraintEnd_toStartOf="@+id/b2"
             app:layout_constraintStart_toEndOf="@+id/a2"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/as2" />
+            app:srcCompat="@drawable/askey" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -359,7 +359,7 @@
         android:id="@+id/scaleType"
         android:layout_width="165dp"
         android:layout_height="50dp"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="28dp"
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="@+id/keys"
         app:layout_constraintTop_toBottomOf="@+id/keys" />
@@ -593,9 +593,10 @@
         android:id="@+id/fixedScaleType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="28dp"
         android:layout_marginTop="13dp"
         android:text="@string/scale"
+        android:textColor="#FFFFFF"
         android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="@+id/keys"
         app:layout_constraintTop_toBottomOf="@+id/keys" />
@@ -606,8 +607,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="165dp"
         android:layout_marginTop="88dp"
-        android:layout_marginBottom="65dp"
+        android:layout_marginBottom="64dp"
         android:text="@string/root"
+        android:textColor="#FFFFFF"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/keys"
@@ -620,6 +622,7 @@
         android:layout_marginStart="233dp"
         android:layout_marginTop="13dp"
         android:text="@string/chord"
+        android:textColor="#FFFFFF"
         android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="@+id/keys"
         app:layout_constraintTop_toBottomOf="@+id/keys" />
@@ -674,7 +677,7 @@
         android:layout_marginTop="175dp"
         android:layout_marginBottom="81dp"
         android:text="@string/noSelection"
-        android:textColor="#DBE160"
+        android:textColor="#FFFFFF"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/keys"
@@ -702,7 +705,7 @@
         android:layout_marginTop="175dp"
         android:layout_marginBottom="81dp"
         android:text="@string/noSelection"
-        android:textColor="#C100C6AD"
+        android:textColor="#FFFFFF"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/keys"

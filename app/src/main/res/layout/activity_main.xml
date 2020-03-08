@@ -711,4 +711,122 @@
         app:layout_constraintStart_toStartOf="@+id/keys"
         app:layout_constraintTop_toBottomOf="@+id/keys" />
 
+    <Button
+        android:id="@+id/quizButton"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="615dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="70dp"
+        android:background="#345126"
+        android:text="@string/quizButton"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <Button
+        android:id="@+id/recordsButton"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="615dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginBottom="28dp"
+        android:background="#345126"
+        android:text="@string/recordsButton"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/enterText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="395dp"
+        android:layout_marginTop="6dp"
+        android:text="@string/enter"
+        android:textColor="#FFFFFF"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/quizRequest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="435dp"
+        android:layout_marginTop="6dp"
+        android:text="@string/enterInitial"
+        android:textColor="#DBE160"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/timeLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="218dp"
+        android:layout_marginTop="84dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/timeLeft"
+        android:textColor="#FFFFFF"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/timeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176dp"
+        android:layout_marginTop="84dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/time"
+        android:textColor="#FFFFFF"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/quizRules"
+        android:layout_width="200dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="395dp"
+        android:layout_marginTop="58dp"
+        android:gravity="center"
+        android:text="@string/quizRules"
+        android:textColor="#FFFFFF"
+        android:textSize="10sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/inputText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="395dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/userInput"
+        android:textColor="#FFFFFF"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/userInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="435dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/defaultInput"
+        android:textColor="#DBE160"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

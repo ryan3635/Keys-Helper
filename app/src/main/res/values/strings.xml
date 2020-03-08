@@ -16,6 +16,19 @@
     <string name="selectedChord">Chord:</string>
     <string name="noSelection"></string>
 
+    <!-- Quiz game area -->
+    <string name="quizButton">Quiz</string>
+    <string name="endQuizButton">End Quiz</string>
+    <string name="recordsButton">Records</string>
+    <string name="clearInputButton">Clear Input</string>
+    <string name="userInput">Input: </string>
+    <string name="defaultInput">C, C#, D#, E, F#, G#, A#, B</string>
+    <string name="time">Time - </string>
+    <string name="timeLeft">2:00</string>
+    <string name="enter">Enter: </string>
+    <string name="enterInitial">G# Major Pentonic Scale</string>
+    <string name="quizRules">Starting from left side of the keyboard, enter the requested scale/chord one key a time!</string>
+
     <!-- Notes for each individual key -->
     <string name="cNote">C</string>
     <string name="dNote">D</string>
@@ -50,46 +63,6 @@
     <!-- Initial Chord -->
     <string-array name="initialChords">
         <item>(select)</item>
-    </string-array>
-
-
-    <string-array name="cmajChords">
-        <item>(select)</item>
-        <item>Cmaj</item>
-        <item>Fmaj</item>
-        <item>Gmaj</item>
-        <item>Dm</item>
-        <item>Em</item>
-        <item>Am</item>
-        <item>F#m</item>
-        <item>G7</item>
-        <item>Dmin7</item>
-        <item>Emin7</item>
-        <item>Amin7</item>
-        <item>Cmaj7</item>
-        <item>Fmaj7</item>
-        <item>C6</item>
-        <item>F6</item>
-        <item>G6</item>
-        <item>Dmin6</item>
-        <item>G9</item>
-        <item>Csus4</item>
-        <item>Dsus4</item>
-        <item>Esus4</item>
-        <item>Gsus4</item>
-        <item>Asus4</item>
-        <item>D7sus4</item>
-        <item>E7sus4</item>
-        <item>G7sus4</item>
-        <item>A7sus4</item>
-        <item>Csus2</item>
-        <item>Dsus2</item>
-        <item>Fsus2</item>
-        <item>Gsus2</item>
-        <item>Asus2</item>
-        <item>Bdim</item>
-        <item>Cdim</item>
-        <item>Caug</item>
     </string-array>
 
 </resources>

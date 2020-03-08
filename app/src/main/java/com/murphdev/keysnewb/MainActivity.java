@@ -17,7 +17,6 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -333,8 +332,91 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 j++;
             }
         }
-        Collections.sort(chords);
-        ArrayAdapter<String> chordAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, chords);
+        //sorting chords by chord type
+        ArrayList<String> sortedChords = new ArrayList<>();
+        ArrayList<String> majChords = new ArrayList<>();
+        ArrayList<String> mChords = new ArrayList<>();
+        ArrayList<String> sevenChords = new ArrayList<>();
+        ArrayList<String> min7Chords = new ArrayList<>();
+        ArrayList<String> maj7Chords = new ArrayList<>();
+        ArrayList<String> sixChords = new ArrayList<>();
+        ArrayList<String> min6Chords = new ArrayList<>();
+        ArrayList<String> sus4Chords = new ArrayList<>();
+        ArrayList<String> sevenSus4Chords = new ArrayList<>();
+        ArrayList<String> sus2Chords = new ArrayList<>();
+        ArrayList<String> dimChords = new ArrayList<>();
+        ArrayList<String> augChords = new ArrayList<>();
+        String chordType;
+        for (int i = 0; i < chords.size(); i++) {
+            chordType = chords.get(i);
+            if (chordType.charAt(1) == '#') chordType = chordType.substring(2);
+            else chordType = chordType.substring(1);
+            switch (chordType) {
+                case "maj": {
+                   majChords.add(chords.get(i));
+                   break;
+                }
+                case "m": {
+                    mChords.add(chords.get(i));
+                    break;
+                }
+                case "7": {
+                    sevenChords.add(chords.get(i));
+                    break;
+                }
+                case "min7": {
+                    min7Chords.add(chords.get(i));
+                    break;
+                }
+                case "maj7": {
+                    maj7Chords.add(chords.get(i));
+                    break;
+                }
+                case "6": {
+                    sixChords.add(chords.get(i));
+                    break;
+                }
+                case "min6": {
+                    min6Chords.add(chords.get(i));
+                    break;
+                }
+                case "sus4": {
+                    sus4Chords.add(chords.get(i));
+                    break;
+                }
+                case "7sus4": {
+                    sevenSus4Chords.add(chords.get(i));
+                    break;
+                }
+                case "sus2": {
+                    sus2Chords.add(chords.get(i));
+                    break;
+                }
+                case "dim": {
+                    dimChords.add(chords.get(i));
+                    break;
+                }
+                case "aug": {
+                    augChords.add(chords.get(i));
+                    break;
+                }
+
+            }
+        }
+        sortedChords.add("(select)");
+        sortedChords.addAll(majChords);
+        sortedChords.addAll(mChords);
+        sortedChords.addAll(sevenChords);
+        sortedChords.addAll(min7Chords);
+        sortedChords.addAll(maj7Chords);
+        sortedChords.addAll(sixChords);
+        sortedChords.addAll(min6Chords);
+        sortedChords.addAll(sus4Chords);
+        sortedChords.addAll(sevenSus4Chords);
+        sortedChords.addAll(sus2Chords);
+        sortedChords.addAll(dimChords);
+        sortedChords.addAll(augChords);
+        ArrayAdapter<String> chordAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, sortedChords);
         chordAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         chordSpinner.setAdapter(chordAdapter);
     }

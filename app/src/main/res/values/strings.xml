@@ -14,7 +14,8 @@
     <!-- Information area -->
     <string name="selectedScale">Scale:</string>
     <string name="selectedChord">Chord:</string>
-    <string name="noSelection"></string>
+    <string name="noSelection">""</string>
+    <string name="noChordNotes">(none)</string>
 
     <!-- Quiz game area -->
     <string name="quizButton">Quiz</string>
@@ -22,7 +23,8 @@
     <string name="recordsButton">Records</string>
     <string name="clearInputButton">Clear Input</string>
     <string name="userInput">Input: </string>
-    <string name="defaultInput">C, C#, D#, E, F#, G#, A#, B</string>
+    <string name="score">Score - </string>
+    <string name="currentScore">0</string>
     <string name="time">Time - </string>
     <string name="timeLeft">2:00</string>
     <string name="enter">Enter: </string>

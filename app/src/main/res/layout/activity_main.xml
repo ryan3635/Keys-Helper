@@ -721,6 +721,7 @@
         android:background="#345126"
         android:text="@string/quizButton"
         android:textSize="10sp"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
         app:layout_constraintStart_toStartOf="@+id/keys"
         app:layout_constraintTop_toBottomOf="@+id/keys" />
@@ -767,7 +768,7 @@
         android:id="@+id/timeLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="218dp"
+        android:layout_marginStart="298dp"
         android:layout_marginTop="84dp"
         android:layout_marginBottom="15dp"
         android:text="@string/timeLeft"
@@ -778,13 +779,41 @@
         app:layout_constraintTop_toBottomOf="@+id/keys" />
 
     <TextView
+        android:id="@+id/currentScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="84dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/currentScore"
+        android:textColor="#FFFFFF"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
         android:id="@+id/timeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="176dp"
+        android:layout_marginStart="256dp"
         android:layout_marginTop="84dp"
         android:layout_marginBottom="15dp"
         android:text="@string/time"
+        android:textColor="#FFFFFF"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/scoreText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="84dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/score"
         android:textColor="#FFFFFF"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
@@ -823,9 +852,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="435dp"
         android:layout_marginTop="30dp"
-        android:text="@string/defaultInput"
         android:textColor="#DBE160"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="@+id/keys"
         app:layout_constraintTop_toBottomOf="@+id/keys" />
 

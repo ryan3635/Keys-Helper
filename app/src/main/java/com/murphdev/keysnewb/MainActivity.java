@@ -18,6 +18,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -35,10 +36,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     CheckBox hideSelection;
     Key[] keys = new Key[24];
     Key key;
+    boolean hideSel, hideNote, quizRunning;
+    int score = 0, userInputPos = 0, maxInput = 5, quizType = 3, quizDifficulty = 3;
     String scale, chord;
-    boolean hideSel, hideNote, quizRunning, endQuiz;
-    int score = 0, userInputPos = 0, maxInput = 5; //maxInput temp value, updates when randomizer is run to answer.length
+    String [] rootNotesQuiz = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
     ArrayList<String> userInput = new ArrayList<>();
+    ArrayList<String> easyScales = new ArrayList<>();
+    ArrayList<String> medScales = new ArrayList<>();
+    ArrayList<String> hardScales = new ArrayList<>();
+    ArrayList<String> easyChords = new ArrayList<>();
+    ArrayList<String> medChords = new ArrayList<>();
+    ArrayList<String> hardChords = new ArrayList<>();
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -68,19 +76,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         scoreText = findViewById(R.id.scoreText);
         currentScore = findViewById(R.id.currentScore);
 
-        quizRunning = false;
         hideSel = false;
         hideNote = false;
-        endQuiz = false;
         chord = "(select)";
-        String [] rootNotes = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
-        //Difficulties for quiz game
-        String [] easyScales = {"Major", "Minor", "Major Pentonic", "Minor Pentonic"};
-        String [] medScales = {"Blues", "Augmented", "Diminished"};
-        String [] hardScales = {"Dorian", "Locrian", "Lydian", "Mixolydian", "Phrygian"};
-        String [] easyChords = {"maj", "m", "7"};
-        String [] medChords = {"min7", "maj7", "6", "min6"};
-        String [] hardChords = {"sus4", "7sus4", "sus2", "dim", "aug"};
+        quizRunning = false;
+        difficultyInitialization();
 
         //Scale type and chord selection spinners initialization
         scaleSpinner = findViewById(R.id.scaleType);
@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             public void onClick(View v) {
                 if (quizRunning) {
                     quizRunning = false;
+                    score = 0;
                     quizButton.setBackgroundColor(0xFF345126);
                     quizButton.setText(R.string.quizButton);
                     userInputPos = 0;
@@ -119,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
                 else {
                     quizRunning = true;
+                    score = 0;
                     quizButton.setBackgroundColor(0xFFEA0E0E);
                     quizButton.setText(R.string.endQuizButton);
                     hideSelection.setChecked(true);
@@ -133,7 +135,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     timeLeft.setVisibility(View.VISIBLE);
                     scoreText.setVisibility(View.VISIBLE);
                     currentScore.setVisibility(View.VISIBLE);
-                    //quizGame(); -> runs randomizer, maxInput = size of randomized string -> userInput = new String [maxInput];
+                    //quizGame(); -> runs randomizer, maxInput = size of randomized string -> userInput = new String [maxInput] -> ends after 2 mins
+                    //quizRunning = false;
+                    //hide elements again, as quiz is now stopped
+                    //hideSelection.setChecked(false);
+                    //hideSel = false;
+                    //paintKey(hideSel, hideNote);
+                    //show score as alert?
+                    //save score onto phone if it's score is greater than top 10 previous records (separate records for each quiz type?)
+                    //add score to records page (when implemented)
                 }
             }
         });
@@ -141,7 +151,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         recordsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //nothing here yet
+                //temporarily using this button to test randomizer function
+                String request = randomizer(quizType, quizDifficulty);
+                quizRequest.setText(request);
             }
         });
 
@@ -540,218 +552,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         chordSpinner.setAdapter(chordAdapter);
     }
 
-    //paintKey: Called when either spinner or checkbox is updated -> updates key image accordingly for each key
-    public void paintKey(boolean hideSel, boolean hideNote) {
-        //Default case - Both checkboxes are unchecked
-        if (!hideSel && !hideNote) {
-            String keyID;
-            for (Key i : keys) {
-                keyID = i.idCheck();
-                int key = getResources().getIdentifier(keyID, "id", context.getPackageName());
-                keyButton = findViewById(key);
-                keyID = keyID.substring(0, keyID.length() - 1);
-                if (i.chordCheck()) {
-                    switch (keyID) {
-                        case "c":
-                            keyButton.setImageResource(R.drawable.cchord);
-                            break;
-                        case "cs":
-                            keyButton.setImageResource(R.drawable.cschord);
-                            break;
-                        case "d":
-                            keyButton.setImageResource(R.drawable.dchord);
-                            break;
-                        case "ds":
-                            keyButton.setImageResource(R.drawable.dschord);
-                            break;
-                        case "e":
-                            keyButton.setImageResource(R.drawable.echord);
-                            break;
-                        case "f":
-                            keyButton.setImageResource(R.drawable.fchord);
-                            break;
-                        case "fs":
-                            keyButton.setImageResource(R.drawable.fschord);
-                            break;
-                        case "g":
-                            keyButton.setImageResource(R.drawable.gchord);
-                            break;
-                        case "gs":
-                            keyButton.setImageResource(R.drawable.gschord);
-                            break;
-                        case "a":
-                            keyButton.setImageResource(R.drawable.achord);
-                            break;
-                        case "as":
-                            keyButton.setImageResource(R.drawable.aschord);
-                            break;
-                        case "b":
-                            keyButton.setImageResource(R.drawable.bchord);
-                            break;
-                    }
-                } else if (i.scaleCheck()) {
-                    switch (keyID) {
-                        case "c":
-                            keyButton.setImageResource(R.drawable.cselected);
-                            break;
-                        case "cs":
-                            keyButton.setImageResource(R.drawable.csselected);
-                            break;
-                        case "d":
-                            keyButton.setImageResource(R.drawable.dselected);
-                            break;
-                        case "ds":
-                            keyButton.setImageResource(R.drawable.dsselected);
-                            break;
-                        case "e":
-                            keyButton.setImageResource(R.drawable.eselected);
-                            break;
-                        case "f":
-                            keyButton.setImageResource(R.drawable.fselected);
-                            break;
-                        case "fs":
-                            keyButton.setImageResource(R.drawable.fsselected);
-                            break;
-                        case "g":
-                            keyButton.setImageResource(R.drawable.gselected);
-                            break;
-                        case "gs":
-                            keyButton.setImageResource(R.drawable.gsselected);
-                            break;
-                        case "a":
-                            keyButton.setImageResource(R.drawable.aselected);
-                            break;
-                        case "as":
-                            keyButton.setImageResource(R.drawable.asselected);
-                            break;
-                        case "b":
-                            keyButton.setImageResource(R.drawable.bselected);
-                            break;
-                    }
-                } else {
-                    switch (keyID) {
-                        case "c":
-                            keyButton.setImageResource(R.drawable.ckey);
-                            break;
-                        case "cs":
-                            keyButton.setImageResource(R.drawable.cskey);
-                            break;
-                        case "d":
-                            keyButton.setImageResource(R.drawable.dkey);
-                            break;
-                        case "ds":
-                            keyButton.setImageResource(R.drawable.dskey);
-                            break;
-                        case "e":
-                            keyButton.setImageResource(R.drawable.ekey);
-                            break;
-                        case "f":
-                            keyButton.setImageResource(R.drawable.fkey);
-                            break;
-                        case "fs":
-                            keyButton.setImageResource(R.drawable.fskey);
-                            break;
-                        case "g":
-                            keyButton.setImageResource(R.drawable.gkey);
-                            break;
-                        case "gs":
-                            keyButton.setImageResource(R.drawable.gskey);
-                            break;
-                        case "a":
-                            keyButton.setImageResource(R.drawable.akey);
-                            break;
-                        case "as":
-                            keyButton.setImageResource(R.drawable.askey);
-                            break;
-                        case "b":
-                            keyButton.setImageResource(R.drawable.bkey);
-                            break;
-                    }
-                }
-            }
-        }
-        //Only Hide Selection checked
-        if (hideSel && !hideNote) {
-            String keyID;
-            for (Key i : keys) {
-                keyID = i.idCheck();
-                int key = getResources().getIdentifier(keyID, "id", context.getPackageName());
-                keyButton = findViewById(key);
-                keyID = keyID.substring(0, keyID.length() - 1);
-                switch (keyID) {
-                    case "c":
-                        keyButton.setImageResource(R.drawable.ckey);
-                        break;
-                    case "cs":
-                        keyButton.setImageResource(R.drawable.cskey);
-                        break;
-                    case "d":
-                        keyButton.setImageResource(R.drawable.dkey);
-                        break;
-                    case "ds":
-                        keyButton.setImageResource(R.drawable.dskey);
-                        break;
-                    case "e":
-                        keyButton.setImageResource(R.drawable.ekey);
-                        break;
-                    case "f":
-                        keyButton.setImageResource(R.drawable.fkey);
-                        break;
-                    case "fs":
-                        keyButton.setImageResource(R.drawable.fskey);
-                        break;
-                    case "g":
-                        keyButton.setImageResource(R.drawable.gkey);
-                        break;
-                    case "gs":
-                        keyButton.setImageResource(R.drawable.gskey);
-                        break;
-                    case "a":
-                        keyButton.setImageResource(R.drawable.akey);
-                        break;
-                    case "as":
-                        keyButton.setImageResource(R.drawable.askey);
-                        break;
-                    case "b":
-                        keyButton.setImageResource(R.drawable.bkey);
-                        break;
-                }
-            }
-        }
-        //Only Hide Notes checked
-        if (!hideSel && hideNote) {
-            boolean isBlackKey;
-            String keyID;
-            for (Key i : keys) {
-                keyID = i.idCheck();
-                int key = getResources().getIdentifier(keyID, "id", context.getPackageName());
-                keyButton = findViewById(key);
-                isBlackKey = keyID.equals("cs1") || keyID.equals("ds1") || keyID.equals("fs1") || keyID.equals("gs1") || keyID.equals("as1") ||
-                        keyID.equals("cs2") || keyID.equals("ds2") || keyID.equals("fs2") || keyID.equals("gs2") || keyID.equals("as2");
-
-                if (i.chordCheck()) {
-                    if (isBlackKey) keyButton.setImageResource(R.drawable.blackchord);
-                    else keyButton.setImageResource(R.drawable.whitechord);
-                } else if (i.scaleCheck()) {
-                    if (isBlackKey) keyButton.setImageResource(R.drawable.blackselected);
-                    else keyButton.setImageResource(R.drawable.whiteselected);
-                } else if (isBlackKey) keyButton.setImageResource(R.drawable.blackkey);
-                else keyButton.setImageResource(R.drawable.whitekey);
-            }
-        }
-        //Both checkboxes are checked
-        if (hideSel && hideNote) {
-            String keyID;
-            for (Key i : keys) {
-                keyID = i.idCheck();
-                int key = getResources().getIdentifier(keyID, "id", context.getPackageName());
-                keyButton = findViewById(key);
-                if ((keyID.charAt(1)) == 's') keyButton.setImageResource(R.drawable.blackkey);
-                else keyButton.setImageResource(R.drawable.whitekey);
-            }
-        }
-    }
-
 
     //scaleSteps: Called when scale type spinner or root note is updated -> Determines what order of keys must be selected to match the type of scale selected
     public int[] scaleSteps(String scaleType) {
@@ -978,4 +778,341 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
+
+    //paintKey: Called when either spinner or checkbox is updated -> updates key image accordingly for each key
+    public void paintKey(boolean hideSel, boolean hideNote) {
+        //Default case - Both checkboxes are unchecked
+        if (!hideSel && !hideNote) {
+            String keyID;
+            for (Key i : keys) {
+                keyID = i.idCheck();
+                int key = getResources().getIdentifier(keyID, "id", context.getPackageName());
+                keyButton = findViewById(key);
+                keyID = keyID.substring(0, keyID.length() - 1);
+                if (i.chordCheck()) {
+                    switch (keyID) {
+                        case "c":
+                            keyButton.setImageResource(R.drawable.cchord);
+                            break;
+                        case "cs":
+                            keyButton.setImageResource(R.drawable.cschord);
+                            break;
+                        case "d":
+                            keyButton.setImageResource(R.drawable.dchord);
+                            break;
+                        case "ds":
+                            keyButton.setImageResource(R.drawable.dschord);
+                            break;
+                        case "e":
+                            keyButton.setImageResource(R.drawable.echord);
+                            break;
+                        case "f":
+                            keyButton.setImageResource(R.drawable.fchord);
+                            break;
+                        case "fs":
+                            keyButton.setImageResource(R.drawable.fschord);
+                            break;
+                        case "g":
+                            keyButton.setImageResource(R.drawable.gchord);
+                            break;
+                        case "gs":
+                            keyButton.setImageResource(R.drawable.gschord);
+                            break;
+                        case "a":
+                            keyButton.setImageResource(R.drawable.achord);
+                            break;
+                        case "as":
+                            keyButton.setImageResource(R.drawable.aschord);
+                            break;
+                        case "b":
+                            keyButton.setImageResource(R.drawable.bchord);
+                            break;
+                    }
+                } else if (i.scaleCheck()) {
+                    switch (keyID) {
+                        case "c":
+                            keyButton.setImageResource(R.drawable.cselected);
+                            break;
+                        case "cs":
+                            keyButton.setImageResource(R.drawable.csselected);
+                            break;
+                        case "d":
+                            keyButton.setImageResource(R.drawable.dselected);
+                            break;
+                        case "ds":
+                            keyButton.setImageResource(R.drawable.dsselected);
+                            break;
+                        case "e":
+                            keyButton.setImageResource(R.drawable.eselected);
+                            break;
+                        case "f":
+                            keyButton.setImageResource(R.drawable.fselected);
+                            break;
+                        case "fs":
+                            keyButton.setImageResource(R.drawable.fsselected);
+                            break;
+                        case "g":
+                            keyButton.setImageResource(R.drawable.gselected);
+                            break;
+                        case "gs":
+                            keyButton.setImageResource(R.drawable.gsselected);
+                            break;
+                        case "a":
+                            keyButton.setImageResource(R.drawable.aselected);
+                            break;
+                        case "as":
+                            keyButton.setImageResource(R.drawable.asselected);
+                            break;
+                        case "b":
+                            keyButton.setImageResource(R.drawable.bselected);
+                            break;
+                    }
+                } else {
+                    switch (keyID) {
+                        case "c":
+                            keyButton.setImageResource(R.drawable.ckey);
+                            break;
+                        case "cs":
+                            keyButton.setImageResource(R.drawable.cskey);
+                            break;
+                        case "d":
+                            keyButton.setImageResource(R.drawable.dkey);
+                            break;
+                        case "ds":
+                            keyButton.setImageResource(R.drawable.dskey);
+                            break;
+                        case "e":
+                            keyButton.setImageResource(R.drawable.ekey);
+                            break;
+                        case "f":
+                            keyButton.setImageResource(R.drawable.fkey);
+                            break;
+                        case "fs":
+                            keyButton.setImageResource(R.drawable.fskey);
+                            break;
+                        case "g":
+                            keyButton.setImageResource(R.drawable.gkey);
+                            break;
+                        case "gs":
+                            keyButton.setImageResource(R.drawable.gskey);
+                            break;
+                        case "a":
+                            keyButton.setImageResource(R.drawable.akey);
+                            break;
+                        case "as":
+                            keyButton.setImageResource(R.drawable.askey);
+                            break;
+                        case "b":
+                            keyButton.setImageResource(R.drawable.bkey);
+                            break;
+                    }
+                }
+            }
+        }
+        //Only Hide Selection checked
+        if (hideSel && !hideNote) {
+            String keyID;
+            for (Key i : keys) {
+                keyID = i.idCheck();
+                int key = getResources().getIdentifier(keyID, "id", context.getPackageName());
+                keyButton = findViewById(key);
+                keyID = keyID.substring(0, keyID.length() - 1);
+                switch (keyID) {
+                    case "c":
+                        keyButton.setImageResource(R.drawable.ckey);
+                        break;
+                    case "cs":
+                        keyButton.setImageResource(R.drawable.cskey);
+                        break;
+                    case "d":
+                        keyButton.setImageResource(R.drawable.dkey);
+                        break;
+                    case "ds":
+                        keyButton.setImageResource(R.drawable.dskey);
+                        break;
+                    case "e":
+                        keyButton.setImageResource(R.drawable.ekey);
+                        break;
+                    case "f":
+                        keyButton.setImageResource(R.drawable.fkey);
+                        break;
+                    case "fs":
+                        keyButton.setImageResource(R.drawable.fskey);
+                        break;
+                    case "g":
+                        keyButton.setImageResource(R.drawable.gkey);
+                        break;
+                    case "gs":
+                        keyButton.setImageResource(R.drawable.gskey);
+                        break;
+                    case "a":
+                        keyButton.setImageResource(R.drawable.akey);
+                        break;
+                    case "as":
+                        keyButton.setImageResource(R.drawable.askey);
+                        break;
+                    case "b":
+                        keyButton.setImageResource(R.drawable.bkey);
+                        break;
+                }
+            }
+        }
+        //Only Hide Notes checked
+        if (!hideSel && hideNote) {
+            boolean isBlackKey;
+            String keyID;
+            for (Key i : keys) {
+                keyID = i.idCheck();
+                int key = getResources().getIdentifier(keyID, "id", context.getPackageName());
+                keyButton = findViewById(key);
+                isBlackKey = keyID.equals("cs1") || keyID.equals("ds1") || keyID.equals("fs1") || keyID.equals("gs1") || keyID.equals("as1") ||
+                        keyID.equals("cs2") || keyID.equals("ds2") || keyID.equals("fs2") || keyID.equals("gs2") || keyID.equals("as2");
+
+                if (i.chordCheck()) {
+                    if (isBlackKey) keyButton.setImageResource(R.drawable.blackchord);
+                    else keyButton.setImageResource(R.drawable.whitechord);
+                } else if (i.scaleCheck()) {
+                    if (isBlackKey) keyButton.setImageResource(R.drawable.blackselected);
+                    else keyButton.setImageResource(R.drawable.whiteselected);
+                } else if (isBlackKey) keyButton.setImageResource(R.drawable.blackkey);
+                else keyButton.setImageResource(R.drawable.whitekey);
+            }
+        }
+        //Both checkboxes are checked
+        if (hideSel && hideNote) {
+            String keyID;
+            for (Key i : keys) {
+                keyID = i.idCheck();
+                int key = getResources().getIdentifier(keyID, "id", context.getPackageName());
+                keyButton = findViewById(key);
+                if ((keyID.charAt(1)) == 's') keyButton.setImageResource(R.drawable.blackkey);
+                else keyButton.setImageResource(R.drawable.whitekey);
+            }
+        }
+    }
+
+
+    //difficultyInitialization: Called when app is first launched to associate scales and chords with their set difficulties for quiz
+    public void difficultyInitialization() {
+        easyScales.add("Major Scale");
+        easyScales.add("Minor Scale");
+        easyScales.add("Major Pentonic Scale");
+        easyScales.add("Minor Pentonic Scale");
+        medScales.add("Blues Scale");
+        medScales.add("Augmented Scale");
+        medScales.add("Diminished Scale");
+        hardScales.add("Dorian Scale");
+        hardScales.add("Locrian Scale");
+        hardScales.add("Lydian Scale");
+        hardScales.add("Mixolydian Scale");
+        hardScales.add("Phrygian Scale");
+
+        easyChords.add("maj Chord");
+        easyChords.add("m Chord");
+        easyChords.add("7 Chord");
+        medChords.add("min7 Chord");
+        medChords.add("maj7 Chord");
+        medChords.add("6 Chord");
+        medChords.add("min6 Chord");
+        hardChords.add("sus4 Chord");
+        hardChords.add("7sus4 Chord");
+        hardChords.add("sus2 Chord");
+        hardChords.add("dim Chord");
+        hardChords.add("aug Chord");
+    }
+
+
+    //randomizer: Called when quiz game is running -> chooses a random scale or chord for any one root note
+    String randomizer (int type, int difficulty) {
+        Random randomizer = new Random();
+        int rIndex = randomizer.nextInt(rootNotesQuiz.length);
+        int scalesCount;
+        boolean isChord = false;
+        String randomRoot = rootNotesQuiz[rIndex];
+        String request = "";
+        ArrayList<String> possibleRequests = new ArrayList<>();
+
+        //Type 1 -> Only scales ; Type 2 -> Only chords ; Type 3 -> Scales and chords
+        if (type == 1) {
+            //Difficulty 1 -> Easy ; Difficulty 2 -> Medium ; Difficulty 3 -> Hard
+            switch (difficulty) {
+                case 1:
+                    rIndex = randomizer.nextInt(easyScales.size());
+                    request = easyScales.get(rIndex);
+                    break;
+                case 2:
+                    possibleRequests.addAll(easyScales);
+                    possibleRequests.addAll(medScales);
+                    rIndex = randomizer.nextInt(possibleRequests.size());
+                    request = possibleRequests.get(rIndex);
+                    break;
+                case 3:
+                    possibleRequests.addAll(easyScales);
+                    possibleRequests.addAll(medScales);
+                    possibleRequests.addAll(hardScales);
+                    rIndex = randomizer.nextInt(possibleRequests.size());
+                    request = possibleRequests.get(rIndex);
+                    break;
+            }
+        }
+        else if (type == 2) {
+            isChord = true;
+            switch (difficulty) {
+                case 1:
+                    rIndex = randomizer.nextInt(easyChords.size());
+                    request = easyChords.get(rIndex);
+                    break;
+                case 2:
+                    possibleRequests.addAll(easyChords);
+                    possibleRequests.addAll(medChords);
+                    rIndex = randomizer.nextInt(possibleRequests.size());
+                    request = possibleRequests.get(rIndex);
+                    break;
+                case 3:
+                    possibleRequests.addAll(easyChords);
+                    possibleRequests.addAll(medChords);
+                    possibleRequests.addAll(hardChords);
+                    rIndex = randomizer.nextInt(possibleRequests.size());
+                    request = possibleRequests.get(rIndex);
+                    break;
+            }
+        }
+        else if (type == 3) {
+            switch (difficulty) {
+                case 1:
+                    possibleRequests.addAll(easyScales);
+                    scalesCount = possibleRequests.size();
+                    possibleRequests.addAll(easyChords);
+                    rIndex = randomizer.nextInt(possibleRequests.size());
+                    request = possibleRequests.get(rIndex);
+                    if (rIndex >= scalesCount) isChord = true;
+                    break;
+                case 2:
+                    possibleRequests.addAll(easyScales);
+                    possibleRequests.addAll(medScales);
+                    scalesCount = possibleRequests.size();
+                    possibleRequests.addAll(easyChords);
+                    possibleRequests.addAll(medChords);
+                    rIndex = randomizer.nextInt(possibleRequests.size());
+                    request = possibleRequests.get(rIndex);
+                    if (rIndex >= scalesCount) isChord = true;
+                    break;
+                case 3:
+                    possibleRequests.addAll(easyScales);
+                    possibleRequests.addAll(medScales);
+                    possibleRequests.addAll(hardScales);
+                    scalesCount = possibleRequests.size();
+                    possibleRequests.addAll(easyChords);
+                    possibleRequests.addAll(medChords);
+                    possibleRequests.addAll(hardChords);
+                    rIndex = randomizer.nextInt(possibleRequests.size());
+                    request = possibleRequests.get(rIndex);
+                    if (rIndex >= scalesCount) isChord = true;
+                    break;
+            }
+        }
+        possibleRequests.clear();
+        if (isChord) return randomRoot + request;
+        else return randomRoot + " " + request;
+    }
 }

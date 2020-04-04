@@ -3,7 +3,7 @@
 
     <!-- Selection areas -->
     <string name="scale">Scale Type</string>
-    <string name="root">Root Note</string>
+    <string name="root"><u>Root Note</u></string>
     <string name="chord">Chords</string>
     <string name="noChord">(select)</string>
     <string name="hideSelection">Hide Selection</string>
@@ -12,10 +12,10 @@
     <string name="verticalBorder">Vertical border for root notes</string>
 
     <!-- Information area -->
-    <string name="selectedScale">Scale:</string>
-    <string name="selectedChord">Chord:</string>
+    <string name="selectedScale"><u>Scale</u></string>
+    <string name="selectedChord"><u>Chord</u></string>
     <string name="noSelection">""</string>
-    <string name="noChordNotes">(none)</string>
+    <string name="noChordNotes">""</string>
 
     <!-- Quiz game area -->
     <string name="quizButton">Quiz</string>
@@ -29,7 +29,7 @@
     <string name="timeLeft">2:00</string>
     <string name="enter">Enter: </string>
     <string name="enterInitial">G# Major Pentonic Scale</string>
-    <string name="quizRules">Starting from left side of the keyboard, enter the requested scale/chord one key a time!</string>
+    <string name="quizRules">Starting from leftmost root note, enter the requested scale/chord one key a time!</string>
 
     <!-- Notes for each individual key -->
     <string name="cNote">C</string>

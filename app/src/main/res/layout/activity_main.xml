@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FC6F6F6F"
+    android:background="@drawable/background"
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -393,10 +393,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="565dp"
         android:layout_marginTop="145dp"
+        android:checked="true"
+        android:onClick="checkBoxes"
         android:text="@string/hideNotes"
         android:textColor="#C100C6AD"
         android:textStyle="bold"
-        android:onClick="checkBoxes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/keys"
         app:layout_constraintTop_toBottomOf="@+id/keys" />
@@ -405,7 +406,7 @@
         android:id="@+id/horizontalBorder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="11dp"
         android:contentDescription="@string/horizontalBorder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/keys"
@@ -417,21 +418,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="354dp"
-        android:layout_marginTop="117dp"
-        android:layout_marginBottom="6dp"
         android:contentDescription="@string/verticalBorder"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/rootNotes"
-        app:layout_constraintTop_toBottomOf="@+id/keys"
-        app:srcCompat="@drawable/verticalline" />
-
-    <ImageView
-        android:id="@+id/verticalBorder2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="354dp"
-        android:contentDescription="@string/verticalBorder"
-        android:foregroundGravity="bottom"
         app:layout_constraintStart_toStartOf="@+id/rootNotes"
         app:layout_constraintTop_toBottomOf="@+id/keys"
         app:srcCompat="@drawable/verticalline" />
@@ -459,7 +446,7 @@
             android:text="@string/eNote"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:translationY="23dp" />
+            android:translationY="20dp" />
 
         <RadioButton
             android:id="@+id/c"
@@ -484,7 +471,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:translationX="-47dp"
-            android:translationY="45dp" />
+            android:translationY="42dp" />
 
         <RadioButton
             android:id="@+id/d"
@@ -509,7 +496,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:translationX="-97dp"
-            android:translationY="45dp" />
+            android:translationY="42dp" />
 
         <RadioButton
             android:id="@+id/f"
@@ -534,7 +521,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:translationX="-145dp"
-            android:translationY="45dp" />
+            android:translationY="42dp" />
 
         <RadioButton
             android:id="@+id/g"
@@ -559,7 +546,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:translationX="-195dp"
-            android:translationY="45dp" />
+            android:translationY="42dp" />
 
         <RadioButton
             android:id="@+id/a"
@@ -584,7 +571,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:translationX="-244dp"
-            android:translationY="45dp" />
+            android:translationY="42dp" />
 
         <RadioButton
             android:id="@+id/b"
@@ -597,7 +584,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:translationX="-250dp"
-            android:translationY="23dp" />
+            android:translationY="20dp" />
 
     </RadioGroup>
 
@@ -622,7 +609,7 @@
         android:layout_marginBottom="64dp"
         android:text="@string/root"
         android:textColor="#FFFFFF"
-        android:textSize="12dp"
+        android:textSize="12sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/keys"
@@ -674,83 +661,58 @@
         android:id="@+id/infoSelectedScale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="400dp"
-        android:layout_marginTop="160dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginStart="7dp"
         android:text="@string/noSelection"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
+        app:layout_constraintStart_toStartOf="@+id/fixedScaleText"
+        app:layout_constraintTop_toBottomOf="@+id/fixedScaleText" />
 
     <TextView
         android:id="@+id/infoScaleNotes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="410dp"
-        android:layout_marginTop="180dp"
-        android:layout_marginBottom="81dp"
+        android:layout_marginStart="7dp"
         android:text="@string/noSelection"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
+        app:layout_constraintStart_toStartOf="@+id/infoSelectedScale"
+        app:layout_constraintTop_toBottomOf="@+id/infoSelectedScale" />
 
     <TextView
         android:id="@+id/infoSelectedChord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="580dp"
-        android:layout_marginTop="160dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginStart="7dp"
         android:text="@string/noSelection"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
+        app:layout_constraintStart_toStartOf="@+id/fixedChordText"
+        app:layout_constraintTop_toBottomOf="@+id/fixedChordText" />
 
     <TextView
         android:id="@+id/infoChordNotes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="590dp"
-        android:layout_marginTop="180dp"
-        android:layout_marginBottom="81dp"
+        android:layout_marginStart="7dp"
         android:text="@string/noSelection"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
+        app:layout_constraintStart_toStartOf="@+id/infoSelectedChord"
+        app:layout_constraintTop_toBottomOf="@+id/infoSelectedChord" />
 
     <Button
         android:id="@+id/quizButton"
-        android:layout_width="50dp"
+        android:layout_width="60dp"
         android:layout_height="30dp"
         android:layout_marginStart="615dp"
         android:layout_marginTop="28dp"
         android:layout_marginBottom="70dp"
-        android:background="#345126"
+        android:background="@android:color/transparent"
         android:text="@string/quizButton"
-        android:textSize="10sp"
+        android:textSize="12sp"
+        android:textStyle="bold|italic"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <Button
-        android:id="@+id/recordsButton"
-        android:layout_width="50dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="615dp"
-        android:layout_marginTop="65dp"
-        android:layout_marginBottom="28dp"
-        android:background="#345126"
-        android:text="@string/recordsButton"
-        android:textSize="10sp"
         app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
         app:layout_constraintStart_toStartOf="@+id/keys"
         app:layout_constraintTop_toBottomOf="@+id/keys" />
@@ -771,64 +733,49 @@
         android:id="@+id/quizRequest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="435dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="6dp"
         android:text="@string/enterInitial"
         android:textColor="#DBE160"
         android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintStart_toEndOf="@+id/enterText"
         app:layout_constraintTop_toBottomOf="@+id/keys" />
 
     <TextView
-        android:id="@+id/timeLeft"
+        android:id="@+id/numCompleted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="236dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="84dp"
         android:layout_marginBottom="15dp"
-        android:text="@string/timeLeft"
+        android:text="@string/initialAnswered"
         android:textColor="#DBE160"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
-        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintStart_toEndOf="@+id/completedText"
         app:layout_constraintTop_toBottomOf="@+id/keys" />
 
     <TextView
-        android:id="@+id/currentScore"
+        android:id="@+id/finalCompleted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="155dp"
         android:layout_marginTop="84dp"
         android:layout_marginBottom="15dp"
-        android:text="@string/currentScore"
+        android:text="@string/maxAnswered"
         android:textColor="#DBE160"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
-        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintStart_toEndOf="@+id/numCompleted"
         app:layout_constraintTop_toBottomOf="@+id/keys" />
 
     <TextView
-        android:id="@+id/timeText"
+        android:id="@+id/completedText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="194dp"
+        android:layout_marginStart="395dp"
         android:layout_marginTop="84dp"
         android:layout_marginBottom="15dp"
-        android:text="@string/time"
-        android:textColor="#DBE160"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/scoreText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="84dp"
-        android:layout_marginBottom="15dp"
-        android:text="@string/score"
+        android:text="@string/completed"
         android:textColor="#DBE160"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
@@ -837,17 +784,19 @@
 
     <TextView
         android:id="@+id/quizRules"
-        android:layout_width="210dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="395dp"
-        android:layout_marginTop="56dp"
+        android:layout_width="375dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="6dp"
         android:gravity="center"
         android:text="@string/quizRules"
         android:textColor="#FFFFFF"
         android:textSize="11sp"
         android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
         app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
+        app:layout_constraintTop_toBottomOf="@+id/scaleType" />
 
     <TextView
         android:id="@+id/inputText"
@@ -865,11 +814,35 @@
         android:id="@+id/userInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="435dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="30dp"
         android:textColor="#DBE160"
         android:visibility="visible"
-        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintStart_toEndOf="@+id/inputText"
         app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <ImageView
+        android:id="@+id/correctAnswer"
+        android:layout_width="25dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:contentDescription="@string/correctAnswer"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@+id/verticalBorder"
+        app:layout_constraintTop_toBottomOf="@+id/keys"
+        app:srcCompat="@drawable/checkmark" />
+
+    <ImageView
+        android:id="@+id/incorrectAnswer"
+        android:layout_width="25dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:contentDescription="@string/incorrectAnswer"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@+id/verticalBorder"
+        app:layout_constraintTop_toBottomOf="@+id/keys"
+        app:srcCompat="@drawable/xmark" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

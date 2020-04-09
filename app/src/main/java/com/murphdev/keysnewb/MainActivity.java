@@ -1,9 +1,12 @@
 package com.murphdev.keysnewb;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -13,10 +16,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
@@ -28,19 +33,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     Context context = this;
     MediaPlayer mp;
     ImageButton keyButton;
-    TextView infoScale, infoChord, infoScaleDisplay, infoChordDisplay, enterText, quizRequest, userInputArea, inputText, quizRules, timeText, timeLeft, scoreText, currentScore;
-    Button quizButton, recordsButton;
+    ImageView xMark, checkMark;
+    TextView infoScale, infoChord, infoScaleDisplay, infoChordDisplay, enterText, quizRequest, userInputArea, inputText, quizRules, completedText, numCompleted, finalCompleted;
+    Button quizButton;
     RadioGroup rootNotes;
-    RadioButton root;
+    RadioButton root, rootC, rootCs, rootD, rootDs, rootE, rootF, rootFs, rootG, rootGs, rootA, rootAs, rootB;
     Spinner scaleSpinner, chordSpinner;
     CheckBox hideSelection;
     Key[] keys = new Key[24];
     Key key;
 
-    String scale, chord; //updated when corresponding spinner has a new selection
-    boolean hideSel, hideNote, quizRunning;
-    int score = 0, answered = 0, userInputPos = 0, maxInput = 7, quizType = 3, quizDifficulty = 3;
-    String [] rootNotesQuiz = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
+    String scale, chord, correctAnswer;
+    boolean hideSel, hideNote, quizRunning, isChord;
+    int questionNumber = 0, answerAttempts = 0, correctlyAnswered = 0, userInputPos = 0, maxInput, quizType = 3, quizDifficulty = 3;
+    String [] noSelection = {"(select)"};
     ArrayList<String> userInput = new ArrayList<>();
     ArrayList<String> easyScales = new ArrayList<>();
     ArrayList<String> medScales = new ArrayList<>();
@@ -57,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-        //Initializing UI elements
+        //initializing UI elements
         rootNotes = findViewById(R.id.rootNotes);
         infoScale = findViewById(R.id.infoSelectedScale);
         infoScaleDisplay = findViewById(R.id.infoScaleNotes);
@@ -65,31 +71,44 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         infoChordDisplay = findViewById(R.id.infoChordNotes);
         hideSelection = findViewById(R.id.hideSelection);
         quizButton = findViewById(R.id.quizButton);
-        recordsButton = findViewById(R.id.recordsButton);
-        //These become visible once quiz is running - then invisible when quiz is ended
+        rootC = findViewById(R.id.c);
+        rootCs = findViewById(R.id.cs);
+        rootD = findViewById(R.id.d);
+        rootDs = findViewById(R.id.ds);
+        rootE = findViewById(R.id.e);
+        rootF = findViewById(R.id.f);
+        rootFs = findViewById(R.id.fs);
+        rootG = findViewById(R.id.g);
+        rootGs = findViewById(R.id.gs);
+        rootA = findViewById(R.id.a);
+        rootAs = findViewById(R.id.as);
+        rootB = findViewById(R.id.b);
+        //these become visible once quiz is running - then invisible when quiz is ended
         enterText = findViewById(R.id.enterText);
         quizRequest = findViewById(R.id.quizRequest);
         userInputArea = findViewById(R.id.userInput);
         inputText = findViewById(R.id.inputText);
         quizRules = findViewById(R.id.quizRules);
-        timeText = findViewById(R.id.timeText);
-        timeLeft = findViewById(R.id.timeLeft);
-        scoreText = findViewById(R.id.scoreText);
-        currentScore = findViewById(R.id.currentScore);
+        completedText = findViewById(R.id.completedText);
+        numCompleted = findViewById(R.id.numCompleted);
+        finalCompleted = findViewById(R.id.finalCompleted);
+        //shown when either a correct answer or incorrect answer is entered during quiz
+        xMark = findViewById(R.id.incorrectAnswer);
+        checkMark = findViewById(R.id.correctAnswer);
 
         hideSel = false;
-        hideNote = false;
+        hideNote = true;
         chord = "(select)";
         quizRunning = false;
         difficultyInitialization();
 
-        //Scale type and chord selection spinners initialization
+        //scale type and chord selection spinners initialization
         scaleSpinner = findViewById(R.id.scaleType);
         ArrayAdapter<String> scaleAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.scaleTypes));
         scaleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         scaleSpinner.setAdapter(scaleAdapter);
         chordSpinner = findViewById(R.id.chord);
-        ArrayAdapter<String> chordAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.initialChords));
+        ArrayAdapter<String> chordAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, noSelection);
         chordAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         chordSpinner.setAdapter(chordAdapter);
 
@@ -101,73 +120,68 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 //ends quiz
                 if (quizRunning) {
                     quizRunning = false;
-                    score = 0;
-                    quizButton.setBackgroundColor(0xFF345126);
                     quizButton.setText(R.string.quizButton);
+                    quizButton.setTextColor(Color.WHITE);
                     userInputPos = 0;
                     userInput.clear();
                     userInputArea.setText(R.string.noSelection);
                     hideSelection.setChecked(false);
                     hideSel = false;
-                    paintKey(hideSel, hideNote);
+                    numCompleted.setText("0");
+                    questionNumber = 0;
+                    correctlyAnswered = 0;
+                    answerAttempts = 0;
+
                     //hiding text on screen
                     enterText.setVisibility(View.INVISIBLE);
                     quizRequest.setVisibility(View.INVISIBLE);
                     inputText.setVisibility(View.INVISIBLE);
                     quizRules.setVisibility(View.INVISIBLE);
-                    timeText.setVisibility(View.INVISIBLE);
-                    timeLeft.setVisibility(View.INVISIBLE);
-                    scoreText.setVisibility(View.INVISIBLE);
-                    currentScore.setVisibility(View.INVISIBLE);
+                    completedText.setVisibility(View.INVISIBLE);
+                    numCompleted.setVisibility(View.INVISIBLE);
+                    finalCompleted.setVisibility(View.INVISIBLE);
+
+                    //reset spinners back to default
+                    ArrayAdapter<String> scaleAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.scaleTypes));
+                    scaleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    scaleSpinner.setAdapter(scaleAdapter);
+                    ArrayAdapter<String> chordAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, noSelection);
+                    chordAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    chordSpinner.setAdapter(chordAdapter);
+
+                    //set radio buttons as clickable
+                    for (int i = 0; i < rootNotes.getChildCount(); i++) rootNotes.getChildAt(i).setEnabled(true);
                 }
                 //starts quiz
                 else {
                     quizRunning = true;
-                    score = 0;
-                    quizButton.setBackgroundColor(0xFFEA0E0E);
                     quizButton.setText(R.string.endQuizButton);
+                    quizButton.setTextColor(Color.RED);
                     hideSelection.setChecked(true);
                     hideSel = true;
 
-                    //reset spinners to default
-                    ArrayAdapter<String> scaleAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.scaleTypes));
+                    //clear spinners
+                    ArrayAdapter<String> scaleAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, noSelection);
                     scaleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     scaleSpinner.setAdapter(scaleAdapter);
-                    String [] defaultChord = {"(select)"};
-                    ArrayAdapter<String> chordAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, defaultChord);
+                    ArrayAdapter<String> chordAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, noSelection);
                     chordAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     chordSpinner.setAdapter(chordAdapter);
 
-                    paintKey(hideSel, hideNote);
+                    //set radio buttons as unclickable
+                    for (int i = 0; i < rootNotes.getChildCount(); i++) rootNotes.getChildAt(i).setEnabled(false);
+
                     //showing text on screen
                     enterText.setVisibility(View.VISIBLE);
                     quizRequest.setVisibility(View.VISIBLE);
                     inputText.setVisibility(View.VISIBLE);
                     quizRules.setVisibility(View.VISIBLE);
-                    timeText.setVisibility(View.VISIBLE);
-                    timeLeft.setVisibility(View.VISIBLE);
-                    scoreText.setVisibility(View.VISIBLE);
-                    currentScore.setVisibility(View.VISIBLE);
+                    completedText.setVisibility(View.VISIBLE);
+                    numCompleted.setVisibility(View.VISIBLE);
+                    finalCompleted.setVisibility(View.VISIBLE);
 
-                    //quizGame(quizDifficulty);
-                    //quizRunning = false;
-                    //hide elements again
-                    //hideSelection.setChecked(false);
-                    //hideSel = false;
-                    //paintKey(hideSel, hideNote);
-                    //show score as alert?
-                    //save score onto phone if it's score is greater than top 10 previous records (separate records for each quiz type?)
-                    //add score to records page (when implemented)
+                    updateQuizAnswer();
                 }
-            }
-        });
-
-
-        recordsButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //temporarily using this button to test randomizer function
-                String request = randomizer(quizType, quizDifficulty);
-                quizRequest.setText(request);
             }
         });
     }
@@ -180,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         String noteId = getResources().getResourceEntryName(id);
         int note = res.getIdentifier(noteId, "raw", context.getPackageName());
 
-        //Plays sound
+        //plays sound
         mp = MediaPlayer.create(context, note);
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -190,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
         mp.start();
 
-        //Displays feedback on key click
+        //displays feedback on key click
         keyButton = findViewById(id);
         if ((noteId.charAt(1)) == 's') keyButton.setImageResource(R.drawable.blackkeyfeedback);
         else keyButton.setImageResource(R.drawable.whitekeyfeedback);
@@ -201,47 +215,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             public void run() {
                 paintKey(hideSel, hideNote);
             }
-        }, 50);
+        }, 65);
 
-        //For quiz - if quiz running, add note to user input area
+        //quiz game operation
         if (quizRunning) {
+            infoScaleDisplay.setText("");
+            infoChordDisplay.setText("");
             if (userInputPos < maxInput) {
                 userInput.add(noteId);
                 userInputPos++;
             }
-            String userInputDisplay = "";
-            String inputKey;
-            for (int i = 0; i < userInput.size(); i++) {
-                inputKey = userInput.get(i);
-                if (inputKey.charAt(1) == 's') inputKey = inputKey.substring(0, 1) + "#";
-                else inputKey = inputKey.substring(0, 1);
-                inputKey = inputKey.toUpperCase();
-                userInputDisplay = userInputDisplay + inputKey + ", ";
-            }
-            userInputArea.setText(userInputDisplay);
-            if (userInputPos == maxInput) {
-                userInputDisplay = userInputDisplay.substring(0, userInputDisplay.length() - 2); //remove extra comma
-                userInputArea.setText(userInputDisplay);
-                //check if correct answer -> get randomized request string from quizGame ; use this to find correct answer ; compare it with user input
-                //if incorrect, score = score + 0
-                //else, score = score + points given (from difficulty setting)
-                userInput.clear();
-                userInputPos = 0;
-                Timer t2 = new Timer();
-                t2.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                userInputArea.setText(R.string.noSelection);
-                                //show 'wrong' X mark if wrong answer
-                                //show 'correct' check mark if correct answer AND update score
-                            }
-                        });
-                    }
-                }, 75);
-            }
+            quizGame();
         }
     }
 
@@ -250,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void rootUpdate(View v) {
         keysInitialization();
         setScale();
-        updateChords();
+        if (!quizRunning) updateChords();
         setChord();
         paintKey(hideSel, hideNote);
     }
@@ -263,14 +247,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         switch (parent.getId()) {
             case R.id.scaleType:
                 scale = parent.getItemAtPosition(position).toString();
-                if (scale.equals("(select)")) {
-                    String [] defaultChord = {"(select)"};
-                    ArrayAdapter<String> chordAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, defaultChord);
+                if (scale.equals("(select)") && !quizRunning) {
+                    ArrayAdapter<String> chordAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, noSelection);
                     chordAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     chordSpinner.setAdapter(chordAdapter);
                 }
                 setScale();
-                updateChords();
+                if (!quizRunning) updateChords();
                 setChord();
                 paintKey(hideSel, hideNote);
                 break;
@@ -331,9 +314,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ArrayList<String> scaleNotes = new ArrayList<>();
 
         while (i < keys.length) {
-            //for default (select) case
-            if (steps.length == 0) break;
-
+            if (steps.length == 0) break; //if scale is set to default (select) case
             infoScaleNote = keys[i].keyId.toUpperCase();
             infoScaleNote = infoScaleNote.substring(0, infoScaleNote.length() - 1);
             if (infoScaleNote.length() == 2) infoScaleNote = infoScaleNote.substring(0, 1) + "#";
@@ -371,14 +352,23 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         i = rootPos;
         j = steps.length - 1;
         while (!(i < 0)) {
-            //for (select) case
-            if (steps.length == 0) break;
-
+            if (steps.length == 0) break; //if scale is set to default (select) case
             step = steps[j];
             i = i - step;
             if (i >= 0) keys[i].setScale();
             j--;
             if (j < 0) j = steps.length - 1; //reset to end of steps array to continue selecting keys backwards from root in correct order
+        }
+
+        //hiding answer during quiz
+        if (quizRunning && !isChord) {
+            maxInput = scaleNotesCondensed.size();
+            correctAnswer = scaleNotesFinal;
+            infoScaleDisplay.setText("");
+            infoChordDisplay.setText("");
+            ArrayAdapter<String> chordAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, noSelection);
+            chordAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            chordSpinner.setAdapter(chordAdapter);
         }
     }
 
@@ -429,6 +419,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 else chordNotesFinal = chordNotesFinal + ", " + note;
             }
             infoChordDisplay.setText(chordNotesFinal);
+
+            //hiding answer during quiz
+            if (quizRunning && isChord) {
+                maxInput = chordNotes.size();
+                correctAnswer = chordNotesFinal;
+                infoScaleDisplay.setText("");
+                infoChordDisplay.setText("");
+                ArrayAdapter<String> scaleAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, noSelection);
+                scaleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                scaleSpinner.setAdapter(scaleAdapter);
+            }
         }
     }
 
@@ -1026,9 +1027,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
-    //randomizer: Called when quiz game is running -> chooses a random scale or chord for any one root note
-    String randomizer (int type, int difficulty) {
+    //randomizer: Used during quiz -> chooses a random scale or chord for any one root note
+    String randomizer(int type, int difficulty) {
         Random randomizer = new Random();
+        String [] rootNotesQuiz = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
         int rIndex = randomizer.nextInt(rootNotesQuiz.length);
         int scalesCount;
         boolean isChord = false;
@@ -1121,55 +1123,142 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
-    //quizGame: Called when quiz button is clicked -> Handles scoring and functionality of the quiz game
-    public void quizGame(int difficulty) {
-        final int maxAnswers = 10;
-        answered = 0;
-        //String request = randomizer(type, difficulty);
-        String rootNote, requestType;
-        ArrayList<String> answer = new ArrayList<>();
-        boolean selShown = false;
+    //rootNoteSelect: Used during quiz -> Selects the requested root note radiobutton
+    void rootNoteSelect(String rootNote) {
+        switch (rootNote) {
+            case "C":
+                rootNotes.check(rootC.getId());
+                break;
+            case "C#":
+                rootNotes.check(rootCs.getId());
+                break;
+            case "D":
+                rootNotes.check(rootD.getId());
+                break;
+            case "D#":
+                rootNotes.check(rootDs.getId());
+                break;
+            case "E":
+                rootNotes.check(rootE.getId());
+                break;
+            case "F":
+                rootNotes.check(rootF.getId());
+                break;
+            case "F#":
+                rootNotes.check(rootFs.getId());
+                break;
+            case "G":
+                rootNotes.check(rootG.getId());
+                break;
+            case "G#":
+                rootNotes.check(rootGs.getId());
+                break;
+            case "A":
+                rootNotes.check(rootA.getId());
+                break;
+            case "A#":
+                rootNotes.check(rootAs.getId());
+                break;
+            case "B":
+                rootNotes.check(rootB.getId());
+                break;
+        }
 
-        //testing this for now rather than using randomizer
-        String request = "Cm Chord";
-        answer.add("C");
-        answer.add("D#");
-        answer.add("G");
+    }
 
+
+    //updateQuizAnswer: Used during quiz -> Processes randomizer request and determines correct answer to compare with user input
+    void updateQuizAnswer() {
+        String request = randomizer(quizType, quizDifficulty);
         quizRequest.setText(request);
-        //fill answer arraylist based on request string -> create substrings from request, one for root note and one for type
-        maxInput = answer.size();
-        for (int i = 0; i < maxAnswers; i++) {
-            //stay here until correct answer is entered -> need to use mouse click event
-            while (userInput != answer) {
-                if (hideSelection.isChecked()) selShown = true;
-                if (userInput.size() == answer.size()) userInput.clear();
+        String rootNoteSelection;
+        if (request.charAt(1) == '#') rootNoteSelection = request.substring(0, 2);
+        else rootNoteSelection = request.substring(0, 1);
+        rootNoteSelect(rootNoteSelection);
+        isChord = request.substring((request.length() - 5)).equals("Chord");
+
+        if (isChord) {
+            String [] chordType = {request.substring(0, request.length() - 6)};
+            ArrayAdapter<String> chordAdapterUpdate = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, chordType);
+            chordAdapterUpdate.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            chordSpinner.setAdapter(chordAdapterUpdate);
+        }
+        else {
+            String [] scaleType;
+            if (request.charAt(1) == '#') scaleType = new String[]{request.substring(3, request.length() - 6)};
+            else scaleType = new String[]{request.substring(2, request.length() - 6)};
+            ArrayAdapter<String> scaleAdapterUpdate = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, scaleType);
+            scaleAdapterUpdate.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            scaleSpinner.setAdapter(scaleAdapterUpdate);
+        }
+    }
+
+
+    //quizGame: Called when quiz button is clicked -> Handles scoring and functionality of the quiz game
+    public void quizGame() {
+        String userInputDisplay = "";
+        String inputKey;
+        boolean selShown = false;
+        for (int i = 0; i < userInput.size(); i++) {
+            inputKey = userInput.get(i);
+            if (inputKey.charAt(1) == 's') inputKey = inputKey.substring(0, 1) + "#";
+            else inputKey = inputKey.substring(0, 1);
+            inputKey = inputKey.toUpperCase();
+            userInputDisplay = userInputDisplay + inputKey + ", ";
+        }
+        userInputArea.setText(userInputDisplay);
+        if (!hideSelection.isChecked()) selShown = true;
+
+        //answer is fully entered (either correct or incorrect)
+        if (userInputPos == maxInput) {
+            userInputDisplay = userInputDisplay.substring(0, userInputDisplay.length() - 2); //remove extra comma
+            userInputArea.setText(userInputDisplay);
+            answerAttempts++;
+            //checking for correct answer
+            if ((userInputArea.getText()).equals(correctAnswer)) {
+                checkMark.setVisibility(View.VISIBLE);
+                updateQuizAnswer();
+                if (!selShown) correctlyAnswered++; //if Hide Selection was unchecked, does not count as answered correctly
+                questionNumber++;
+                numCompleted.setText(Integer.toString(questionNumber));
+                hideSelection.setChecked(true);
+                hideSel = true;
+                paintKey(hideSel, hideNote);
+
+                if (questionNumber == 10) {
+                    checkMark.setVisibility(View.INVISIBLE);
+                    AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                    alert.setTitle("Quiz Result");
+                    alert.setCancelable(false);
+                    alert.setMessage("Out of 10 questions - you answered " + correctlyAnswered + " without assistance!\n\n" + "Your total attempts: " + answerAttempts);
+                    alert.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();}
+                    });
+                    alert.show();
+                    quizButton.performClick();
+                    return;
+                }
             }
-            answered++;
-            switch (difficulty) {
-                case 1:
-                    if (selShown) score = score + 2;
-                    else score = score + 10;
-                    break;
-                case 2:
-                    if (selShown) score = score + 4;
-                    else score = score + 20;
-                    break;
-                case 3:
-                    if (selShown) score = score + 6;
-                    else score = score + 30;
-                    break;
-            }
-            currentScore.setText(score);
+            else xMark.setVisibility(View.VISIBLE);
+            //prepare for next user input
             userInput.clear();
-            answer.clear();
-            selShown = false;
-            hideSel = false;
-            hideSelection.setChecked(false);
-            //request = randomizer(type, difficulty);
-            //quizRequest.setText(request);
-            //find answer
-            //maxInput = answer.size();
+            userInputPos = 0;
+            Timer t2 = new Timer();
+            t2.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            userInputArea.setText(R.string.noSelection);
+                            checkMark.setVisibility(View.INVISIBLE);
+                            xMark.setVisibility(View.INVISIBLE);
+                        }
+                    });
+                }
+            }, 95);
         }
     }
 }

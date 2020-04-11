@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -34,18 +35,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     MediaPlayer mp;
     ImageButton keyButton;
     ImageView xMark, checkMark;
-    TextView infoScale, infoChord, infoScaleDisplay, infoChordDisplay, enterText, quizRequest, userInputArea, inputText, quizRules, completedText, numCompleted, finalCompleted;
+    TextView infoScale, infoChord, infoScaleDisplay, infoChordDisplay; //textviews for information section
+    TextView fixedQuizTypeText, fixedQuizDiffText, quizTypeText, quizDiffText; //textviews for quiz selection
+    TextView enterText, quizRequest, userInputArea, inputText, quizRules, completedText, numCompleted, finalCompleted; //textviews shown during quiz game
     Button quizButton;
     RadioGroup rootNotes;
     RadioButton root, rootC, rootCs, rootD, rootDs, rootE, rootF, rootFs, rootG, rootGs, rootA, rootAs, rootB;
     Spinner scaleSpinner, chordSpinner;
     CheckBox hideSelection;
+    SeekBar quizTypeBar, quizDifficultyBar;
     Key[] keys = new Key[24];
     Key key;
 
     String scale, chord, correctAnswer;
     boolean hideSel, hideNote, quizRunning, isChord;
-    int questionNumber = 0, answerAttempts = 0, correctlyAnswered = 0, userInputPos = 0, maxInput, quizType = 3, quizDifficulty = 3;
+    int questionNumber = 0, answerAttempts = 0, correctlyAnswered = 0, userInputPos = 0, maxInput, quizType, quizDifficulty;
     String [] noSelection = {"(select)"};
     ArrayList<String> userInput = new ArrayList<>();
     ArrayList<String> easyScales = new ArrayList<>();
@@ -54,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     ArrayList<String> easyChords = new ArrayList<>();
     ArrayList<String> medChords = new ArrayList<>();
     ArrayList<String> hardChords = new ArrayList<>();
+    ArrayList<String> lessDuplicates = new ArrayList<>(); //used to make less duplicate quiz requests
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -70,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         infoChord = findViewById(R.id.infoSelectedChord);
         infoChordDisplay = findViewById(R.id.infoChordNotes);
         hideSelection = findViewById(R.id.hideSelection);
-        quizButton = findViewById(R.id.quizButton);
+
         rootC = findViewById(R.id.c);
         rootCs = findViewById(R.id.cs);
         rootD = findViewById(R.id.d);
@@ -83,7 +88,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         rootA = findViewById(R.id.a);
         rootAs = findViewById(R.id.as);
         rootB = findViewById(R.id.b);
-        //these become visible once quiz is running - then invisible when quiz is ended
+
+        quizTypeBar = findViewById(R.id.quizType);
+        quizDifficultyBar = findViewById(R.id.quizDifficulty);
+        fixedQuizTypeText = findViewById(R.id.fixedQuizTypeText);
+        fixedQuizDiffText = findViewById(R.id.fixedQuizDiffText);
+        quizTypeText = findViewById(R.id.quizTypeText);
+        quizDiffText = findViewById(R.id.quizDiffText);
+        quizButton = findViewById(R.id.quizButton);
+
         enterText = findViewById(R.id.enterText);
         quizRequest = findViewById(R.id.quizRequest);
         userInputArea = findViewById(R.id.userInput);
@@ -92,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         completedText = findViewById(R.id.completedText);
         numCompleted = findViewById(R.id.numCompleted);
         finalCompleted = findViewById(R.id.finalCompleted);
-        //shown when either a correct answer or incorrect answer is entered during quiz
+
         xMark = findViewById(R.id.incorrectAnswer);
         checkMark = findViewById(R.id.correctAnswer);
 
@@ -115,6 +128,61 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         chordSpinner.setOnItemSelectedListener(this);
         scaleSpinner.setOnItemSelectedListener(this);
 
+        //quiz seekbar and button implementation
+        quizTypeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int currentQuizType = 0;
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                currentQuizType = progress;
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                //not used -> must include with seekbar listener
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                quizType = currentQuizType;
+                switch (quizType) {
+                    case 0:
+                        quizTypeText.setText(R.string.quizTypeScales);
+                        break;
+                    case 1:
+                        quizTypeText.setText(R.string.quizTypeChords);
+                        break;
+                    case 2:
+                        quizTypeText.setText(R.string.quizTypeScalesChords);
+                        break;
+                }
+            }
+        });
+
+        quizDifficultyBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int currentQuizDifficulty = 0;
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                currentQuizDifficulty = progress;
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                //not used -> must include with seekbar listener
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                quizDifficulty = currentQuizDifficulty;
+                switch (quizDifficulty) {
+                    case 0:
+                        quizDiffText.setText(R.string.quizDiffEasy);
+                        break;
+                    case 1:
+                        quizDiffText.setText(R.string.quizDiffMed);
+                        break;
+                    case 2:
+                        quizDiffText.setText(R.string.quizDiffHard);
+                        break;
+                }
+            }
+        });
+
         quizButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //ends quiz
@@ -131,8 +199,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     questionNumber = 0;
                     correctlyAnswered = 0;
                     answerAttempts = 0;
+                    lessDuplicates.clear();
 
-                    //hiding text on screen
+                    //showing/hiding UI elements
+                    quizTypeBar.setVisibility(View.VISIBLE);
+                    quizDifficultyBar.setVisibility(View.VISIBLE);
+                    fixedQuizTypeText.setVisibility(View.VISIBLE);
+                    fixedQuizDiffText.setVisibility(View.VISIBLE);
+                    quizTypeText.setVisibility(View.VISIBLE);
+                    quizDiffText.setVisibility(View.VISIBLE);
+
                     enterText.setVisibility(View.INVISIBLE);
                     quizRequest.setVisibility(View.INVISIBLE);
                     inputText.setVisibility(View.INVISIBLE);
@@ -171,7 +247,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     //set radio buttons as unclickable
                     for (int i = 0; i < rootNotes.getChildCount(); i++) rootNotes.getChildAt(i).setEnabled(false);
 
-                    //showing text on screen
+                    //showing/hiding UI elements
+                    quizTypeBar.setVisibility(View.GONE);
+                    quizDifficultyBar.setVisibility(View.GONE);
+                    fixedQuizTypeText.setVisibility(View.INVISIBLE);
+                    fixedQuizDiffText.setVisibility(View.INVISIBLE);
+                    quizTypeText.setVisibility(View.INVISIBLE);
+                    quizDiffText.setVisibility(View.INVISIBLE);
+
                     enterText.setVisibility(View.VISIBLE);
                     quizRequest.setVisibility(View.VISIBLE);
                     inputText.setVisibility(View.VISIBLE);
@@ -1038,21 +1121,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         String request = "";
         ArrayList<String> possibleRequests = new ArrayList<>();
 
-        //Type 1 -> Only scales ; Type 2 -> Only chords ; Type 3 -> Scales and chords
-        if (type == 1) {
-            //Difficulty 1 -> Easy ; Difficulty 2 -> Medium ; Difficulty 3 -> Hard
+        //Type 0 -> Only scales ; Type 1 -> Only chords ; Type 2 -> Scales and chords
+        if (type == 0) {
+            //Difficulty 0 -> Easy ; Difficulty 1 -> Medium ; Difficulty 2 -> Hard
             switch (difficulty) {
-                case 1:
+                case 0:
                     rIndex = randomizer.nextInt(easyScales.size());
                     request = easyScales.get(rIndex);
                     break;
-                case 2:
+                case 1:
                     possibleRequests.addAll(easyScales);
                     possibleRequests.addAll(medScales);
                     rIndex = randomizer.nextInt(possibleRequests.size());
                     request = possibleRequests.get(rIndex);
                     break;
-                case 3:
+                case 2:
                     possibleRequests.addAll(easyScales);
                     possibleRequests.addAll(medScales);
                     possibleRequests.addAll(hardScales);
@@ -1061,20 +1144,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     break;
             }
         }
-        else if (type == 2) {
+        else if (type == 1) {
             isChord = true;
             switch (difficulty) {
-                case 1:
+                case 0:
                     rIndex = randomizer.nextInt(easyChords.size());
                     request = easyChords.get(rIndex);
                     break;
-                case 2:
+                case 1:
                     possibleRequests.addAll(easyChords);
                     possibleRequests.addAll(medChords);
                     rIndex = randomizer.nextInt(possibleRequests.size());
                     request = possibleRequests.get(rIndex);
                     break;
-                case 3:
+                case 2:
                     possibleRequests.addAll(easyChords);
                     possibleRequests.addAll(medChords);
                     possibleRequests.addAll(hardChords);
@@ -1083,9 +1166,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     break;
             }
         }
-        else if (type == 3) {
+        else if (type == 2) {
             switch (difficulty) {
-                case 1:
+                case 0:
                     possibleRequests.addAll(easyScales);
                     scalesCount = possibleRequests.size();
                     possibleRequests.addAll(easyChords);
@@ -1093,7 +1176,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     request = possibleRequests.get(rIndex);
                     if (rIndex >= scalesCount) isChord = true;
                     break;
-                case 2:
+                case 1:
                     possibleRequests.addAll(easyScales);
                     possibleRequests.addAll(medScales);
                     scalesCount = possibleRequests.size();
@@ -1103,7 +1186,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     request = possibleRequests.get(rIndex);
                     if (rIndex >= scalesCount) isChord = true;
                     break;
-                case 3:
+                case 2:
                     possibleRequests.addAll(easyScales);
                     possibleRequests.addAll(medScales);
                     possibleRequests.addAll(hardScales);
@@ -1170,6 +1253,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     //updateQuizAnswer: Used during quiz -> Processes randomizer request and determines correct answer to compare with user input
     void updateQuizAnswer() {
         String request = randomizer(quizType, quizDifficulty);
+        String duplicateRequest = request;
+        lessDuplicates.add(duplicateRequest);
+        while (request.equals(duplicateRequest)) {
+            if (lessDuplicates.size() == 1) break;
+                for (int i = 0; i < lessDuplicates.size() - 1; i++) {
+                    duplicateRequest = lessDuplicates.get(i);
+                    if (request.equals(duplicateRequest)) {
+                        request = randomizer(quizType, quizDifficulty);
+                        break;
+                    }
+                }
+        }
         quizRequest.setText(request);
         String rootNoteSelection;
         if (request.charAt(1) == '#') rootNoteSelection = request.substring(0, 2);
@@ -1230,7 +1325,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     AlertDialog.Builder alert = new AlertDialog.Builder(context);
                     alert.setTitle("Quiz Result");
                     alert.setCancelable(false);
-                    alert.setMessage("Out of 10 questions - you answered " + correctlyAnswered + " without assistance!\n\n" + "Your total attempts: " + answerAttempts);
+                    alert.setMessage("Out of 10 questions - you answered " + correctlyAnswered + " on your own!\n\n" + "Total attempts: " + answerAttempts);
                     alert.setPositiveButton("Close", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {

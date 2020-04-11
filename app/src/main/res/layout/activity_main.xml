@@ -705,9 +705,9 @@
         android:id="@+id/quizButton"
         android:layout_width="60dp"
         android:layout_height="30dp"
-        android:layout_marginStart="615dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginBottom="70dp"
+        android:layout_marginStart="590dp"
+        android:layout_marginTop="75dp"
+        android:layout_marginBottom="25dp"
         android:background="@android:color/transparent"
         android:text="@string/quizButton"
         android:textSize="12sp"
@@ -844,5 +844,83 @@
         app:layout_constraintEnd_toStartOf="@+id/verticalBorder"
         app:layout_constraintTop_toBottomOf="@+id/keys"
         app:srcCompat="@drawable/xmark" />
+
+    <SeekBar
+        android:id="@+id/quizType"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="59dp"
+        android:max="2"
+        android:progress="0"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
+        app:layout_constraintStart_toEndOf="@+id/verticalBorder"
+        app:layout_constraintTop_toBottomOf="@+id/fixedQuizTypeText" />
+
+    <SeekBar
+        android:id="@+id/quizDifficulty"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="6dp"
+        android:max="2"
+        android:progress="0"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
+        app:layout_constraintStart_toEndOf="@+id/verticalBorder"
+        app:layout_constraintTop_toBottomOf="@+id/fixedQuizDiffText" />
+
+    <TextView
+        android:id="@+id/fixedQuizTypeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginBottom="82dp"
+        android:text="@string/quizTypeText"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
+        app:layout_constraintStart_toEndOf="@+id/verticalBorder"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/fixedQuizDiffText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginBottom="29dp"
+        android:text="@string/quizDiffText"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
+        app:layout_constraintStart_toEndOf="@+id/verticalBorder"
+        app:layout_constraintTop_toBottomOf="@+id/quizType" />
+
+    <TextView
+        android:id="@+id/quizTypeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginBottom="82dp"
+        android:text="@string/quizTypeScales"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
+        app:layout_constraintStart_toEndOf="@+id/fixedQuizTypeText"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
+
+    <TextView
+        android:id="@+id/quizDiffText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginBottom="29dp"
+        android:text="@string/quizDiffEasy"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
+        app:layout_constraintStart_toEndOf="@+id/fixedQuizDiffText"
+        app:layout_constraintTop_toBottomOf="@+id/quizType" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

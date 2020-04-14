@@ -77,8 +77,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            AudioAttributes audioAtb = new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION).setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build();
-            soundPool = new SoundPool.Builder().setMaxStreams(10).setAudioAttributes(audioAtb).build();
+            soundPool = new SoundPool.Builder().setMaxStreams(10).build();
         }
         else {
             soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
@@ -169,6 +168,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     userInput.clear();
                     userInputArea.setText(R.string.noSelection);
                     hideSelection.setChecked(false);
+                    hideSel = false;
                     selShown = false;
                     numCompleted.setText("0");
                     questionNumber = 0;
@@ -210,6 +210,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     quizButton.setTextColor(Color.RED);
                     hideSelection.setChecked(true);
                     hideSel = true;
+                    paintKey(hideSel, hideNote);
 
                     //clear spinners
                     ArrayAdapter<String> scaleAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, noSelection);

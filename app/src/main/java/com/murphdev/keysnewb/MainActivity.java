@@ -293,6 +293,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
+    //onDestroy: Method to release soundpool resources
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        soundPool.release();
+        soundPool = null;
+    }
+
     //rootUpdate: Called when the root note is changed -> Highlights keys and updates chord selection
     public void rootUpdate(View v) {
         keysInitialization();

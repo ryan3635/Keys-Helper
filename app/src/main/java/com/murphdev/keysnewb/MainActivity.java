@@ -7,10 +7,14 @@ import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.media.MediaPlayer;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -32,8 +36,9 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     Context context = this;
-    MediaPlayer mp;
-    ImageButton keyButton;
+    AudioManager audioManager;
+    SoundPool soundPool;
+    ImageButton keyButton, c1, cs1, d1, ds1, e1, f1, fs1, g1, gs1, a1, as1, b1, c2, cs2, d2, ds2, e2, f2, fs2, g2, gs2, a2, as2, b2;
     ImageView xMark, checkMark;
     TextView infoScale, infoChord, infoScaleDisplay, infoChordDisplay; //textviews for information section
     TextView fixedQuizTypeText, fixedQuizDiffText, quizTypeText, quizDiffText; //textviews for quiz selection
@@ -42,13 +47,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     RadioGroup rootNotes;
     RadioButton root, rootC, rootCs, rootD, rootDs, rootE, rootF, rootFs, rootG, rootGs, rootA, rootAs, rootB;
     Spinner scaleSpinner, chordSpinner;
-    CheckBox hideSelection;
+    CheckBox hideSelection, muteSound;
     SeekBar quizTypeBar, quizDifficultyBar;
     Key[] keys = new Key[24];
     Key key;
 
     String scale, chord, correctAnswer;
-    boolean hideSel, hideNote, quizRunning, isChord;
+    boolean hideSel, hideNote, quizRunning, isChord, selShown, soundMute;
     int questionNumber = 0, answerAttempts = 0, correctlyAnswered = 0, userInputPos = 0, maxInput, quizType, quizDifficulty;
     String [] noSelection = {"(select)"};
     ArrayList<String> userInput = new ArrayList<>();
@@ -58,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     ArrayList<String> easyChords = new ArrayList<>();
     ArrayList<String> medChords = new ArrayList<>();
     ArrayList<String> hardChords = new ArrayList<>();
-    ArrayList<String> lessDuplicates = new ArrayList<>(); //used to make less duplicate quiz requests
+    ArrayList<String> lessDuplicates = new ArrayList<>(); //used to increase randomness of quiz requests
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -68,79 +73,41 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-        //initializing UI elements
-        rootNotes = findViewById(R.id.rootNotes);
-        infoScale = findViewById(R.id.infoSelectedScale);
-        infoScaleDisplay = findViewById(R.id.infoScaleNotes);
-        infoChord = findViewById(R.id.infoSelectedChord);
-        infoChordDisplay = findViewById(R.id.infoChordNotes);
-        hideSelection = findViewById(R.id.hideSelection);
-
-        rootC = findViewById(R.id.c);
-        rootCs = findViewById(R.id.cs);
-        rootD = findViewById(R.id.d);
-        rootDs = findViewById(R.id.ds);
-        rootE = findViewById(R.id.e);
-        rootF = findViewById(R.id.f);
-        rootFs = findViewById(R.id.fs);
-        rootG = findViewById(R.id.g);
-        rootGs = findViewById(R.id.gs);
-        rootA = findViewById(R.id.a);
-        rootAs = findViewById(R.id.as);
-        rootB = findViewById(R.id.b);
-
-        quizTypeBar = findViewById(R.id.quizType);
-        quizDifficultyBar = findViewById(R.id.quizDifficulty);
-        fixedQuizTypeText = findViewById(R.id.fixedQuizTypeText);
-        fixedQuizDiffText = findViewById(R.id.fixedQuizDiffText);
-        quizTypeText = findViewById(R.id.quizTypeText);
-        quizDiffText = findViewById(R.id.quizDiffText);
-        quizButton = findViewById(R.id.quizButton);
-
-        enterText = findViewById(R.id.enterText);
-        quizRequest = findViewById(R.id.quizRequest);
-        userInputArea = findViewById(R.id.userInput);
-        inputText = findViewById(R.id.inputText);
-        quizRules = findViewById(R.id.quizRules);
-        completedText = findViewById(R.id.completedText);
-        numCompleted = findViewById(R.id.numCompleted);
-        finalCompleted = findViewById(R.id.finalCompleted);
-
-        xMark = findViewById(R.id.incorrectAnswer);
-        checkMark = findViewById(R.id.correctAnswer);
+        //initializing soundpool class and audio stream to play keyboard sounds
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            AudioAttributes audioAtb = new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION).setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build();
+            soundPool = new SoundPool.Builder().setMaxStreams(10).setAudioAttributes(audioAtb).build();
+        }
+        else {
+            soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+        }
 
         hideSel = false;
         hideNote = true;
         chord = "(select)";
         quizRunning = false;
-        difficultyInitialization();
+        selShown = false; //used to check if user needed the selection to be shown during quiz
+        soundMute = false;
+        difficultyAndUIInitialization();
 
         //scale type and chord selection spinners initialization
-        scaleSpinner = findViewById(R.id.scaleType);
         ArrayAdapter<String> scaleAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.scaleTypes));
         scaleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         scaleSpinner.setAdapter(scaleAdapter);
-        chordSpinner = findViewById(R.id.chord);
         ArrayAdapter<String> chordAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, noSelection);
         chordAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         chordSpinner.setAdapter(chordAdapter);
-
         chordSpinner.setOnItemSelectedListener(this);
         scaleSpinner.setOnItemSelectedListener(this);
 
-        //quiz seekbar and button implementation
+        //quiz seekbars and button implementation
         quizTypeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int currentQuizType = 0;
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 currentQuizType = progress;
-            }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                //not used -> must include with seekbar listener
-            }
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
                 quizType = currentQuizType;
                 switch (quizType) {
                     case 0:
@@ -154,20 +121,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         break;
                 }
             }
-        });
-
-        quizDifficultyBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int currentQuizDifficulty = 0;
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                currentQuizDifficulty = progress;
-            }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 //not used -> must include with seekbar listener
             }
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                //not used -> must include with seekbar listener
+            }
+        });
+        quizDifficultyBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int currentQuizDifficulty = 0;
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                currentQuizDifficulty = progress;
                 quizDifficulty = currentQuizDifficulty;
                 switch (quizDifficulty) {
                     case 0:
@@ -180,6 +147,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         quizDiffText.setText(R.string.quizDiffHard);
                         break;
                 }
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                //not used -> must include with seekbar listener
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                //not used -> must include with seekbar listener
             }
         });
 
@@ -194,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     userInput.clear();
                     userInputArea.setText(R.string.noSelection);
                     hideSelection.setChecked(false);
-                    hideSel = false;
+                    selShown = false;
                     numCompleted.setText("0");
                     questionNumber = 0;
                     correctlyAnswered = 0;
@@ -270,46 +245,50 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
-    //playNote: Called when a key is clicked -> Plays sound and shows feedback on click
-    public void playNote(View v) {
-        Resources res = context.getResources();
-        int id = v.getId();
-        String noteId = getResources().getResourceEntryName(id);
-        int note = res.getIdentifier(noteId, "raw", context.getPackageName());
+    /*****UI Functionality Methods*****/
 
-        //plays sound
-        mp = MediaPlayer.create(context, note);
-        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+    //keyImagePress: Called when a key is pressed -> Plays sound and shows feedback on click
+    @SuppressLint("ClickableViewAccessibility")
+    public void keyImagePress(final ImageButton keyImage) {
+        keyImage.setOnTouchListener(new View.OnTouchListener() {
+            Resources res = context.getResources();
+            final int id = keyImage.getId();
+            String noteId = getResources().getResourceEntryName(id);
+            int keySoundFileName = res.getIdentifier(noteId, "raw", context.getPackageName());
+            int keySound = soundPool.load(context, keySoundFileName, 1);
+
             @Override
-            public void onCompletion(MediaPlayer mp) {
-                mp.reset();
+            public boolean onTouch(View v, MotionEvent event) {
+                audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                assert audioManager != null;
+                float userVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                float newUserVolume = userVolume/audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        //plays sound
+                        if (!soundMute) soundPool.play(keySound, newUserVolume, newUserVolume, 1, 0, 1);
+
+                        //displays feedback on key click
+                        if ((noteId.charAt(1)) == 's') keyImage.setImageResource(R.drawable.blackkeyfeedback);
+                        else keyImage.setImageResource(R.drawable.whitekeyfeedback);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        //adds note to user input during quiz
+                        if (quizRunning) {
+                            if (userInputPos < maxInput) {
+                                userInput.add(noteId);
+                                userInputPos++;
+                            }
+                            quizGame();
+                        }
+                        paintKey(hideSel, hideNote);
+                        break;
+                }
+                return false;
             }
         });
-        mp.start();
-
-        //displays feedback on key click
-        keyButton = findViewById(id);
-        if ((noteId.charAt(1)) == 's') keyButton.setImageResource(R.drawable.blackkeyfeedback);
-        else keyButton.setImageResource(R.drawable.whitekeyfeedback);
-
-        Timer t = new Timer();
-        t.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                paintKey(hideSel, hideNote);
-            }
-        }, 65);
-
-        //quiz game operation
-        if (quizRunning) {
-            infoScaleDisplay.setText("");
-            infoChordDisplay.setText("");
-            if (userInputPos < maxInput) {
-                userInput.add(noteId);
-                userInputPos++;
-            }
-            quizGame();
-        }
     }
 
 
@@ -319,7 +298,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setScale();
         if (!quizRunning) updateChords();
         setChord();
-        paintKey(hideSel, hideNote);
+        if (!quizRunning) paintKey(hideSel, hideNote);
     }
 
 
@@ -338,7 +317,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 setScale();
                 if (!quizRunning) updateChords();
                 setChord();
-                paintKey(hideSel, hideNote);
+                if (!quizRunning) paintKey(hideSel, hideNote);
                 break;
 
             case R.id.chord:
@@ -347,527 +326,39 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 infoChord.setText(chord);
                 setScale();
                 setChord();
-                paintKey(hideSel, hideNote);
+                if (!quizRunning) paintKey(hideSel, hideNote);
                 break;
         }
     }
-
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         //Not used -> forced to include with AdapterView class
     }
 
 
-    //checkBoxes: Called when either checkbox is clicked
+    //checkBoxes: Called when either hide selection or notes checkbox is clicked
     public void checkBoxes(View v) {
         boolean isChecked = ((CheckBox) v).isChecked();
         int checkboxId = v.getId();
         switch (checkboxId) {
             case R.id.hideSelection:
                 hideSel = isChecked;
+                if (quizRunning) selShown = true;
                 break;
             case R.id.hideNotes:
                 hideNote = isChecked;
+                break;
+            case R.id.muteSound:
+                soundMute = isChecked;
                 break;
         }
         paintKey(hideSel, hideNote);
     }
 
 
-    //setScale: Called when root note or scale spinner is updated -> handles which keys will be selected for the corresponding scale
-    public void setScale() {
-        //Updating scale name for information section (bottom right)
-        int selectedRoot = rootNotes.getCheckedRadioButtonId();
-        root = findViewById(selectedRoot);
-        String rootInfoNote = (String) root.getText();
-        String scaleText;
-        if (scale.equals("(select)")) scaleText = scale;
-        else scaleText = rootInfoNote + " " + scale;
-        infoScale.setText(scaleText);
+    /*****Key Update Methods*****/
 
-        //Selecting root note and keys AFTER it that are in scale
-        String rootNote = getResources().getResourceEntryName(selectedRoot);
-        rootNote = rootNote + "1"; //to match resource id of a key
-        int[] steps = scaleSteps(scale);
-        int step;
-        int i = 0, j = 0;
-        while (!((keys[i].keyId).equals(rootNote))) i++;
-        int rootPos = i; //saving root position
-        String infoScaleNote;
-        ArrayList<String> scaleNotes = new ArrayList<>();
-
-        while (i < keys.length) {
-            if (steps.length == 0) break; //if scale is set to default (select) case
-            infoScaleNote = keys[i].keyId.toUpperCase();
-            infoScaleNote = infoScaleNote.substring(0, infoScaleNote.length() - 1);
-            if (infoScaleNote.length() == 2) infoScaleNote = infoScaleNote.substring(0, 1) + "#";
-            scaleNotes.add(infoScaleNote);
-
-            //selection
-            keys[i].setScale();
-            step = steps[j];
-            i = i + step;
-            if (i < keys.length) keys[i].setScale();
-            j++;
-            if (j >= steps.length) j = 0; //reset to start of steps array to continue selecting keys in correct order
-        }
-        //Updating scale notes for info section
-        ArrayList<String> scaleNotesCondensed = new ArrayList<>();
-        scaleNotesCondensed.add(rootInfoNote);
-        for (int k = 1; k < scaleNotes.size(); k++){
-            scaleNotesCondensed.add(scaleNotes.get(k));
-            //stop when root note is reached again -> avoids adding the same notes to info section
-            if (scaleNotesCondensed.get(k).equals(rootInfoNote)){
-                scaleNotesCondensed.remove(k);
-                break;
-            }
-        }
-        //adding commas to separate scale notes
-        String scaleNotesFinal = "";
-        for (int k = 0; k < scaleNotesCondensed.size(); k++){
-            scaleNotesFinal = scaleNotesFinal + scaleNotesCondensed.get(k) + ", ";
-        }
-        scaleNotesFinal = scaleNotesFinal.substring(0, scaleNotesFinal.length() - 2); //remove extra comma at end
-        if (scale.equals("(select)")) scaleNotesFinal = "";
-        infoScaleDisplay.setText(scaleNotesFinal);
-
-        //Selecting keys BEFORE root note
-        i = rootPos;
-        j = steps.length - 1;
-        while (!(i < 0)) {
-            if (steps.length == 0) break; //if scale is set to default (select) case
-            step = steps[j];
-            i = i - step;
-            if (i >= 0) keys[i].setScale();
-            j--;
-            if (j < 0) j = steps.length - 1; //reset to end of steps array to continue selecting keys backwards from root in correct order
-        }
-
-        //hiding answer during quiz
-        if (quizRunning && !isChord) {
-            maxInput = scaleNotesCondensed.size();
-            correctAnswer = scaleNotesFinal;
-            infoScaleDisplay.setText("");
-            infoChordDisplay.setText("");
-            ArrayAdapter<String> chordAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, noSelection);
-            chordAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            chordSpinner.setAdapter(chordAdapter);
-        }
-    }
-
-
-    //setChord: Called when a chord is selected from chord spinner -> handles which keys will be selected for the corresponding chord
-    public void setChord() {
-        String chordStart, chordType;
-        int i = 0;
-        int [] steps;
-        ArrayList<String> chordNotes = new ArrayList<>();
-        if (chord.equals("(select)")) {
-            while (i < keys.length) {
-                keys[i].clearChord();
-              i++;
-            }
-            infoChordDisplay.setText(R.string.noChordNotes);
-        }
-        //selection
-        else {
-            chordStart = chord.substring(0, 1);
-            if ((chord.charAt(1)) == '#') {
-                chordStart = chordStart + "s";
-                chordType = chord.substring(2);
-            }
-            else chordType = chord.substring(1);
-            steps = chordSteps(chordType);
-            chordStart = chordStart.toLowerCase();
-            chordStart = chordStart + "1"; //to match resource id of key
-            i = 0;
-            while (!((keys[i].keyId).equals(chordStart))) i++;
-            for (int step : steps) {
-                keys[i].setChord();
-                chordNotes.add(keys[i].keyId);
-                i = i + step;
-            }
-            keys[i].setChord();
-            chordNotes.add(keys[i].keyId);
-
-            //updating chord notes for info section
-            String note;
-            String chordNotesFinal = "";
-            for (int j = 0; j < chordNotes.size(); j++) {
-                note = chordNotes.get(j);
-                if (note.charAt(1) == 's') note = note.substring(0, 1) + "#";
-                else note = note.substring(0, 1);
-                note = note.toUpperCase();
-                if (j == 0) chordNotesFinal = note;
-                else chordNotesFinal = chordNotesFinal + ", " + note;
-            }
-            infoChordDisplay.setText(chordNotesFinal);
-
-            //hiding answer during quiz
-            if (quizRunning && isChord) {
-                maxInput = chordNotes.size();
-                correctAnswer = chordNotesFinal;
-                infoScaleDisplay.setText("");
-                infoChordDisplay.setText("");
-                ArrayAdapter<String> scaleAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, noSelection);
-                scaleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                scaleSpinner.setAdapter(scaleAdapter);
-            }
-        }
-    }
-
-
-    //updateChords: Called when scale spinner or root note is updated -> determines what chords are loaded into chord spinner
-    public void updateChords() {
-        ArrayList<String> chords = new ArrayList<>();
-        String chordStart;
-        String [] chordTypes = {"maj", "m", "7", "min7", "maj7", "6", "min6", "sus4", "7sus4", "sus2", "dim", "aug"};
-        int [] chordSteps;
-        chords.add("(select)");
-        //Checking all chord types for each of the 12 notes, starting from C and ending on B
-        for (int i = 0; i < 12; i++) {
-            chordStart = keys[i].keyId;
-            if ((chordStart.charAt(1)) == 's') {
-                chordStart = chordStart.substring(0, 1);
-                chordStart = chordStart + "#";
-            }
-            else chordStart = chordStart.substring(0, 1);
-            chordStart = chordStart.toUpperCase();
-            int j = 0;
-            while (j < chordTypes.length) {
-                chordSteps = chordSteps(chordTypes[j]);
-                boolean isChord = true;
-                int step = i;
-                //If all notes within chord are in scale, the chord is added to chord spinner
-                for (int chordStep : chordSteps) {
-                    if (!keys[step].scaleCheck()) {
-                        isChord = false;
-                        break;
-                    }
-                    step = step + chordStep;
-                }
-                if (!keys[step].scaleCheck()) isChord = false;
-                if (isChord) chords.add(chordStart + chordTypes[j]);
-                j++;
-            }
-        }
-        //sorting chords by chord type
-        ArrayList<String> sortedChords = new ArrayList<>();
-        ArrayList<String> majChords = new ArrayList<>();
-        ArrayList<String> mChords = new ArrayList<>();
-        ArrayList<String> sevenChords = new ArrayList<>();
-        ArrayList<String> min7Chords = new ArrayList<>();
-        ArrayList<String> maj7Chords = new ArrayList<>();
-        ArrayList<String> sixChords = new ArrayList<>();
-        ArrayList<String> min6Chords = new ArrayList<>();
-        ArrayList<String> sus4Chords = new ArrayList<>();
-        ArrayList<String> sevenSus4Chords = new ArrayList<>();
-        ArrayList<String> sus2Chords = new ArrayList<>();
-        ArrayList<String> dimChords = new ArrayList<>();
-        ArrayList<String> augChords = new ArrayList<>();
-        String chordType;
-        for (int i = 0; i < chords.size(); i++) {
-            chordType = chords.get(i);
-            if (chordType.charAt(1) == '#') chordType = chordType.substring(2);
-            else chordType = chordType.substring(1);
-            switch (chordType) {
-                case "maj": {
-                   majChords.add(chords.get(i));
-                   break;
-                }
-                case "m": {
-                    mChords.add(chords.get(i));
-                    break;
-                }
-                case "7": {
-                    sevenChords.add(chords.get(i));
-                    break;
-                }
-                case "min7": {
-                    min7Chords.add(chords.get(i));
-                    break;
-                }
-                case "maj7": {
-                    maj7Chords.add(chords.get(i));
-                    break;
-                }
-                case "6": {
-                    sixChords.add(chords.get(i));
-                    break;
-                }
-                case "min6": {
-                    min6Chords.add(chords.get(i));
-                    break;
-                }
-                case "sus4": {
-                    sus4Chords.add(chords.get(i));
-                    break;
-                }
-                case "7sus4": {
-                    sevenSus4Chords.add(chords.get(i));
-                    break;
-                }
-                case "sus2": {
-                    sus2Chords.add(chords.get(i));
-                    break;
-                }
-                case "dim": {
-                    dimChords.add(chords.get(i));
-                    break;
-                }
-                case "aug": {
-                    augChords.add(chords.get(i));
-                    break;
-                }
-
-            }
-        }
-        sortedChords.add("(select)");
-        sortedChords.addAll(majChords);
-        sortedChords.addAll(mChords);
-        sortedChords.addAll(sevenChords);
-        sortedChords.addAll(min7Chords);
-        sortedChords.addAll(maj7Chords);
-        sortedChords.addAll(sixChords);
-        sortedChords.addAll(min6Chords);
-        sortedChords.addAll(sus4Chords);
-        sortedChords.addAll(sevenSus4Chords);
-        sortedChords.addAll(sus2Chords);
-        sortedChords.addAll(dimChords);
-        sortedChords.addAll(augChords);
-        ArrayAdapter<String> chordAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, sortedChords);
-        chordAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        chordSpinner.setAdapter(chordAdapter);
-    }
-
-
-    //scaleSteps: Called when scale type spinner or root note is updated -> Determines what order of keys must be selected to match the type of scale selected
-    public int[] scaleSteps(String scaleType) {
-        int[] steps = {};
-        switch (scaleType) {
-            case "(select)":
-                steps = new int[] {};
-                break;
-            case "Major":
-                steps = new int[] {2, 2, 1, 2, 2, 2, 1};
-                break;
-            case "Minor":
-                steps = new int[] {2, 1, 2, 2, 1, 2, 2};
-                break;
-            case "Major Pentonic":
-                steps = new int[] {2, 2, 3, 2, 3};
-                break;
-            case "Minor Pentonic":
-                steps = new int[] {3, 2, 2, 3, 2};
-                break;
-            case "Blues":
-                steps = new int[] {3, 2, 1, 1, 3, 2};
-                break;
-            case "Augmented":
-                steps = new int[] {3, 1, 3, 1, 3, 1};
-                break;
-            case "Diminished":
-                steps = new int[] {2, 1, 2, 1, 2, 1, 2, 1};
-                break;
-            case "Dorian":
-                steps = new int[] {2, 1, 2, 2, 2, 1, 2};
-                break;
-            case "Locrian":
-                steps = new int[] {1, 2, 2, 1, 2, 2, 2};
-                break;
-            case "Lydian":
-                steps = new int[] {2, 2, 2, 1, 2, 1, 2};
-                break;
-            case "Mixolydian":
-                steps = new int[] {2, 2, 1, 2, 2, 1, 2};
-                break;
-            case "Phrygian":
-                steps = new int[] {1, 2, 2, 2, 1, 2, 2};
-                break;
-        }
-        return steps;
-    }
-
-
-    //chordSteps: Called when chord spinner is updated -> Acts similar to scaleSteps function but for chord types instead
-    public int[] chordSteps(String chordType) {
-        int[] steps = {};
-        switch (chordType) {
-            case "(select)":
-                steps = new int[] {};
-                break;
-            case "maj":
-                steps = new int[] {4, 3};
-                break;
-            case "m":
-                steps = new int[] {3, 4};
-                break;
-            case "7":
-                steps = new int[] {4, 3, 3};
-                break;
-            case "min7":
-                steps = new int[] {3, 4, 3};
-                break;
-            case "maj7":
-                steps = new int[] {4, 3, 4};
-                break;
-            case "6":
-                steps = new int[] {4, 3, 2};
-                break;
-            case "min6":
-                steps = new int[] {3, 4, 2};
-                break;
-            case "sus4":
-                steps = new int[] {5, 2};
-                break;
-            case "7sus4":
-                steps = new int[] {5, 2, 3};
-                break;
-            case "sus2":
-                steps = new int[] {2, 5};
-                break;
-            case "dim":
-                steps = new int[] {3, 3};
-                break;
-            case "aug":
-                steps = new int[] {4, 4};
-                break;
-        }
-        return steps;
-    }
-
-
-    //keysInitialization: Called when app is first launched to set initial key properties
-    public void keysInitialization() {
-        boolean isScale = false;
-        boolean isChord = false;
-        String keyID;
-        for (int i = 0; i < keys.length; i++) {
-                if (i == 0) {
-                    keyID = "c1";
-                    key = new Key(keyID, isScale, isChord);
-                    keys[i] = key;
-                }
-                else if (i == 1) {
-                    keyID = "cs1";
-                    key = new Key(keyID, isScale, isChord);
-                    keys[i] = key;
-                }
-                else if (i == 2) {
-                    keyID = "d1";
-                    key = new Key(keyID, isScale, isChord);
-                    keys[i] = key;
-                }
-                else if (i == 3) {
-                    keyID = "ds1";
-                    key = new Key(keyID, isScale, isChord);
-                    keys[i] = key;
-                }
-                else if (i == 4) {
-                    keyID = "e1";
-                    key = new Key(keyID, isScale, isChord);
-                    keys[i] = key;
-                }
-                else if (i == 5) {
-                    keyID = "f1";
-                    key = new Key(keyID, isScale, isChord);
-                    keys[i] = key;
-                }
-                else if (i == 6) {
-                    keyID = "fs1";
-                    key = new Key(keyID, isScale, isChord);
-                    keys[i] = key;
-                }
-                else if (i == 7) {
-                    keyID = "g1";
-                    key = new Key(keyID, isScale, isChord);
-                    keys[i] = key;
-                }
-                else if (i == 8) {
-                    keyID = "gs1";
-                    key = new Key(keyID, isScale, isChord);
-                    keys[i] = key;
-                }
-                else if (i == 9) {
-                    keyID = "a1";
-                    key = new Key(keyID, isScale, isChord);
-                    keys[i] = key;
-                }
-                else if (i == 10) {
-                    keyID = "as1";
-                    key = new Key(keyID, isScale, isChord);
-                    keys[i] = key;
-                }
-                else if (i == 11) {
-                    keyID = "b1";
-                    key = new Key(keyID, isScale, isChord);
-                    keys[i] = key;
-                }
-                else if (i == 12) {
-                    keyID = "c2";
-                    key = new Key(keyID, isScale, isChord);
-                    keys[i] = key;
-                }
-                else if (i == 13) {
-                    keyID = "cs2";
-                    key = new Key(keyID, isScale, isChord);
-                    keys[i] = key;
-                }
-                else if (i == 14) {
-                    keyID = "d2";
-                    key = new Key(keyID, isScale, isChord);
-                    keys[i] = key;
-                }
-                else if (i == 15) {
-                    keyID = "ds2";
-                    key = new Key(keyID, isScale, isChord);
-                    keys[i] = key;
-                }
-                else if (i == 16) {
-                    keyID = "e2";
-                    key = new Key(keyID, isScale, isChord);
-                    keys[i] = key;
-                }
-                else if (i == 17) {
-                    keyID = "f2";
-                    key = new Key(keyID, isScale, isChord);
-                    keys[i] = key;
-                }
-                else if (i == 18) {
-                    keyID = "fs2";
-                    key = new Key(keyID, isScale, isChord);
-                    keys[i] = key;
-                }
-                else if (i == 19) {
-                    keyID = "g2";
-                    key = new Key(keyID, isScale, isChord);
-                    keys[i] = key;
-                }
-                else if (i == 20) {
-                    keyID = "gs2";
-                    key = new Key(keyID, isScale, isChord);
-                    keys[i] = key;
-                }
-                else if (i == 21) {
-                    keyID = "a2";
-                    key = new Key(keyID, isScale, isChord);
-                    keys[i] = key;
-                }
-                else if (i == 22) {
-                    keyID = "as2";
-                    key = new Key(keyID, isScale, isChord);
-                    keys[i] = key;
-                }
-                else if (i == 23) {
-                    keyID = "b2";
-                    key = new Key(keyID, isScale, isChord);
-                    keys[i] = key;
-                }
-        }
-    }
-
-
-    //paintKey: Called when either spinner, root note, or checkbox is updated -> updates key image accordingly for each key
+    //paintKey: Called when either spinner, root note, or hide sel/hide note checkboxes are changed -> Updates key image accordingly for each key
     public void paintKey(boolean hideSel, boolean hideNote) {
         //Default case - Both checkboxes are unchecked
         if (!hideSel && !hideNote) {
@@ -1080,37 +571,275 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
-    //difficultyInitialization: Called when app is first launched to associate scales and chords with their set difficulties for quiz
-    public void difficultyInitialization() {
-        easyScales.add("Major Scale");
-        easyScales.add("Minor Scale");
-        easyScales.add("Major Pentonic Scale");
-        easyScales.add("Minor Pentonic Scale");
-        medScales.add("Blues Scale");
-        medScales.add("Augmented Scale");
-        medScales.add("Diminished Scale");
-        hardScales.add("Dorian Scale");
-        hardScales.add("Locrian Scale");
-        hardScales.add("Lydian Scale");
-        hardScales.add("Mixolydian Scale");
-        hardScales.add("Phrygian Scale");
+    //setScale: Called when root note or scale spinner is updated -> Handles which keys will be selected for the corresponding scale
+    public void setScale() {
+        //Updating scale name for information section (bottom right)
+        int selectedRoot = rootNotes.getCheckedRadioButtonId();
+        root = findViewById(selectedRoot);
+        String rootInfoNote = (String) root.getText();
+        String scaleText;
+        if (scale.equals("(select)")) scaleText = scale;
+        else scaleText = rootInfoNote + " " + scale;
+        infoScale.setText(scaleText);
 
-        easyChords.add("maj Chord");
-        easyChords.add("m Chord");
-        easyChords.add("7 Chord");
-        medChords.add("min7 Chord");
-        medChords.add("maj7 Chord");
-        medChords.add("6 Chord");
-        medChords.add("min6 Chord");
-        hardChords.add("sus4 Chord");
-        hardChords.add("7sus4 Chord");
-        hardChords.add("sus2 Chord");
-        hardChords.add("dim Chord");
-        hardChords.add("aug Chord");
+        //Selecting root note and keys AFTER it that are in scale
+        String rootNote = getResources().getResourceEntryName(selectedRoot);
+        rootNote = rootNote + "1"; //to match resource id of a key
+        int[] steps = scaleSteps(scale);
+        int step;
+        int i = 0, j = 0;
+        while (!((keys[i].keyId).equals(rootNote))) i++;
+        int rootPos = i; //saving root position
+        String infoScaleNote;
+        ArrayList<String> scaleNotes = new ArrayList<>();
+
+        while (i < keys.length) {
+            if (steps.length == 0) break; //if scale is set to default (select) case
+            infoScaleNote = keys[i].keyId.toUpperCase();
+            infoScaleNote = infoScaleNote.substring(0, infoScaleNote.length() - 1);
+            if (infoScaleNote.length() == 2) infoScaleNote = infoScaleNote.substring(0, 1) + "#";
+            scaleNotes.add(infoScaleNote);
+
+            //selection
+            keys[i].setScale();
+            step = steps[j];
+            i = i + step;
+            if (i < keys.length) keys[i].setScale();
+            j++;
+            if (j >= steps.length) j = 0; //reset to start of steps array to continue selecting keys in correct order
+        }
+        //Updating scale notes for info section
+        ArrayList<String> scaleNotesCondensed = new ArrayList<>();
+        scaleNotesCondensed.add(rootInfoNote);
+        for (int k = 1; k < scaleNotes.size(); k++){
+            scaleNotesCondensed.add(scaleNotes.get(k));
+            //stop when root note is reached again -> avoids adding the same notes to info section
+            if (scaleNotesCondensed.get(k).equals(rootInfoNote)){
+                scaleNotesCondensed.remove(k);
+                break;
+            }
+        }
+        //adding commas to separate scale notes
+        String scaleNotesFinal = "";
+        for (int k = 0; k < scaleNotesCondensed.size(); k++){
+            scaleNotesFinal = scaleNotesFinal + scaleNotesCondensed.get(k) + ", ";
+        }
+        scaleNotesFinal = scaleNotesFinal.substring(0, scaleNotesFinal.length() - 2); //remove extra comma at end
+        if (scale.equals("(select)")) scaleNotesFinal = "";
+        infoScaleDisplay.setText(scaleNotesFinal);
+
+        //Selecting keys BEFORE root note
+        i = rootPos;
+        j = steps.length - 1;
+        while (!(i < 0)) {
+            if (steps.length == 0) break; //if scale is set to default (select) case
+            step = steps[j];
+            i = i - step;
+            if (i >= 0) keys[i].setScale();
+            j--;
+            if (j < 0) j = steps.length - 1; //reset to end of steps array to continue selecting keys backwards from root in correct order
+        }
+
+        //hiding answer during quiz
+        if (quizRunning && !isChord) {
+            maxInput = scaleNotesCondensed.size();
+            correctAnswer = scaleNotesFinal;
+            infoScaleDisplay.setText("");
+            infoChordDisplay.setText("");
+            ArrayAdapter<String> chordAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, noSelection);
+            chordAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            chordSpinner.setAdapter(chordAdapter);
+        }
     }
 
 
-    //randomizer: Used during quiz -> chooses a random scale or chord for any one root note
+    //updateChords: Called when scale spinner or root note is updated -> Determines what chords are loaded into chord spinner
+    public void updateChords() {
+        ArrayList<String> chords = new ArrayList<>();
+        String chordStart;
+        String [] chordTypes = {"maj", "m", "7", "min7", "maj7", "6", "min6", "sus4", "7sus4", "sus2", "dim", "aug"};
+        int [] chordSteps;
+        chords.add("(select)");
+        //Checking all chord types for each of the 12 notes, starting from C and ending on B
+        for (int i = 0; i < 12; i++) {
+            chordStart = keys[i].keyId;
+            if ((chordStart.charAt(1)) == 's') {
+                chordStart = chordStart.substring(0, 1);
+                chordStart = chordStart + "#";
+            }
+            else chordStart = chordStart.substring(0, 1);
+            chordStart = chordStart.toUpperCase();
+            int j = 0;
+            while (j < chordTypes.length) {
+                chordSteps = chordSteps(chordTypes[j]);
+                boolean isChord = true;
+                int step = i;
+                //If all notes within chord are in scale, the chord is added to chord spinner
+                for (int chordStep : chordSteps) {
+                    if (!keys[step].scaleCheck()) {
+                        isChord = false;
+                        break;
+                    }
+                    step = step + chordStep;
+                }
+                if (!keys[step].scaleCheck()) isChord = false;
+                if (isChord) chords.add(chordStart + chordTypes[j]);
+                j++;
+            }
+        }
+        //sorting chords by chord type
+        ArrayList<String> sortedChords = new ArrayList<>();
+        ArrayList<String> majChords = new ArrayList<>();
+        ArrayList<String> mChords = new ArrayList<>();
+        ArrayList<String> sevenChords = new ArrayList<>();
+        ArrayList<String> min7Chords = new ArrayList<>();
+        ArrayList<String> maj7Chords = new ArrayList<>();
+        ArrayList<String> sixChords = new ArrayList<>();
+        ArrayList<String> min6Chords = new ArrayList<>();
+        ArrayList<String> sus4Chords = new ArrayList<>();
+        ArrayList<String> sevenSus4Chords = new ArrayList<>();
+        ArrayList<String> sus2Chords = new ArrayList<>();
+        ArrayList<String> dimChords = new ArrayList<>();
+        ArrayList<String> augChords = new ArrayList<>();
+        String chordType;
+        for (int i = 0; i < chords.size(); i++) {
+            chordType = chords.get(i);
+            if (chordType.charAt(1) == '#') chordType = chordType.substring(2);
+            else chordType = chordType.substring(1);
+            switch (chordType) {
+                case "maj": {
+                    majChords.add(chords.get(i));
+                    break;
+                }
+                case "m": {
+                    mChords.add(chords.get(i));
+                    break;
+                }
+                case "7": {
+                    sevenChords.add(chords.get(i));
+                    break;
+                }
+                case "min7": {
+                    min7Chords.add(chords.get(i));
+                    break;
+                }
+                case "maj7": {
+                    maj7Chords.add(chords.get(i));
+                    break;
+                }
+                case "6": {
+                    sixChords.add(chords.get(i));
+                    break;
+                }
+                case "min6": {
+                    min6Chords.add(chords.get(i));
+                    break;
+                }
+                case "sus4": {
+                    sus4Chords.add(chords.get(i));
+                    break;
+                }
+                case "7sus4": {
+                    sevenSus4Chords.add(chords.get(i));
+                    break;
+                }
+                case "sus2": {
+                    sus2Chords.add(chords.get(i));
+                    break;
+                }
+                case "dim": {
+                    dimChords.add(chords.get(i));
+                    break;
+                }
+                case "aug": {
+                    augChords.add(chords.get(i));
+                    break;
+                }
+            }
+        }
+        sortedChords.add("(select)");
+        sortedChords.addAll(majChords);
+        sortedChords.addAll(mChords);
+        sortedChords.addAll(sevenChords);
+        sortedChords.addAll(min7Chords);
+        sortedChords.addAll(maj7Chords);
+        sortedChords.addAll(sixChords);
+        sortedChords.addAll(min6Chords);
+        sortedChords.addAll(sus4Chords);
+        sortedChords.addAll(sevenSus4Chords);
+        sortedChords.addAll(sus2Chords);
+        sortedChords.addAll(dimChords);
+        sortedChords.addAll(augChords);
+        ArrayAdapter<String> chordAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, sortedChords);
+        chordAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        chordSpinner.setAdapter(chordAdapter);
+    }
+
+
+    //setChord: Called when a chord is selected from chord spinner -> Handles which keys will be selected for the corresponding chord
+    public void setChord() {
+        String chordStart, chordType;
+        int i = 0;
+        int [] steps;
+        ArrayList<String> chordNotes = new ArrayList<>();
+        if (chord.equals("(select)")) {
+            while (i < keys.length) {
+                keys[i].clearChord();
+              i++;
+            }
+            infoChordDisplay.setText(R.string.noChordNotes);
+        }
+        //selection
+        else {
+            chordStart = chord.substring(0, 1);
+            if ((chord.charAt(1)) == '#') {
+                chordStart = chordStart + "s";
+                chordType = chord.substring(2);
+            }
+            else chordType = chord.substring(1);
+            steps = chordSteps(chordType);
+            chordStart = chordStart.toLowerCase();
+            chordStart = chordStart + "1"; //to match resource id of key
+            i = 0;
+            while (!((keys[i].keyId).equals(chordStart))) i++;
+            for (int step : steps) {
+                keys[i].setChord();
+                chordNotes.add(keys[i].keyId);
+                i = i + step;
+            }
+            keys[i].setChord();
+            chordNotes.add(keys[i].keyId);
+
+            //updating chord notes for info section
+            String note;
+            String chordNotesFinal = "";
+            for (int j = 0; j < chordNotes.size(); j++) {
+                note = chordNotes.get(j);
+                if (note.charAt(1) == 's') note = note.substring(0, 1) + "#";
+                else note = note.substring(0, 1);
+                note = note.toUpperCase();
+                if (j == 0) chordNotesFinal = note;
+                else chordNotesFinal = chordNotesFinal + ", " + note;
+            }
+            infoChordDisplay.setText(chordNotesFinal);
+
+            //hiding answer during quiz
+            if (quizRunning && isChord) {
+                maxInput = chordNotes.size();
+                correctAnswer = chordNotesFinal;
+                infoScaleDisplay.setText("");
+                infoChordDisplay.setText("");
+                ArrayAdapter<String> scaleAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, noSelection);
+                scaleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                scaleSpinner.setAdapter(scaleAdapter);
+            }
+        }
+    }
+
+
+    /*****Quiz Game Methods*****/
+
+    //randomizer: Used during quiz -> Chooses a random scale or chord for any one root note
     String randomizer(int type, int difficulty) {
         Random randomizer = new Random();
         String [] rootNotesQuiz = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
@@ -1246,7 +975,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 rootNotes.check(rootB.getId());
                 break;
         }
-
     }
 
 
@@ -1257,13 +985,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         lessDuplicates.add(duplicateRequest);
         while (request.equals(duplicateRequest)) {
             if (lessDuplicates.size() == 1) break;
-                for (int i = 0; i < lessDuplicates.size() - 1; i++) {
-                    duplicateRequest = lessDuplicates.get(i);
-                    if (request.equals(duplicateRequest)) {
-                        request = randomizer(quizType, quizDifficulty);
-                        break;
-                    }
+            for (int i = 0; i < lessDuplicates.size() - 1; i++) {
+                duplicateRequest = lessDuplicates.get(i);
+                if (request.equals(duplicateRequest)) {
+                    request = randomizer(quizType, quizDifficulty);
+                    break;
                 }
+            }
         }
         quizRequest.setText(request);
         String rootNoteSelection;
@@ -1290,10 +1018,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
     //quizGame: Called when quiz button is clicked -> Handles scoring and functionality of the quiz game
+    @SuppressLint("ClickableViewAccessibility")
     public void quizGame() {
         String userInputDisplay = "";
         String inputKey;
-        boolean selShown = false;
+
         for (int i = 0; i < userInput.size(); i++) {
             inputKey = userInput.get(i);
             if (inputKey.charAt(1) == 's') inputKey = inputKey.substring(0, 1) + "#";
@@ -1302,7 +1031,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             userInputDisplay = userInputDisplay + inputKey + ", ";
         }
         userInputArea.setText(userInputDisplay);
-        if (!hideSelection.isChecked()) selShown = true;
 
         //answer is fully entered (either correct or incorrect)
         if (userInputPos == maxInput) {
@@ -1312,13 +1040,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             //checking for correct answer
             if ((userInputArea.getText()).equals(correctAnswer)) {
                 checkMark.setVisibility(View.VISIBLE);
-                updateQuizAnswer();
                 if (!selShown) correctlyAnswered++; //if Hide Selection was unchecked, does not count as answered correctly
+                selShown = false;
+                updateQuizAnswer();
                 questionNumber++;
                 numCompleted.setText(Integer.toString(questionNumber));
                 hideSelection.setChecked(true);
                 hideSel = true;
-                paintKey(hideSel, hideNote);
 
                 if (questionNumber == 10) {
                     checkMark.setVisibility(View.INVISIBLE);
@@ -1353,7 +1081,359 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         }
                     });
                 }
-            }, 95);
+            }, 120);
         }
+    }
+
+
+    /*****Simple Initialization Methods*****/
+
+    //difficultyAndUIInitialization: Called when app is first launched to associate scales and chords with their set difficulties for quiz, also initializing UI elements
+    public void difficultyAndUIInitialization() {
+        //setting difficulties
+        easyScales.add("Major Scale");
+        easyScales.add("Minor Scale");
+        easyScales.add("Major Pentatonic Scale");
+        easyScales.add("Minor Pentatonic Scale");
+        medScales.add("Blues Scale");
+        medScales.add("Augmented Scale");
+        medScales.add("Diminished Scale");
+        hardScales.add("Dorian Scale");
+        hardScales.add("Locrian Scale");
+        hardScales.add("Lydian Scale");
+        hardScales.add("Mixolydian Scale");
+        hardScales.add("Phrygian Scale");
+
+        easyChords.add("maj Chord");
+        easyChords.add("m Chord");
+        easyChords.add("7 Chord");
+        medChords.add("min7 Chord");
+        medChords.add("maj7 Chord");
+        medChords.add("6 Chord");
+        medChords.add("min6 Chord");
+        hardChords.add("sus4 Chord");
+        hardChords.add("7sus4 Chord");
+        hardChords.add("sus2 Chord");
+        hardChords.add("dim Chord");
+        hardChords.add("aug Chord");
+
+        //initializing UI elements
+        rootNotes = findViewById(R.id.rootNotes);
+        scaleSpinner = findViewById(R.id.scaleType);
+        chordSpinner = findViewById(R.id.chord);
+        infoScale = findViewById(R.id.infoSelectedScale);
+        infoScaleDisplay = findViewById(R.id.infoScaleNotes);
+        infoChord = findViewById(R.id.infoSelectedChord);
+        infoChordDisplay = findViewById(R.id.infoChordNotes);
+        hideSelection = findViewById(R.id.hideSelection);
+        muteSound = findViewById(R.id.muteSound);
+
+        c1 = findViewById(R.id.c1);
+        cs1 = findViewById(R.id.cs1);
+        d1 = findViewById(R.id.d1);
+        ds1 = findViewById(R.id.ds1);
+        e1 = findViewById(R.id.e1);
+        f1 = findViewById(R.id.f1);
+        fs1 = findViewById(R.id.fs1);
+        g1 = findViewById(R.id.g1);
+        gs1 = findViewById(R.id.gs1);
+        a1 = findViewById(R.id.a1);
+        as1 = findViewById(R.id.as1);
+        b1 = findViewById(R.id.b1);
+        c2 = findViewById(R.id.c2);
+        cs2 = findViewById(R.id.cs2);
+        d2 = findViewById(R.id.d2);
+        ds2 = findViewById(R.id.ds2);
+        e2 = findViewById(R.id.e2);
+        f2 = findViewById(R.id.f2);
+        fs2 = findViewById(R.id.fs2);
+        g2 = findViewById(R.id.g2);
+        gs2 = findViewById(R.id.gs2);
+        a2 = findViewById(R.id.a2);
+        as2 = findViewById(R.id.as2);
+        b2 = findViewById(R.id.b2);
+        keyImagePress(c1);
+        keyImagePress(cs1);
+        keyImagePress(d1);
+        keyImagePress(ds1);
+        keyImagePress(e1);
+        keyImagePress(f1);
+        keyImagePress(fs1);
+        keyImagePress(g1);
+        keyImagePress(gs1);
+        keyImagePress(a1);
+        keyImagePress(as1);
+        keyImagePress(b1);
+        keyImagePress(c2);
+        keyImagePress(cs2);
+        keyImagePress(d2);
+        keyImagePress(ds2);
+        keyImagePress(e2);
+        keyImagePress(f2);
+        keyImagePress(fs2);
+        keyImagePress(g2);
+        keyImagePress(gs2);
+        keyImagePress(a2);
+        keyImagePress(as2);
+        keyImagePress(b2);
+
+        rootC = findViewById(R.id.c);
+        rootCs = findViewById(R.id.cs);
+        rootD = findViewById(R.id.d);
+        rootDs = findViewById(R.id.ds);
+        rootE = findViewById(R.id.e);
+        rootF = findViewById(R.id.f);
+        rootFs = findViewById(R.id.fs);
+        rootG = findViewById(R.id.g);
+        rootGs = findViewById(R.id.gs);
+        rootA = findViewById(R.id.a);
+        rootAs = findViewById(R.id.as);
+        rootB = findViewById(R.id.b);
+
+        quizTypeBar = findViewById(R.id.quizType);
+        quizDifficultyBar = findViewById(R.id.quizDifficulty);
+        fixedQuizTypeText = findViewById(R.id.fixedQuizTypeText);
+        fixedQuizDiffText = findViewById(R.id.fixedQuizDiffText);
+        quizTypeText = findViewById(R.id.quizTypeText);
+        quizDiffText = findViewById(R.id.quizDiffText);
+        quizButton = findViewById(R.id.quizButton);
+
+        enterText = findViewById(R.id.enterText);
+        quizRequest = findViewById(R.id.quizRequest);
+        userInputArea = findViewById(R.id.userInput);
+        inputText = findViewById(R.id.inputText);
+        quizRules = findViewById(R.id.quizRules);
+        completedText = findViewById(R.id.completedText);
+        numCompleted = findViewById(R.id.numCompleted);
+        finalCompleted = findViewById(R.id.finalCompleted);
+
+        xMark = findViewById(R.id.incorrectAnswer);
+        checkMark = findViewById(R.id.correctAnswer);
+    }
+
+
+    //keysInitialization: Called when app is first launched to set initial key properties
+    public void keysInitialization() {
+        boolean isScale = false;
+        boolean isChord = false;
+        String keyID;
+        for (int i = 0; i < keys.length; i++) {
+            if (i == 0) {
+                keyID = "c1";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 1) {
+                keyID = "cs1";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 2) {
+                keyID = "d1";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 3) {
+                keyID = "ds1";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 4) {
+                keyID = "e1";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 5) {
+                keyID = "f1";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 6) {
+                keyID = "fs1";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 7) {
+                keyID = "g1";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 8) {
+                keyID = "gs1";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 9) {
+                keyID = "a1";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 10) {
+                keyID = "as1";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 11) {
+                keyID = "b1";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 12) {
+                keyID = "c2";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 13) {
+                keyID = "cs2";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 14) {
+                keyID = "d2";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 15) {
+                keyID = "ds2";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 16) {
+                keyID = "e2";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 17) {
+                keyID = "f2";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 18) {
+                keyID = "fs2";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 19) {
+                keyID = "g2";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 20) {
+                keyID = "gs2";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 21) {
+                keyID = "a2";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 22) {
+                keyID = "as2";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 23) {
+                keyID = "b2";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+        }
+    }
+
+
+    //scaleSteps: Called when scale type spinner or root note is updated -> Determines what order of keys must be selected to match the type of scale selected
+    public int[] scaleSteps(String scaleType) {
+        int[] steps = {};
+        switch (scaleType) {
+            case "(select)":
+                steps = new int[] {};
+                break;
+            case "Major":
+                steps = new int[] {2, 2, 1, 2, 2, 2, 1};
+                break;
+            case "Minor":
+                steps = new int[] {2, 1, 2, 2, 1, 2, 2};
+                break;
+            case "Major Pentatonic":
+                steps = new int[] {2, 2, 3, 2, 3};
+                break;
+            case "Minor Pentatonic":
+                steps = new int[] {3, 2, 2, 3, 2};
+                break;
+            case "Blues":
+                steps = new int[] {3, 2, 1, 1, 3, 2};
+                break;
+            case "Augmented":
+                steps = new int[] {3, 1, 3, 1, 3, 1};
+                break;
+            case "Diminished":
+                steps = new int[] {2, 1, 2, 1, 2, 1, 2, 1};
+                break;
+            case "Dorian":
+                steps = new int[] {2, 1, 2, 2, 2, 1, 2};
+                break;
+            case "Locrian":
+                steps = new int[] {1, 2, 2, 1, 2, 2, 2};
+                break;
+            case "Lydian":
+                steps = new int[] {2, 2, 2, 1, 2, 1, 2};
+                break;
+            case "Mixolydian":
+                steps = new int[] {2, 2, 1, 2, 2, 1, 2};
+                break;
+            case "Phrygian":
+                steps = new int[] {1, 2, 2, 2, 1, 2, 2};
+                break;
+        }
+        return steps;
+    }
+
+
+    //chordSteps: Called when chord spinner is updated -> Acts similar to scaleSteps function but for chord types instead
+    public int[] chordSteps(String chordType) {
+        int[] steps = {};
+        switch (chordType) {
+            case "(select)":
+                steps = new int[] {};
+                break;
+            case "maj":
+                steps = new int[] {4, 3};
+                break;
+            case "m":
+                steps = new int[] {3, 4};
+                break;
+            case "7":
+                steps = new int[] {4, 3, 3};
+                break;
+            case "min7":
+                steps = new int[] {3, 4, 3};
+                break;
+            case "maj7":
+                steps = new int[] {4, 3, 4};
+                break;
+            case "6":
+                steps = new int[] {4, 3, 2};
+                break;
+            case "min6":
+                steps = new int[] {3, 4, 2};
+                break;
+            case "sus4":
+                steps = new int[] {5, 2};
+                break;
+            case "7sus4":
+                steps = new int[] {5, 2, 3};
+                break;
+            case "sus2":
+                steps = new int[] {2, 5};
+                break;
+            case "dim":
+                steps = new int[] {3, 3};
+                break;
+            case "aug":
+                steps = new int[] {4, 4};
+                break;
+        }
+        return steps;
     }
 }

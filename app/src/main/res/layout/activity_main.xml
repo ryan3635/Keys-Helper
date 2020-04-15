@@ -333,7 +333,7 @@
 
     <Spinner
         android:id="@+id/scaleType"
-        android:layout_width="164dp"
+        android:layout_width="185dp"
         android:layout_height="50dp"
         android:layout_marginStart="28dp"
         android:layout_marginTop="32dp"
@@ -344,14 +344,14 @@
         android:id="@+id/chord"
         android:layout_width="145dp"
         android:layout_height="50dp"
-        android:layout_marginStart="33dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toEndOf="@+id/scaleType"
         app:layout_constraintTop_toBottomOf="@+id/keys" />
 
     <CheckBox
         android:id="@+id/hideSelection"
-        android:layout_width="wrap_content"
+        android:layout_width="132dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="145dp"
         android:onClick="checkBoxes"
@@ -364,7 +364,7 @@
 
     <CheckBox
         android:id="@+id/hideNotes"
-        android:layout_width="wrap_content"
+        android:layout_width="108dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="145dp"
         android:checked="true"
@@ -378,7 +378,7 @@
 
     <CheckBox
         android:id="@+id/muteSound"
-        android:layout_width="90dp"
+        android:layout_width="95dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="145dp"
         android:checked="false"
@@ -405,8 +405,9 @@
         android:id="@+id/verticalBorder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="382dp"
+        android:layout_marginStart="377dp"
         android:contentDescription="@string/verticalBorder"
+        app:layout_constraintEnd_toStartOf="@+id/hideSelection"
         app:layout_constraintStart_toStartOf="@+id/rootNotes"
         app:layout_constraintTop_toBottomOf="@+id/keys"
         app:srcCompat="@drawable/verticalline" />
@@ -604,7 +605,7 @@
         android:id="@+id/fixedChordType"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="33dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="13dp"
         android:text="@string/chord"
         android:textColor="#FFFFFF"
@@ -833,9 +834,9 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="5dp"
         android:max="2"
         android:progress="0"
+        app:layout_constraintBottom_toTopOf="@+id/fixedQuizDiffText"
         app:layout_constraintStart_toEndOf="@+id/verticalBorder"
         app:layout_constraintTop_toBottomOf="@+id/fixedQuizTypeText" />
 
@@ -844,9 +845,9 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="5dp"
         android:max="2"
         android:progress="0"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
         app:layout_constraintStart_toEndOf="@+id/verticalBorder"
         app:layout_constraintTop_toBottomOf="@+id/fixedQuizDiffText" />
 
@@ -858,6 +859,7 @@
         android:layout_marginTop="5dp"
         android:text="@string/quizTypeText"
         android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/quizType"
         app:layout_constraintStart_toEndOf="@+id/verticalBorder"
         app:layout_constraintTop_toBottomOf="@+id/keys" />
 
@@ -867,10 +869,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="11dp"
-        android:layout_marginBottom="30dp"
         android:text="@string/quizDiffText"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
+        app:layout_constraintBottom_toTopOf="@+id/quizDifficulty"
         app:layout_constraintStart_toEndOf="@+id/verticalBorder"
         app:layout_constraintTop_toBottomOf="@+id/quizType" />
 
@@ -882,6 +883,7 @@
         android:layout_marginTop="5dp"
         android:text="@string/quizTypeScales"
         android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/quizType"
         app:layout_constraintStart_toEndOf="@+id/fixedQuizTypeText"
         app:layout_constraintTop_toBottomOf="@+id/keys" />
 
@@ -891,10 +893,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:layout_marginTop="11dp"
-        android:layout_marginBottom="30dp"
         android:text="@string/quizDiffEasy"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
+        app:layout_constraintBottom_toTopOf="@+id/quizDifficulty"
         app:layout_constraintStart_toEndOf="@+id/fixedQuizDiffText"
         app:layout_constraintTop_toBottomOf="@+id/quizType" />
 

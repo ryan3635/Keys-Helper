@@ -1,4 +1,4 @@
-# KeysNewb - By Ryan Murphy
+# Keys Helper - By Ryan Murphy
 Thank you for taking a look at my Android app! This is my first solo project since I graduated from university and has been a great learning experience for me. I used Java and XML through Android Studio to make this application possible.
 
 KeysNewb is a simple app that can be used for learning keyboard and piano, or even as a reference tool for the more experienced!

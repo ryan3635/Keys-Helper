@@ -389,7 +389,7 @@
         app:srcCompat="@drawable/horizontalline" />
 
     <ImageView
-        android:id="@+id/horizontalBorder3"
+        android:id="@+id/horizontalBorderKeys"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/horizontalBorder"

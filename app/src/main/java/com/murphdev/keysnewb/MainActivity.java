@@ -47,13 +47,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     RadioGroup rootNotes;
     RadioButton root, rootC, rootCs, rootD, rootDs, rootE, rootF, rootFs, rootG, rootGs, rootA, rootAs, rootB;
     Spinner scaleSpinner, chordSpinner;
-    CheckBox hideSelection, muteSound;
+    CheckBox hideSelection;
     SeekBar quizTypeBar, quizDifficultyBar;
     Key[] keys = new Key[24];
     Key key;
 
     String scale, chord, correctAnswer;
-    boolean hideSel, hideNote, quizRunning, isChord, selShown, soundMute;
+    boolean hideSel, hideNote, quizRunning, isChord, selShown;
     int questionNumber = 0, answerAttempts = 0, correctlyAnswered = 0, userInputPos = 0, maxInput, quizType, quizDifficulty;
     String [] noSelection = {"(select)"};
     ArrayList<String> userInput = new ArrayList<>();
@@ -88,7 +88,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         chord = "(select)";
         quizRunning = false;
         selShown = false; //used to check if user needed the selection to be shown during quiz
-        soundMute = false;
         difficultyAndUIInitialization();
 
         //scale type and chord selection spinners initialization
@@ -268,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         //plays sound
-                        if (!soundMute) soundPool.play(keySound, newUserVolume, newUserVolume, 1, 0, 1);
+                        soundPool.play(keySound, newUserVolume, newUserVolume, 1, 0, 1);
 
                         //displays feedback on key click
                         if ((noteId.charAt(1)) == 's') keyImage.setImageResource(R.drawable.blackkeyfeedback);
@@ -356,9 +355,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 break;
             case R.id.hideNotes:
                 hideNote = isChecked;
-                break;
-            case R.id.muteSound:
-                soundMute = isChecked;
                 break;
         }
         paintKey(hideSel, hideNote);
@@ -1135,7 +1131,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         infoChord = findViewById(R.id.infoSelectedChord);
         infoChordDisplay = findViewById(R.id.infoChordNotes);
         hideSelection = findViewById(R.id.hideSelection);
-        muteSound = findViewById(R.id.muteSound);
 
         c1 = findViewById(R.id.c1);
         cs1 = findViewById(R.id.cs1);

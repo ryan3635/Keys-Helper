@@ -8,7 +8,6 @@
     <string name="noChord">(select)</string>
     <string name="hideSelection">Hide Selection</string>
     <string name="hideNotes">Hide Notes</string>
-    <string name="muteKeys">Mute</string>
 
     <!-- Information area -->
     <string name="selectedScale"><u>Scale</u></string>

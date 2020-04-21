@@ -358,9 +358,10 @@
         android:text="@string/hideSelection"
         android:textColor="#DBE160"
         android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/fixedScaleText"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/verticalBorder"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
+        app:layout_constraintTop_toBottomOf="@+id/keys"
+        tools:layout_editor_absoluteX="384dp" />
 
     <CheckBox
         android:id="@+id/hideNotes"
@@ -373,21 +374,7 @@
         android:textColor="#C100C6AD"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/hideSelection"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <CheckBox
-        android:id="@+id/muteSound"
-        android:layout_width="95dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="145dp"
-        android:checked="false"
-        android:onClick="checkBoxes"
-        android:text="@string/muteKeys"
-        android:textColor="#C1FFFFFF"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/hideNotes"
+        app:layout_constraintStart_toStartOf="@+id/fixedChordText"
         app:layout_constraintTop_toBottomOf="@+id/keys" />
 
     <ImageView
@@ -402,10 +389,20 @@
         app:srcCompat="@drawable/horizontalline" />
 
     <ImageView
+        android:id="@+id/horizontalBorder3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/horizontalBorder"
+        app:layout_constraintStart_toStartOf="@+id/keys"
+        app:layout_constraintTop_toBottomOf="@+id/keys"
+        app:srcCompat="@drawable/horizontallinekeys" />
+
+    <ImageView
         android:id="@+id/verticalBorder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="377dp"
+        android:layout_marginEnd="5dp"
         android:contentDescription="@string/verticalBorder"
         app:layout_constraintEnd_toStartOf="@+id/hideSelection"
         app:layout_constraintStart_toStartOf="@+id/rootNotes"

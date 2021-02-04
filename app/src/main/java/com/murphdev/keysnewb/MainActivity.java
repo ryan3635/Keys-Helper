@@ -1381,7 +1381,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 steps = new int[] {1, 2, 2, 1, 2, 2, 2};
                 break;
             case "Lydian":
-                steps = new int[] {2, 2, 2, 1, 2, 1, 2};
+                steps = new int[] {2, 2, 2, 1, 2, 2, 1};
                 break;
             case "Mixolydian":
                 steps = new int[] {2, 2, 1, 2, 2, 1, 2};

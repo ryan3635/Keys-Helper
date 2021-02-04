@@ -3,8 +3,6 @@ Thank you for taking a look at my Android app! This is my first solo project sin
 
 Keys Helper is a simple app that can be used for learning keyboard and piano, or even as a reference tool for the more experienced!
 
-*Keys Helper is available for download on Google Play Store*
-
 ## Compatibility
 
 Keys Helper is an Android application - so it will only work on Android devices. It requires a large amount of screen space in order to show the full keyboard - this means that older smartphones with smaller resolutions may unfortunately run into problems (such as the full keyboard not showing on-screen). 
@@ -13,11 +11,13 @@ For devices that run into screen space issues - the app still has basic function
 
 Keys Helper is primarily developed to work on smartphones rather than tablets, however, it will still function normally on a tablet as well.
 
-## Custom Installation
+## Installation
 
-1. Downloading through GitHub using a computer: Download Keys-Helper.apk located in master and then plug the Android device into the computer. Transfer the apk file into the "Downloads" folder onto the device
+*Keys Helper will soon be available for download on the Google Play Store, see below for custom installation
 
-   Downloading through GitHub using an Android device: Download Keys-Helper.apk located in master. The saved apk file will by default be saved to the "Downloads" folder onto the device
+1. Downloading using a computer: Download Keys-Helper.apk located in master and then plug the Android device into the computer. Transfer the apk file into the "Downloads" folder onto the device
+
+   Downloading using an Android device: Download Keys-Helper.apk located in master. The saved apk file will by default be saved to the "Downloads" folder onto the device
 
 2. Open the Android app "My Files", or something along the lines of which allows you to browse data that is stored on the device. If there is no shortcut for "Installation APKs", navigate to the "Downloads" folder and Keys-Helper.apk will be listed
 
@@ -29,18 +29,3 @@ Keys Helper is primarily developed to work on smartphones rather than tablets, h
 Feel free to open any issues that are persistent within the app and I will do my best to address them as soon as possible.
 
 Thank you for your support and I hope you enjoy learning with Keys Helper!
-
-### Source Code
-The bulk of the source code and resources can be found in the following locations:
-
-- MainActivity and Key java classes -> app/src/main/java/com/murphdev/keysnewb/
-
-- User interface xml file -> app/src/main/res/layout/activity_main.xml
-
-- Strings xml file -> app/src/main/res/values/strings.xml
-
-- Android manifest file -> app/src/main/AndroidManifest.xml
-
-- Keyboard sound files -> app/src/main/res/raw
-
-- Images -> app/src/main/res/drawable

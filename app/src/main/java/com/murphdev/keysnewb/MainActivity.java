@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     Context context = this;
     AudioManager audioManager;
     SoundPool soundPool;
-    ImageButton keyButton, c1, cs1, d1, ds1, e1, f1, fs1, g1, gs1, a1, as1, b1, c2, cs2, d2, ds2, e2, f2, fs2, g2, gs2, a2, as2, b2;
+    ImageButton keyButton, c1, cs1, d1, ds1, e1, f1, fs1, g1, gs1, a1, as1, b1, c2, cs2, d2, ds2, e2, f2, fs2, g2, gs2, a2, as2, b2, c3, cs3, d3, ds3, e3;
     ImageView xMark, checkMark;
     TextView infoScale, infoChord, infoScaleDisplay, infoChordDisplay; //textviews for information section
     TextView fixedQuizTypeText, fixedQuizDiffText, quizTypeText, quizDiffText; //textviews for quiz selection
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     Spinner scaleSpinner, chordSpinner;
     CheckBox hideSelection;
     SeekBar quizTypeBar, quizDifficultyBar;
-    Key[] keys = new Key[24];
+    Key[] keys = new Key[29];
     Key key;
 
     String scale, chord, correctAnswer;
@@ -256,7 +256,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             String noteId = getResources().getResourceEntryName(id);
             int keySoundFileName = res.getIdentifier(noteId, "raw", context.getPackageName());
             int keySound = soundPool.load(context, keySoundFileName, 1);
-
+ 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -550,7 +550,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 int key = getResources().getIdentifier(keyID, "id", context.getPackageName());
                 keyButton = findViewById(key);
                 isBlackKey = keyID.equals("cs1") || keyID.equals("ds1") || keyID.equals("fs1") || keyID.equals("gs1") || keyID.equals("as1") ||
-                        keyID.equals("cs2") || keyID.equals("ds2") || keyID.equals("fs2") || keyID.equals("gs2") || keyID.equals("as2");
+                        keyID.equals("cs2") || keyID.equals("ds2") || keyID.equals("fs2") || keyID.equals("gs2") || keyID.equals("as2") || keyID.equals("cs3") || keyID.equals("ds3");
 
                 if (i.chordCheck()) {
                     if (isBlackKey) keyButton.setImageResource(R.drawable.blackchord);
@@ -647,8 +647,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         //hiding answer during quiz
         if (quizRunning && !isChord) {
-            maxInput = scaleNotesCondensed.size();
-            correctAnswer = scaleNotesFinal;
+            maxInput = scaleNotesCondensed.size() + 1;
+            correctAnswer = scaleNotesFinal + ", " + rootInfoNote;
             infoScaleDisplay.setText("");
             infoChordDisplay.setText("");
             ArrayAdapter<String> chordAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, noSelection);
@@ -1156,6 +1156,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         a2 = findViewById(R.id.a2);
         as2 = findViewById(R.id.as2);
         b2 = findViewById(R.id.b2);
+        c3 = findViewById(R.id.c3);
+        cs3 = findViewById(R.id.cs3);
+        d3 = findViewById(R.id.d3);
+        ds3 = findViewById(R.id.ds3);
+        e3 = findViewById(R.id.e3);
+
         keyImagePress(c1);
         keyImagePress(cs1);
         keyImagePress(d1);
@@ -1180,6 +1186,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         keyImagePress(a2);
         keyImagePress(as2);
         keyImagePress(b2);
+        keyImagePress(c3);
+        keyImagePress(cs3);
+        keyImagePress(d3);
+        keyImagePress(ds3);
+        keyImagePress(e3);
 
         rootC = findViewById(R.id.c);
         rootCs = findViewById(R.id.cs);
@@ -1339,6 +1350,31 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
             else if (i == 23) {
                 keyID = "b2";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 24) {
+                keyID = "c3";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 25) {
+                keyID = "cs3";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 26) {
+                keyID = "d3";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 27) {
+                keyID = "ds3";
+                key = new Key(keyID, isScale, isChord);
+                keys[i] = key;
+            }
+            else if (i == 28) {
+                keyID = "e3";
                 key = new Key(keyID, isScale, isChord);
                 keys[i] = key;
             }

@@ -10,8 +10,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/keys"
-        android:layout_width="674dp"
+        android:layout_width="1000dp"
         android:layout_height="192dp"
+        android:scaleX="1.05"
+        android:translationX="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -198,16 +200,58 @@
 
         <ImageButton
             android:id="@+id/b2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="49dp"
+            android:layout_height="193dp"
             android:layout_marginStart="624dp"
             android:background="#00000000"
             android:contentDescription="@string/bNote"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/c3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/bkey" />
+
+        <ImageButton
+            android:id="@+id/c3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="672dp"
+            android:background="#00000000"
+            android:contentDescription="@string/cNote"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/d3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/ckey" />
+
+        <ImageButton
+            android:id="@+id/d3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="720dp"
+            android:background="#00000000"
+            android:contentDescription="@string/dNote"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/e3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/dkey" />
+
+        <ImageButton
+            android:id="@+id/e3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="768dp"
+            android:background="#00000000"
+            android:contentDescription="@string/eNote"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/ekey" />
 
         <ImageButton
             android:id="@+id/cs1"
@@ -329,6 +373,30 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/askey" />
 
+        <ImageButton
+            android:id="@+id/cs3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:contentDescription="@string/csNote"
+            android:scaleX="1.2"
+            app:layout_constraintEnd_toStartOf="@+id/d3"
+            app:layout_constraintStart_toEndOf="@+id/c3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/cskey" />
+
+        <ImageButton
+            android:id="@+id/ds3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:contentDescription="@string/dsNote"
+            android:scaleX="1.2"
+            app:layout_constraintEnd_toStartOf="@+id/e3"
+            app:layout_constraintStart_toEndOf="@+id/d3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/dskey" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Spinner
@@ -342,7 +410,7 @@
 
     <Spinner
         android:id="@+id/chord"
-        android:layout_width="145dp"
+        android:layout_width="152dp"
         android:layout_height="50dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="32dp"
@@ -353,36 +421,33 @@
         android:id="@+id/hideSelection"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="145dp"
+        android:layout_marginTop="1dp"
         android:onClick="checkBoxes"
         android:text="@string/hideSelection"
         android:textColor="#DBE160"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/fixedScaleText"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
+        app:layout_constraintTop_toBottomOf="@+id/infoScaleNotes" />
 
     <CheckBox
         android:id="@+id/hideNotes"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="145dp"
+        android:layout_marginTop="1dp"
         android:checked="true"
         android:onClick="checkBoxes"
         android:text="@string/hideNotes"
         android:textColor="#C100C6AD"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/fixedChordText"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
+        app:layout_constraintTop_toBottomOf="@+id/infoChordNotes" />
 
     <ImageView
         android:id="@+id/horizontalBorder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
+        android:layout_marginTop="100dp"
         android:contentDescription="@string/horizontalBorder"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/keys"
         app:layout_constraintTop_toBottomOf="@+id/keys"
         app:srcCompat="@drawable/horizontalline" />
@@ -392,6 +457,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/horizontalBorder"
+        android:scaleX="1.55"
         app:layout_constraintStart_toStartOf="@+id/keys"
         app:layout_constraintTop_toBottomOf="@+id/keys"
         app:srcCompat="@drawable/horizontallinekeys" />
@@ -400,9 +466,12 @@
         android:id="@+id/verticalBorder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="377dp"
+        android:layout_marginStart="371dp"
+        android:layout_marginTop="21dp"
         android:layout_marginEnd="5dp"
         android:contentDescription="@string/verticalBorder"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
         app:layout_constraintEnd_toStartOf="@+id/hideSelection"
         app:layout_constraintStart_toStartOf="@+id/rootNotes"
         app:layout_constraintTop_toBottomOf="@+id/keys"
@@ -413,13 +482,11 @@
         android:layout_width="600dp"
         android:layout_height="70dp"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="136dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="1dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/keys">
+        app:layout_constraintTop_toBottomOf="@+id/fixedRootNote">
 
         <RadioButton
             android:id="@+id/e"

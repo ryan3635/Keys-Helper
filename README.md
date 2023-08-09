@@ -3,7 +3,7 @@ Thank you for taking a look at my Android app! This is my first solo project sin
 
 Keys Helper is a simple app that can be used for learning keyboard and piano, or even as a reference tool for the more experienced!
 
-*Keys Helper is available for download on Google Play Store*
+*Keys Helper is available for download on Google Play Store - searching for MurphDev will be the easiest way to find it*
 
 ## Compatibility
 

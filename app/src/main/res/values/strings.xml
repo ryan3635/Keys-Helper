@@ -8,6 +8,7 @@
     <string name="noChord">(select)</string>
     <string name="hideSelection">Hide Selection</string>
     <string name="hideNotes">Hide Notes</string>
+    <string name="helpButton">\?</string>
 
     <!-- Information area -->
     <string name="selectedScale"><u>Scale</u></string>
@@ -16,8 +17,8 @@
     <string name="noChordNotes">""</string>
 
     <!-- Quiz game type and difficulties -->
-    <string name="quizTypeText">Quiz Type: </string>
-    <string name="quizDiffText">Difficulty: </string>
+    <string name="quizTypeText">Quiz Type </string>
+    <string name="quizDiffText">Difficulty </string>
     <string name="quizTypeScales">Scales</string>
     <string name="quizTypeChords">Chords</string>
     <string name="quizTypeScalesChords">Scales + Chords</string>
@@ -33,7 +34,6 @@
     <string name="userInput">Input: </string>
     <string name="enter">Enter: </string>
     <string name="enterInitial">-</string>
-    <string name="quizRules">Start from root note and enter the scale/chord in increasing order!</string>
     <string name="completed">Completed:</string>
     <string name="initialAnswered">0 </string>
     <string name="maxAnswered">/10</string>

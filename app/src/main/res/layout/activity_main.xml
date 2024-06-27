@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
+    android:textAlignment="gravity"
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -419,13 +420,13 @@
 
     <CheckBox
         android:id="@+id/hideSelection"
-        android:layout_width="150dp"
+        android:layout_width="145dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
         android:onClick="checkBoxes"
         android:text="@string/hideSelection"
         android:textColor="#DBE160"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/fixedScaleText"
         app:layout_constraintTop_toBottomOf="@+id/infoScaleNotes" />
 
@@ -433,12 +434,12 @@
         android:id="@+id/hideNotes"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
         android:checked="true"
         android:onClick="checkBoxes"
         android:text="@string/hideNotes"
         android:textColor="#C100C6AD"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/fixedChordText"
         app:layout_constraintTop_toBottomOf="@+id/infoChordNotes" />
 
@@ -446,8 +447,10 @@
         android:id="@+id/horizontalBorder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
         android:contentDescription="@string/horizontalBorder"
+        android:scaleX="1"
+        android:translationX="378dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/keys"
         app:layout_constraintTop_toBottomOf="@+id/keys"
         app:srcCompat="@drawable/horizontalline" />
@@ -471,7 +474,8 @@
         android:layout_marginEnd="5dp"
         android:contentDescription="@string/verticalBorder"
         android:scaleX="1.2"
-        android:scaleY="1.2"
+        android:scaleY="4"
+        android:translationY="287dp"
         app:layout_constraintEnd_toStartOf="@+id/hideSelection"
         app:layout_constraintStart_toStartOf="@+id/rootNotes"
         app:layout_constraintTop_toBottomOf="@+id/keys"
@@ -482,28 +486,30 @@
         android:layout_width="600dp"
         android:layout_height="70dp"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="1dp"
         android:orientation="horizontal"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/fixedRootNote">
+        app:layout_constraintTop_toBottomOf="@+id/scaleType">
 
         <RadioButton
             android:id="@+id/e"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
+            android:layout_height="30dp"
             android:onClick="rootUpdate"
             android:scaleX="0.75"
             android:scaleY="0.75"
             android:text="@string/eNote"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:translationY="20dp" />
+            android:translationX="6dp"
+            android:translationY="18dp" />
 
         <RadioButton
             android:id="@+id/c"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
+            android:layout_height="30dp"
             android:checked="true"
             android:onClick="rootUpdate"
             android:scaleX="0.75"
@@ -515,20 +521,20 @@
         <RadioButton
             android:id="@+id/cs"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
+            android:layout_height="30dp"
             android:onClick="rootUpdate"
             android:scaleX="0.75"
             android:scaleY="0.75"
             android:text="@string/csNote"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:translationX="-47dp"
-            android:translationY="42dp" />
+            android:translationX="-48dp"
+            android:translationY="30dp" />
 
         <RadioButton
             android:id="@+id/d"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
+            android:layout_height="30dp"
             android:onClick="rootUpdate"
             android:scaleX="0.75"
             android:scaleY="0.75"
@@ -540,20 +546,20 @@
         <RadioButton
             android:id="@+id/ds"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
+            android:layout_height="30dp"
             android:onClick="rootUpdate"
             android:scaleX="0.75"
             android:scaleY="0.75"
             android:text="@string/dsNote"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:translationX="-97dp"
-            android:translationY="42dp" />
+            android:translationX="-98dp"
+            android:translationY="30dp" />
 
         <RadioButton
             android:id="@+id/f"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
+            android:layout_height="30dp"
             android:onClick="rootUpdate"
             android:scaleX="0.75"
             android:scaleY="0.75"
@@ -565,20 +571,20 @@
         <RadioButton
             android:id="@+id/fs"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
+            android:layout_height="30dp"
             android:onClick="rootUpdate"
             android:scaleX="0.75"
             android:scaleY="0.75"
             android:text="@string/fsNote"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:translationX="-145dp"
-            android:translationY="42dp" />
+            android:translationX="-146dp"
+            android:translationY="30dp" />
 
         <RadioButton
             android:id="@+id/g"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
+            android:layout_height="30dp"
             android:onClick="rootUpdate"
             android:scaleX="0.75"
             android:scaleY="0.75"
@@ -590,20 +596,20 @@
         <RadioButton
             android:id="@+id/gs"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
+            android:layout_height="30dp"
             android:onClick="rootUpdate"
             android:scaleX="0.75"
             android:scaleY="0.75"
             android:text="@string/gsNote"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:translationX="-195dp"
-            android:translationY="42dp" />
+            android:translationX="-196dp"
+            android:translationY="30dp" />
 
         <RadioButton
             android:id="@+id/a"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
+            android:layout_height="30dp"
             android:onClick="rootUpdate"
             android:scaleX="0.75"
             android:scaleY="0.75"
@@ -615,28 +621,28 @@
         <RadioButton
             android:id="@+id/as"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
+            android:layout_height="30dp"
             android:onClick="rootUpdate"
             android:scaleX="0.75"
             android:scaleY="0.75"
             android:text="@string/asNote"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:translationX="-244dp"
-            android:translationY="42dp" />
+            android:translationX="-245dp"
+            android:translationY="30dp" />
 
         <RadioButton
             android:id="@+id/b"
             android:layout_width="58dp"
-            android:layout_height="25dp"
+            android:layout_height="30dp"
             android:onClick="rootUpdate"
             android:scaleX="0.75"
             android:scaleY="0.75"
             android:text="@string/bNote"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:translationX="-250dp"
-            android:translationY="20dp" />
+            android:translationX="-259dp"
+            android:translationY="18dp" />
 
     </RadioGroup>
 
@@ -651,18 +657,6 @@
         android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="@+id/keys"
         app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/fixedRootNote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="140dp"
-        android:text="@string/root"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintStart_toStartOf="@+id/rootNotes"
-        app:layout_constraintTop_toTopOf="@+id/horizontalBorder" />
 
     <TextView
         android:id="@+id/fixedChordType"
@@ -748,19 +742,20 @@
 
     <Button
         android:id="@+id/quizButton"
-        android:layout_width="60dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="165dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginBottom="25dp"
-        android:background="@android:color/transparent"
+        android:layout_width="45dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="260dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/roundbutton"
         android:text="@string/quizButton"
-        android:textSize="12sp"
+        android:textColor="#22CABB"
+        android:textSize="9sp"
         android:textStyle="bold|italic"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
         app:layout_constraintStart_toEndOf="@+id/verticalBorder"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
+        app:layout_constraintTop_toBottomOf="@+id/keys"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/enterText"
@@ -791,82 +786,64 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="26dp"
         android:layout_marginBottom="15dp"
         android:text="@string/initialAnswered"
         android:textColor="#DBE160"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
         app:layout_constraintStart_toEndOf="@+id/completedText"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
+        app:layout_constraintTop_toBottomOf="@+id/inputText" />
 
     <TextView
         android:id="@+id/finalCompleted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="26dp"
         android:layout_marginBottom="15dp"
         android:text="@string/maxAnswered"
         android:textColor="#DBE160"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
         app:layout_constraintStart_toEndOf="@+id/numCompleted"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
+        app:layout_constraintTop_toBottomOf="@+id/inputText" />
 
     <TextView
         android:id="@+id/completedText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="26dp"
         android:layout_marginBottom="15dp"
         android:text="@string/completed"
         android:textColor="#DBE160"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
         app:layout_constraintStart_toEndOf="@+id/verticalBorder"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
-
-    <TextView
-        android:id="@+id/quizRules"
-        android:layout_width="360dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="6dp"
-        android:gravity="center"
-        android:text="@string/quizRules"
-        android:textColor="#FFFFFF"
-        android:textSize="10sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
-        app:layout_constraintEnd_toStartOf="@+id/verticalBorder"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/scaleType" />
+        app:layout_constraintTop_toBottomOf="@+id/inputText" />
 
     <TextView
         android:id="@+id/inputText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="5dp"
         android:text="@string/userInput"
         android:textColor="#FFFFFF"
         android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@+id/verticalBorder"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
+        app:layout_constraintTop_toBottomOf="@id/enterText" />
 
     <TextView
         android:id="@+id/userInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="5dp"
         android:textColor="#DBE160"
         android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/inputText"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
+        app:layout_constraintTop_toBottomOf="@+id/fixedQuizTypeText" />
 
     <ImageView
         android:id="@+id/correctAnswer"
@@ -896,33 +873,41 @@
         android:id="@+id/quizType"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="33dp"
         android:max="2"
         android:progress="0"
-        app:layout_constraintBottom_toTopOf="@+id/fixedQuizDiffText"
-        app:layout_constraintStart_toEndOf="@+id/verticalBorder"
-        app:layout_constraintTop_toBottomOf="@+id/fixedQuizTypeText" />
+        android:translationX="-15dp"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
+        app:layout_constraintStart_toStartOf="@+id/fixedQuizTypeText"
+        app:layout_constraintTop_toBottomOf="@+id/quizTypeText"
+        app:layout_constraintVertical_bias="0.0" />
 
     <SeekBar
         android:id="@+id/quizDifficulty"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="33dp"
         android:max="2"
         android:progress="0"
+        android:translationX="-15dp"
         app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
-        app:layout_constraintStart_toEndOf="@+id/verticalBorder"
-        app:layout_constraintTop_toBottomOf="@+id/fixedQuizDiffText" />
+        app:layout_constraintStart_toStartOf="@+id/fixedQuizDiffText"
+        app:layout_constraintTop_toBottomOf="@+id/quizDiffText"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/fixedQuizTypeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:text="@string/quizTypeText"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/quizType"
+        android:textStyle="bold|italic"
         app:layout_constraintStart_toEndOf="@+id/verticalBorder"
         app:layout_constraintTop_toBottomOf="@+id/keys" />
 
@@ -930,36 +915,51 @@
         android:id="@+id/fixedQuizDiffText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="11dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="5dp"
         android:text="@string/quizDiffText"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/quizDifficulty"
-        app:layout_constraintStart_toEndOf="@+id/verticalBorder"
-        app:layout_constraintTop_toBottomOf="@+id/quizType" />
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toEndOf="@+id/fixedQuizTypeText"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
 
     <TextView
         android:id="@+id/quizTypeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="2dp"
         android:text="@string/quizTypeScales"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/quizType"
-        app:layout_constraintStart_toEndOf="@+id/fixedQuizTypeText"
-        app:layout_constraintTop_toBottomOf="@+id/keys" />
+        app:layout_constraintStart_toStartOf="@+id/fixedQuizTypeText"
+        app:layout_constraintTop_toBottomOf="@+id/fixedQuizTypeText" />
 
     <TextView
         android:id="@+id/quizDiffText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="11dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="2dp"
         android:text="@string/quizDiffEasy"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/quizDifficulty"
-        app:layout_constraintStart_toEndOf="@+id/fixedQuizDiffText"
-        app:layout_constraintTop_toBottomOf="@+id/quizType" />
+        app:layout_constraintStart_toStartOf="@+id/fixedQuizDiffText"
+        app:layout_constraintTop_toBottomOf="@+id/fixedQuizDiffText" />
+
+    <Button
+        android:id="@+id/helpButton"
+        android:layout_width="19dp"
+        android:layout_height="19dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/roundbutton"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/helpButton"
+        android:textColor="#22CABB"
+        android:textSize="12sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/hideNotes"
+        app:layout_constraintStart_toEndOf="@+id/hideSelection"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalBorder" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

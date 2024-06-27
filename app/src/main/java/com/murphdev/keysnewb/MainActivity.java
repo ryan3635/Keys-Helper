@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     ImageView xMark, checkMark;
     TextView infoScale, infoChord, infoScaleDisplay, infoChordDisplay; //textviews for information section
     TextView fixedQuizTypeText, fixedQuizDiffText, quizTypeText, quizDiffText; //textviews for quiz selection
-    TextView enterText, quizRequest, userInputArea, inputText, quizRules, completedText, numCompleted, finalCompleted; //textviews shown during quiz game
-    Button quizButton;
+    TextView enterText, quizRequest, userInputArea, inputText, completedText, numCompleted, finalCompleted; //textviews shown during quiz game
+    Button quizButton, helpButton;
     RadioGroup rootNotes;
     RadioButton root, rootC, rootCs, rootD, rootDs, rootE, rootF, rootFs, rootG, rootGs, rootA, rootAs, rootB;
     Spinner scaleSpinner, chordSpinner;
@@ -162,13 +162,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 if (quizRunning) {
                     quizRunning = false;
                     quizButton.setText(R.string.quizButton);
-                    quizButton.setTextColor(Color.WHITE);
+                    quizButton.setTextColor(Color.parseColor("#22CABB"));
+                    selShown = false;
                     userInputPos = 0;
                     userInput.clear();
                     userInputArea.setText(R.string.noSelection);
-                    hideSelection.setChecked(false);
-                    hideSel = false;
-                    selShown = false;
                     numCompleted.setText("0");
                     questionNumber = 0;
                     correctlyAnswered = 0;
@@ -186,12 +184,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     enterText.setVisibility(View.INVISIBLE);
                     quizRequest.setVisibility(View.INVISIBLE);
                     inputText.setVisibility(View.INVISIBLE);
-                    quizRules.setVisibility(View.INVISIBLE);
                     completedText.setVisibility(View.INVISIBLE);
                     numCompleted.setVisibility(View.INVISIBLE);
                     finalCompleted.setVisibility(View.INVISIBLE);
 
+                    //set radio buttons as clickable
+                    for (int i = 0; i < rootNotes.getChildCount(); i++) rootNotes.getChildAt(i).setEnabled(true);
+
                     //reset spinners back to default
+                    hideSelection.setChecked(true);
                     ArrayAdapter<String> scaleAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.scaleTypes));
                     scaleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     scaleSpinner.setAdapter(scaleAdapter);
@@ -199,8 +200,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     chordAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     chordSpinner.setAdapter(chordAdapter);
 
-                    //set radio buttons as clickable
-                    for (int i = 0; i < rootNotes.getChildCount(); i++) rootNotes.getChildAt(i).setEnabled(true);
+                    //keys flashing fix
+                    Timer t = new Timer();
+                    t.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    hideSelection.setChecked(false);
+                                    hideSel = false;
+                                }
+                            });
+                        }
+                    }, 300);
                 }
                 //starts quiz
                 else {
@@ -233,13 +246,40 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     enterText.setVisibility(View.VISIBLE);
                     quizRequest.setVisibility(View.VISIBLE);
                     inputText.setVisibility(View.VISIBLE);
-                    quizRules.setVisibility(View.VISIBLE);
                     completedText.setVisibility(View.VISIBLE);
                     numCompleted.setVisibility(View.VISIBLE);
                     finalCompleted.setVisibility(View.VISIBLE);
 
                     updateQuizAnswer();
                 }
+            }
+        });
+
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick (View v){
+                AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                alert.setTitle("How to use Keys Helper");
+                alert.setCancelable(true);
+                alert.setMessage("Select a \"Scale Type\" and it's root note to display your desired scale on the keyboard. The highlighted keys shown are the keys that belong in the selected scale. Pressing a key will play the sound of the note. \n" +
+                        "\n" +
+                        "Once you have selected a scale, the chords list will be updated with the specific chords that belong in the scale. The newly highlighted keys specify the notes that make up the selected chord.\n" +
+                        "\n" +
+                        "The \"Hide Selection\" checkbox will hide all highlighted keys if selected.\n" +
+                        "\n" +
+                        "The \"Hide Notes\" checkbox hides note letters for all keys on the keyboard. This is enabled by default.\n" +
+                        "\n" +
+                        "To play a quiz game, select a \"Quiz Type\" followed by \"Difficulty\" and then press the \"Start Quiz\" button. Based on the options chosen, 10 randomly generated requests are issued.\n" +
+                        "The user must enter the required scale/chord by pressing one key on the keyboard at a time to build the requested scale/chord, starting at the root note. If the user is stuck on the current question, they may deselect \"Hide Selection\" to display the scale/chord on the keyboard.\n" +
+                        "To cancel the quiz, press the \"End\" button.\n" +
+                        "\n" +
+                        "Have fun using Keys Helper!");
+                alert.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                alert.show();
             }
         });
     }
@@ -1212,12 +1252,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         quizTypeText = findViewById(R.id.quizTypeText);
         quizDiffText = findViewById(R.id.quizDiffText);
         quizButton = findViewById(R.id.quizButton);
+        helpButton = findViewById(R.id.helpButton);
 
         enterText = findViewById(R.id.enterText);
         quizRequest = findViewById(R.id.quizRequest);
         userInputArea = findViewById(R.id.userInput);
         inputText = findViewById(R.id.inputText);
-        quizRules = findViewById(R.id.quizRules);
         completedText = findViewById(R.id.completedText);
         numCompleted = findViewById(R.id.numCompleted);
         finalCompleted = findViewById(R.id.finalCompleted);

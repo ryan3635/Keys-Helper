@@ -1,9 +1,12 @@
-# Keys Helper - By Ryan Murphy
+# Keys Helper
+*- 2024 Update: I have decided to pay a visit back to my old passion project, Keys Helper. My friends have made helpful suggestions over the years, alongside a few ideas of my own and hence I have found the spark to finally come back and work on improvements to the app. To this day, I still regularly use Keys Helper and decided it was time to truly maximize it's potential. Going forward, I plan on pushing an update every so often to further the potential of this project -*
+
 Thank you for taking a look at my Android app! This is my first solo project since I graduated from university and has been a great learning experience for me. I used Java and XML through Android Studio to make this application possible.
 
 Keys Helper is a simple app that can be used for learning keyboard and piano, or even as a reference tool for the more experienced!
 
 *Keys Helper is available for download on Google Play Store - searching for MurphDev will be the easiest way to find it*
+
 
 ## Compatibility
 

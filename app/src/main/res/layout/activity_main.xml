@@ -449,7 +449,7 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/horizontalBorder"
         android:scaleX="1"
-        android:translationX="378dp"
+        android:translationX="376dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/keys"
         app:layout_constraintTop_toBottomOf="@+id/keys"
@@ -469,7 +469,7 @@
         android:id="@+id/verticalBorder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="371dp"
+        android:layout_marginStart="90dp"
         android:layout_marginTop="21dp"
         android:layout_marginEnd="5dp"
         android:contentDescription="@string/verticalBorder"
@@ -477,174 +477,9 @@
         android:scaleY="4"
         android:translationY="287dp"
         app:layout_constraintEnd_toStartOf="@+id/hideSelection"
-        app:layout_constraintStart_toStartOf="@+id/rootNotes"
+        app:layout_constraintStart_toEndOf="@+id/fixedChordType"
         app:layout_constraintTop_toBottomOf="@+id/keys"
         app:srcCompat="@drawable/verticalline" />
-
-    <RadioGroup
-        android:id="@+id/rootNotes"
-        android:layout_width="600dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="5dp"
-        android:orientation="horizontal"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="@+id/keys"
-        app:layout_constraintTop_toBottomOf="@+id/scaleType">
-
-        <RadioButton
-            android:id="@+id/e"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:onClick="rootUpdate"
-            android:scaleX="0.75"
-            android:scaleY="0.75"
-            android:text="@string/eNote"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:translationX="6dp"
-            android:translationY="18dp" />
-
-        <RadioButton
-            android:id="@+id/c"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:checked="true"
-            android:onClick="rootUpdate"
-            android:scaleX="0.75"
-            android:scaleY="0.75"
-            android:text="@string/cNote"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <RadioButton
-            android:id="@+id/cs"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:onClick="rootUpdate"
-            android:scaleX="0.75"
-            android:scaleY="0.75"
-            android:text="@string/csNote"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:translationX="-48dp"
-            android:translationY="30dp" />
-
-        <RadioButton
-            android:id="@+id/d"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:onClick="rootUpdate"
-            android:scaleX="0.75"
-            android:scaleY="0.75"
-            android:text="@string/dNote"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:translationX="-50dp" />
-
-        <RadioButton
-            android:id="@+id/ds"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:onClick="rootUpdate"
-            android:scaleX="0.75"
-            android:scaleY="0.75"
-            android:text="@string/dsNote"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:translationX="-98dp"
-            android:translationY="30dp" />
-
-        <RadioButton
-            android:id="@+id/f"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:onClick="rootUpdate"
-            android:scaleX="0.75"
-            android:scaleY="0.75"
-            android:text="@string/fNote"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:translationX="-100dp" />
-
-        <RadioButton
-            android:id="@+id/fs"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:onClick="rootUpdate"
-            android:scaleX="0.75"
-            android:scaleY="0.75"
-            android:text="@string/fsNote"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:translationX="-146dp"
-            android:translationY="30dp" />
-
-        <RadioButton
-            android:id="@+id/g"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:onClick="rootUpdate"
-            android:scaleX="0.75"
-            android:scaleY="0.75"
-            android:text="@string/gNote"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:translationX="-148dp" />
-
-        <RadioButton
-            android:id="@+id/gs"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:onClick="rootUpdate"
-            android:scaleX="0.75"
-            android:scaleY="0.75"
-            android:text="@string/gsNote"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:translationX="-196dp"
-            android:translationY="30dp" />
-
-        <RadioButton
-            android:id="@+id/a"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:onClick="rootUpdate"
-            android:scaleX="0.75"
-            android:scaleY="0.75"
-            android:text="@string/aNote"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:translationX="-197dp" />
-
-        <RadioButton
-            android:id="@+id/as"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:onClick="rootUpdate"
-            android:scaleX="0.75"
-            android:scaleY="0.75"
-            android:text="@string/asNote"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:translationX="-245dp"
-            android:translationY="30dp" />
-
-        <RadioButton
-            android:id="@+id/b"
-            android:layout_width="58dp"
-            android:layout_height="30dp"
-            android:onClick="rootUpdate"
-            android:scaleX="0.75"
-            android:scaleY="0.75"
-            android:text="@string/bNote"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:translationX="-259dp"
-            android:translationY="18dp" />
-
-    </RadioGroup>
 
     <TextView
         android:id="@+id/fixedScaleType"
@@ -961,5 +796,116 @@
         app:layout_constraintEnd_toStartOf="@+id/hideNotes"
         app:layout_constraintStart_toEndOf="@+id/hideSelection"
         app:layout_constraintTop_toBottomOf="@+id/horizontalBorder" />
+
+    <androidx.gridlayout.widget.GridLayout
+        android:id="@+id/rootNotes"
+        android:layout_width="302dp"
+        android:layout_height="105dp"
+        android:padding="1dp"
+        app:columnCount="6"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/verticalBorder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scaleType"
+        app:rowCount="2">
+
+        <Button
+            android:id="@+id/c"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/root_note_selector"
+            android:text="@string/cNote"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/cs"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/root_note_selector"
+            android:text="@string/csNote"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/d"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/root_note_selector"
+            android:text="@string/dNote"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/ds"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/root_note_selector"
+            android:text="@string/dsNote"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/e"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/root_note_selector"
+            android:text="@string/eNote"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/f"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/root_note_selector"
+            android:text="@string/fNote"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/fs"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/root_note_selector"
+            android:text="@string/fsNote"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/g"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/root_note_selector"
+            android:text="@string/gNote"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/gs"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/root_note_selector"
+            android:text="@string/gsNote"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/a"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/root_note_selector"
+            android:text="@string/aNote"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/as"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/root_note_selector"
+            android:text="@string/asNote"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/b"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/root_note_selector"
+            android:text="@string/bNote"
+            android:textColor="#FFFFFF" />
+
+
+    </androidx.gridlayout.widget.GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

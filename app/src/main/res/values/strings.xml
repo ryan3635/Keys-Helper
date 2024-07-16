@@ -55,6 +55,7 @@
     <!-- Scale types -->
     <string-array name="scaleTypes">
         <item>(select)</item>
+        <item>Chords</item>
         <item>Major</item>
         <item>Minor</item>
         <item>Major Pentatonic</item>

@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 AlertDialog.Builder alert = new AlertDialog.Builder(context);
                 alert.setTitle("How to use Keys Helper");
                 alert.setCancelable(true);
-                alert.setMessage("Select a \"Scale Type\" and it's root note to display your desired scale on the keyboard. The highlighted keys shown are the keys that belong in the selected scale. Pressing a key will play the sound of the note. \n" +
+                alert.setMessage("Select a \"Scale Type\" and its root note to display your desired scale on the keyboard. The highlighted keys shown are the keys that belong in the selected scale. Pressing a key will play the sound of the note. \n" +
                         "\n" +
                         "Once you have selected a scale, the chords list will be updated with the specific chords that belong in the scale. The newly highlighted keys specify the notes that make up the selected chord.\n" +
                         "\n" +

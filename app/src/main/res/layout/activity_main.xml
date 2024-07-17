@@ -420,11 +420,12 @@
 
     <CheckBox
         android:id="@+id/hideSelection"
-        android:layout_width="145dp"
-        android:layout_height="26dp"
+        android:layout_width="165dp"
+        android:layout_height="wrap_content"
         android:onClick="checkBoxes"
         android:text="@string/hideSelection"
         android:textColor="#DBE160"
+        android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/fixedScaleText"
@@ -432,12 +433,13 @@
 
     <CheckBox
         android:id="@+id/hideNotes"
-        android:layout_width="130dp"
-        android:layout_height="26dp"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
         android:checked="true"
         android:onClick="checkBoxes"
         android:text="@string/hideNotes"
         android:textColor="#C100C6AD"
+        android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/fixedChordText"
@@ -549,7 +551,7 @@
         android:layout_marginStart="7dp"
         android:text="@string/noSelection"
         android:textColor="#FFFFFF"
-        android:textSize="14sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/infoSelectedScale"
         app:layout_constraintTop_toBottomOf="@+id/infoSelectedScale" />
 
@@ -571,14 +573,14 @@
         android:layout_marginStart="7dp"
         android:text="@string/noSelection"
         android:textColor="#FFFFFF"
-        android:textSize="14sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/infoSelectedChord"
         app:layout_constraintTop_toBottomOf="@+id/infoSelectedChord" />
 
     <Button
         android:id="@+id/quizButton"
-        android:layout_width="45dp"
-        android:layout_height="34dp"
+        android:layout_width="47dp"
+        android:layout_height="36dp"
         android:layout_marginStart="260dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/roundbutton"
@@ -784,18 +786,17 @@
         android:id="@+id/helpButton"
         android:layout_width="19dp"
         android:layout_height="19dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/roundbutton"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/helpButton"
         android:textColor="#22CABB"
         android:textSize="12sp"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/hideNotes"
-        app:layout_constraintStart_toEndOf="@+id/hideSelection"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalBorder" />
+        app:layout_constraintBottom_toTopOf="@+id/horizontalBorder"
+        app:layout_constraintEnd_toStartOf="@+id/quizButton"
+        app:layout_constraintTop_toBottomOf="@+id/keys" />
 
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/rootNotes"

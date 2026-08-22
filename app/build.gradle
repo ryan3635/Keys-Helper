@@ -1,13 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdk 34
+    compileSdk 37
+
     defaultConfig {
         applicationId "com.murphdev.keysnewb"
         minSdkVersion 21
-        targetSdkVersion 34
-        versionCode 8
-        versionName "2.01"
+        targetSdkVersion 37
+        versionCode 13
+        versionName "2.06"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
